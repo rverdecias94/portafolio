@@ -23,9 +23,9 @@
            VARIABLES Y CONFIGURACIÓN GENERAL
            ========================================================= */
       :root {
-        --primary: #92314c;
-        --primary-dark: #229682;
-        --accent: #127b68;
+        --primary: #a78bfa;
+        --primary-dark: #7c3aed;
+        --accent: #14b8a6;
         --text-dark: #0f172a;
         /* Más oscuro para contraste tech */
         --text-light: #475569;
@@ -40,9 +40,9 @@
 
       /* ===================== TEMA OSCURO ===================== */
       body.dark-mode {
-        --primary: #b3be68;
-        --primary-dark: #2563eb;
-        --accent: #a78bfa;
+        --primary: #a78bfa;
+        --primary-dark: #c4b5fd;
+        --accent: #2dd4bf;
         --text-dark: #f1f5f9;
         --text-light: #cbd5e1;
         --bg-light: #181e29;
@@ -113,7 +113,7 @@
 
       body.dark-mode .topbar-nav a:hover {
         color: var(--text-dark);
-        background: rgba(96, 165, 250, 0.12);
+        background: rgba(167, 139, 250, 0.14);
       }
 
       body.dark-mode .mobile-menu {
@@ -123,7 +123,7 @@
 
       body.dark-mode .mobile-menu a {
         color: var(--text-dark);
-        background: rgba(96, 165, 250, 0.12);
+        background: rgba(167, 139, 250, 0.14);
       }
 
       body.dark-mode .mobile-menu-header {
@@ -301,7 +301,7 @@
 
       .topbar-nav a:hover {
         color: var(--text-dark);
-        background: rgba(37, 99, 235, 0.06);
+        background: rgba(167, 139, 250, 0.12);
       }
 
       .topbar-actions {
@@ -323,7 +323,7 @@
         color: var(--primary-dark);
         cursor: pointer;
         transition: background 0.2s;
-        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.04);
+        box-shadow: 0 2px 8px rgba(167, 139, 250, 0.08);
       }
 
       .icon-switch:active,
@@ -338,7 +338,7 @@
       input:focus-visible,
       select:focus-visible,
       textarea:focus-visible {
-        outline: 3px solid rgba(37, 99, 235, 0.35);
+        outline: 3px solid rgba(167, 139, 250, 0.45);
         outline-offset: 2px;
       }
 
@@ -359,7 +359,7 @@
         backdrop-filter: blur(12px);
       }
 
-      @media (max-width: 768px) {
+      @media (max-width: 1024px) {
         .top-bar {
           padding: 18px 16px;
         }
@@ -420,11 +420,11 @@
           font-weight: 700;
           padding: 12px 12px;
           border-radius: 12px;
-          background: rgba(37, 99, 235, 0.04);
+          background: rgba(167, 139, 250, 0.12);
         }
 
         .mobile-menu a:active {
-          background: rgba(37, 99, 235, 0.08);
+          background: rgba(167, 139, 250, 0.18);
         }
 
         .mobile-menu-actions {
@@ -507,13 +507,13 @@
         gap: 10px;
         padding: 14px 18px;
         border-radius: 14px;
-        border: 1px solid rgba(37, 99, 235, 0.12);
+        border: 1px solid rgba(167, 139, 250, 0.22);
         text-decoration: none;
         font-weight: 800;
         color: var(--text-dark);
         background: rgba(255, 255, 255, 0.6);
         transition: var(--ease-out);
-        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.06);
+        box-shadow: 0 2px 10px rgba(167, 139, 250, 0.12);
       }
 
       .cta.primary {
@@ -524,7 +524,7 @@
 
       .cta:hover {
         transform: translateY(-2px);
-        box-shadow: 0 10px 24px rgba(37, 99, 235, 0.12);
+        box-shadow: 0 12px 28px rgba(167, 139, 250, 0.18);
       }
 
       .tags {
@@ -562,15 +562,15 @@
       /* Efecto de pulso sutil en la tag de tiempo */
       @keyframes pulse-border {
         0% {
-          box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4);
+          box-shadow: 0 0 0 0 rgba(167, 139, 250, 0.45);
         }
 
         70% {
-          box-shadow: 0 0 0 10px rgba(37, 99, 235, 0);
+          box-shadow: 0 0 0 10px rgba(167, 139, 250, 0);
         }
 
         100% {
-          box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+          box-shadow: 0 0 0 0 rgba(167, 139, 250, 0);
         }
       }
 
@@ -609,7 +609,7 @@
         transform: translateY(-10px) scale(1.02);
         border-color: transparent;
         /* Efecto Glow de color sutil */
-        box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.15), 0 10px 20px -10px rgba(124, 58, 237, 0.1);
+        box-shadow: 0 22px 44px -10px rgba(167, 139, 250, 0.20), 0 10px 20px -10px rgba(20, 184, 166, 0.14);
       }
 
       .price {
@@ -889,26 +889,58 @@
       }
 
       /* Responsive */
-      @media (max-width: 768px) {
+      @media (max-width: 1024px) {
         h1 {
-          font-size: 2.8rem;
+          font-size: 3.1rem;
         }
 
         h2 {
-          font-size: 2.2rem;
+          font-size: 2.4rem;
         }
 
         section {
-          padding: 80px 0;
+          padding: 90px 0;
+          scroll-margin-top: 96px;
         }
 
         .hero {
-          padding: 10px 20px;
+          padding: 40px 20px;
+          background-size: 36px 36px;
         }
 
         .contact-info {
           flex-direction: column;
           align-items: center;
+        }
+      }
+
+      @media (max-width: 640px) {
+        h1 {
+          font-size: 2.55rem;
+        }
+
+        h2 {
+          font-size: 2.05rem;
+        }
+
+        section {
+          padding: 72px 0;
+        }
+
+        .hero {
+          padding: 24px 16px;
+        }
+      }
+
+      @media (max-height: 520px) and (orientation: landscape) {
+        section {
+          padding: 64px 0;
+          scroll-margin-top: 96px;
+        }
+
+        .hero {
+          padding: 22px 16px;
+          background-size: 34px 34px;
         }
       }
 
@@ -1320,8 +1352,8 @@
 
       <section id="process">
         <div class="container">
-          <h2 class="text-center lang-es">Cómo Trabajamos Juntos</h2>
-          <h2 class="text-center lang-en">How We Work Together</h2>
+          <h2 class="text-center lang-es">¿Cómo Trabajamos Juntos?</h2>
+          <h2 class="text-center lang-en">How We Work Together?</h2>
 
           <div class="grid-4"
                style="margin-top: 50px;">
@@ -1458,7 +1490,7 @@
           <div class="contact-info">
             <p><i class="fa-solid fa-envelope"
                  aria-hidden="true"
-                 style="color:#2563eb;margin-right:8px;"></i> <a
+                 style="color:var(--primary);margin-right:8px;"></i> <a
                  href="mailto:robertoverdeciasanchez@gmail.com">robertoverdeciasanchez@gmail.com</a></p>
             <p><i class="fab fa-whatsapp"
                  aria-hidden="true"
