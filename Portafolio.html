@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="es">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Portafolio | Roberto Verdecia Sánchez</title>
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer" />
+
+    <style>
+      /* =========================================================
+           VARIABLES Y CONFIGURACIÓN GENERAL
+           ========================================================= */
+      :root {
+        --primary: #2563eb;
+        --primary-dark: #1d4ed8;
+        --accent: #7c3aed;
+        --text-dark: #0f172a;
+        /* Más oscuro para contraste tech */
+        --text-light: #475569;
+        --bg-light: #f1f5f9;
+        /* Ligeramente más gris */
+        --white: #ffffff;
+        --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+
+        /* Transición más "bouncy" para efectos altos */
+        --ease-out: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      }
+
+      /* ===================== TEMA OSCURO ===================== */
+      body.dark-mode {
+        --primary: #60a5fa;
+        --primary-dark: #2563eb;
+        --accent: #a78bfa;
+        --text-dark: #f1f5f9;
+        --text-light: #cbd5e1;
+        --bg-light: #181e29;
+        --white: #23293a;
+      }
+
+      body.dark-mode {
+        color: var(--text-dark);
+        background-color: var(--bg-light);
+      }
+
+      body.dark-mode .bg-pattern {
+        background-color: var(--white);
+        background-image: linear-gradient(#23293a 1.1px, transparent 1.1px), linear-gradient(90deg, #23293a 1.1px, transparent 1.1px);
+      }
+
+      body.dark-mode .bg-white {
+        background-color: var(--white);
+      }
+
+      body.dark-mode .card,
+      body.dark-mode .step,
+      body.dark-mode .contact-info p {
+        background: var(--white);
+        color: var(--text-dark);
+        border-color: #334155;
+      }
+
+      body.dark-mode .tag {
+        background: var(--white);
+        color: var(--primary);
+        border-color: #334155;
+      }
+
+      body.dark-mode .tag.highlight {
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+
+      body.dark-mode .example-box {
+        background-color: #23293a;
+        color: var(--text-light);
+        border-color: #334155;
+      }
+
+      body.dark-mode .scope-alert {
+        background: linear-gradient(135deg, #23293a 0%, #181e29 100%);
+        border: 1px solid #a78bfa;
+        color: var(--text-light);
+      }
+
+      body.dark-mode .scope-alert h3 {
+        color: #a78bfa;
+      }
+
+      body.dark-mode .scope-alert p {
+        color: #cbd5e1;
+      }
+
+      body.dark-mode .top-bar {
+        background-color: rgba(24, 30, 41, 0.8);
+        border-bottom: 1px solid #23293a;
+      }
+
+      body.dark-mode .lang-btn {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+        color: var(--white);
+        box-shadow: 0 4px 12px rgba(96, 165, 250, 0.2);
+      }
+
+      body.dark-mode .lang-btn:hover {
+        box-shadow: 0 6px 18px rgba(167, 139, 250, 0.3);
+      }
+
+      body.dark-mode footer {
+        background: #181e29;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      body.dark-mode footer p {
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      /* Patrón de fondo sutil para zonas de luz */
+      .bg-pattern {
+        background-color: var(--white);
+        background-image: linear-gradient(#f1f5f9 1.1px, transparent 1.1px), linear-gradient(90deg, #f1f5f9 1.1px, transparent 1.1px);
+        background-size: 22px 22px;
+      }
+
+      body {
+        font-family: var(--font-main);
+        line-height: 1.7;
+        margin: 0;
+        padding: 0;
+        color: var(--text-dark);
+        background-color: var(--bg-light);
+        -webkit-font-smoothing: antialiased;
+        scroll-behavior: smooth;
+        /* Scroll suave nativo */
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      /* Títulos con degradado fuerte y animado en hover */
+      h1,
+      h2 {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 50%, var(--primary) 100%);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: transparent;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        transition: var(--ease-out);
+      }
+
+      h2:hover {
+        background-position: right center;
+        /* Movimiento del degradado */
+      }
+
+      h3 {
+        font-size: 1.5rem;
+        margin-top: 0;
+        margin-bottom: 15px;
+        color: var(--text-dark);
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+
+      p {
+        color: var(--text-light);
+        font-size: 1.1rem;
+      }
+
+      /* =========================================================
+           SISTEMA DE CAMBIO DE IDIOMA (SOLO CSS)
+           ========================================================= */
+      #lang-toggle {
+        display: none;
+      }
+
+      .lang-en {
+        display: none;
+      }
+
+      #lang-toggle:checked~.page-wrapper .lang-es {
+        display: none;
+      }
+
+      #lang-toggle:checked~.page-wrapper .lang-en {
+        display: block;
+      }
+
+      #lang-toggle:checked~.page-wrapper span.lang-en {
+        display: inline;
+      }
+
+      .top-bar {
+        background-color: rgba(241, 245, 249, 0.8);
+        backdrop-filter: blur(12px);
+        padding: 18px 24px;
+        text-align: right;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+      }
+
+      /* Botón con degradado dinámico */
+      .lang-btn {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+        background-size: 150% auto;
+        color: var(--white);
+        padding: 11px 26px;
+        border-radius: 12px;
+        /* Menos redondeado, más app style */
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+        transition: var(--ease-out);
+        user-select: none;
+        display: inline-block;
+        border: none;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+      }
+
+      .lang-btn:hover {
+        background-position: right center;
+        transform: translateY(-2px) scale(1.01);
+        box-shadow: 0 6px 18px rgba(124, 58, 237, 0.3);
+      }
+
+      /* =========================================================
+           DISEÑO DE SECCIONES (ESTILOS)
+           ========================================================= */
+      section {
+        padding: 120px 0;
+        position: relative;
+      }
+
+      .bg-white {
+        background-color: var(--white);
+      }
+
+      /* Clip-path suave para separar secciones */
+      .section-separator {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        background-color: var(--bg-light);
+        clip-path: polygon(0 100%, 100% 100%, 100% 0);
+        z-index: 1;
+      }
+
+      .text-center {
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 3.8rem;
+        margin-bottom: 18px;
+        line-height: 1.1;
+      }
+
+      h2 {
+        font-size: 2.8rem;
+        margin-bottom: 60px;
+      }
+
+      /* Hero con patrón de fondo */
+      .hero {
+        padding: 160px 20px;
+        background-color: var(--bg-light);
+        background-image: radial-gradient(#e2e8f0 1.1px, transparent 1.1px), radial-gradient(#e2e8f0 1.1px, var(--bg-light) 1.1px);
+        background-size: 44px 44px;
+        background-position: 0 0, 22px 22px;
+      }
+
+      .tags {
+        display: flex;
+        justify-content: center;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-top: 50px;
+      }
+
+      .tag {
+        background: var(--white);
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        border: 1px solid #e2e8f0;
+        transition: var(--ease-out);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+      }
+
+      .tag:hover {
+        border-color: var(--primary);
+        transform: translateY(-3px) rotate(1deg);
+      }
+
+      .tag.highlight {
+        background: var(--white);
+        color: var(--primary);
+        border: 2px solid var(--primary);
+        position: relative;
+      }
+
+      /* Efecto de pulso sutil en la tag de tiempo */
+      @keyframes pulse-border {
+        0% {
+          box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4);
+        }
+
+        70% {
+          box-shadow: 0 0 0 10px rgba(37, 99, 235, 0);
+        }
+
+        100% {
+          box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+        }
+      }
+
+      .tag.highlight {
+        animation: pulse-border 2s infinite;
+      }
+
+      /* Grillas */
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 35px;
+      }
+
+      .grid-4 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 24px;
+      }
+
+      /* Tarjetas con efecto Glow en Hover */
+      .card {
+        background: var(--white);
+        padding: 45px 35px;
+        border-radius: 24px;
+        border: 1px solid #e2e8f0;
+        transition: var(--ease-out);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        z-index: 2;
+        /* Por encima del separator */
+      }
+
+      .card:hover {
+        transform: translateY(-10px) scale(1.02);
+        border-color: transparent;
+        /* Efecto Glow de color sutil */
+        box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.15), 0 10px 20px -10px rgba(124, 58, 237, 0.1);
+      }
+
+      .price {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: var(--text-dark);
+        margin: 15px 0 25px 0;
+        letter-spacing: -0.04em;
+        position: relative;
+        display: inline-block;
+      }
+
+      /* Subrayado decorativo en el precio */
+      .price::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 40px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        border-radius: 2px;
+      }
+
+      ul {
+        padding-left: 20px;
+        color: var(--text-light);
+        flex-grow: 1;
+        margin-bottom: 30px;
+      }
+
+      li {
+        margin-bottom: 14px;
+        font-size: 1.05rem;
+      }
+
+      /* Ejemplos estilo burbuja de chat */
+      .example-box {
+        background-color: var(--bg-light);
+        padding: 20px;
+        font-size: 0.95rem;
+        color: var(--text-dark);
+        border-radius: 16px;
+        position: relative;
+        border: 1px solid #e2e8f0;
+      }
+
+      .example-box::before {
+        content: '💡';
+        position: absolute;
+        top: -15px;
+        left: 20px;
+        background: var(--white);
+        padding: 0 5px;
+        font-size: 1.2rem;
+      }
+
+      /* Alerta de Alcance (Scope) moderna */
+      .scope-alert {
+        background: linear-gradient(135deg, #fffbeb 0%, #fff7ed 100%);
+        border: 1px solid #fed7aa;
+        padding: 35px;
+        border-radius: 24px;
+        margin-top: 40px;
+        box-shadow: 0 10px 15px -3px rgba(251, 146, 60, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Decoración geométrica en la alerta */
+      .scope-alert::after {
+        content: '';
+        position: absolute;
+        top: -50px;
+        right: -50px;
+        width: 100px;
+        height: 100px;
+        background: rgba(251, 146, 60, 0.1);
+        border-radius: 50%;
+      }
+
+      .scope-alert h3 {
+        color: #c2410c;
+        margin-bottom: 15px;
+        font-size: 1.4rem;
+      }
+
+      .scope-alert p {
+        margin: 0;
+        color: #9a3412;
+        font-size: 1.05rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Pasos del Proceso interactivas */
+      .step {
+        text-align: center;
+        padding: 30px 20px;
+        background: var(--white);
+        border-radius: 20px;
+        border: 1px solid #e2e8f0;
+        transition: var(--ease-out);
+      }
+
+      .step:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.05);
+      }
+
+      /* Efecto Parallax simple en scroll (requiere JS para ser perfecto,
+           pero simularemos efecto visual con perspectiva fija) */
+      .step-number {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 70%) var(--text-dark);
+        color: var(--white);
+        border-radius: 16px;
+        /* Forma de app icon */
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 30px;
+        position: relative;
+        transform: translateZ(0);
+        /* Forzar aceleración hardware */
+        transition: var(--ease-out);
+      }
+
+      .step:hover .step-number {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+        transform: rotateY(180deg);
+        /* Efecto flip al hover */
+      }
+
+      /* Volver a poner el número derecho después del flip */
+      .step-number span {
+        transition: var(--ease-out);
+      }
+
+      .step:hover .step-number span {
+        transform: rotateY(-180deg);
+      }
+
+      /* Contacto estilo botones grandes */
+      .contact-info {
+        margin-top: 60px;
+        font-size: 1.2rem;
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .contact-info p {
+        margin: 0;
+        background: var(--white);
+        padding: 20px 35px;
+        border-radius: 16px;
+        border: 1px solid #e2e8f0;
+        transition: var(--ease-out);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+      }
+
+      .contact-info p:hover {
+        border-color: var(--primary);
+        transform: translateY(-4px);
+        box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.1);
+      }
+
+      .contact-info a {
+        color: var(--text-dark);
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .contact-info p:hover a {
+        color: var(--primary);
+      }
+
+      /* Footer */
+      footer {
+        background: var(--text-dark);
+        color: rgba(255, 255, 255, 0.7);
+        text-align: center;
+        padding: 50px 20px;
+      }
+
+      footer p {
+        color: rgba(255, 255, 255, 0.5);
+        margin: 0;
+        font-size: 0.95rem;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2.8rem;
+        }
+
+        h2 {
+          font-size: 2.2rem;
+        }
+
+        section {
+          padding: 80px 0;
+        }
+
+        .hero {
+          padding: 120px 20px;
+        }
+
+        .contact-info {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <input type="checkbox"
+           id="lang-toggle">
+
+    <div class="page-wrapper">
+
+      <div class="top-bar"
+           style="display: flex; align-items: center; justify-content: end;">
+        <label for="lang-toggle"
+               class="lang-btn">
+          <span class="lang-es">Switch to English</span>
+          <span class="lang-en">Cambiar a Español</span>
+        </label>
+        <button id="theme-toggle"
+                class="lang-btn"
+                style="margin-left: 16px; display: flex; align-items: center; gap: 8px;">
+          <i id="theme-icon"
+             class="fa-solid fa-moon"
+             aria-hidden="true"></i>
+          <span class="lang-es"
+                id="theme-toggle-text"
+                style="display:none;">Modo Oscuro</span>
+          <span class="lang-en"
+                id="theme-toggle-text-en"
+                style="display:none;">Dark Mode</span>
+        </button>
+      </div>
+
+      <section class="hero text-center">
+        <div class="container">
+          <h1 class="lang-es">Sitios Web Simples, Limpios y Efectivos para tu Organización</h1>
+          <h1 class="lang-en">Simple, Clean, and Effective Websites for Your Organization</h1>
+
+          <p class="lang-es"><strong>Roberto Verdecia Sánchez</strong> | Desarrollador Frontend React & Diseño
+            UX/UI</p>
+          <p class="lang-en"><strong>Roberto Verdecia Sánchez</strong> | Frontend React Developer & UX/UI
+            Design</p>
+
+          <div class="tags">
+            <span class="tag highlight lang-es">⏱️ 1 a 4 Semanas Estimadas</span>
+            <span class="tag highlight lang-en">⏱️ 1 to 4 Weeks Estimated</span>
+
+            <span class="tag lang-es">100% Móvil</span>
+            <span class="tag lang-en">100% Mobile</span>
+
+            <span class="tag lang-es">Diseño Adaptable</span>
+            <span class="tag lang-en">Adaptable Design</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-white">
+        <div class="container text-center">
+          <h2 class="lang-es">Sobre Mí</h2>
+          <h2 class="lang-en">About Me</h2>
+
+          <p class="lang-es">
+            Me llamo <strong>Roberto Verdecia Sánchez</strong>. Desarrollador frontend enfocado en UX/UI y
+            diseño limpio.
+
+            Ayudo a pequeñas empresas y organizaciones a construir sitios web y aplicaciones sencillas y
+            efectivas utilizando React. Con más de 6 años de experiencia, me especializo en mejorar la
+            usabilidad, crear interfaces claras y entregar resultados fiables.
+
+            Rápido, sencillo y profesional.
+          </p>
+          <p class="lang-en">
+            My name is <strong>Roberto Verdecia Sánchez</strong>. Frontend developer focused on UX/UI and
+            clean design.
+
+            I help small businesses and organizations build simple, effective websites and applications
+            using React. With 6+ years of experience, I specialize in improving usability, creating clear
+            interfaces and delivering reliable results.
+
+            Fast, simple and professional.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <h2 class="text-center lang-es">Paquetes de Desarrollo Web</h2>
+          <h2 class="text-center lang-en">Web Development Packages</h2>
+
+          <p class="text-center lang-es"
+             style="margin-bottom: 50px;">Opciones claras diseñadas para adaptarse a las necesidades y
+            proyecciones de tu negocio.</p>
+          <p class="text-center lang-en"
+             style="margin-bottom: 50px;">Clear options designed to fit the needs and projections of your
+            business.</p>
+
+          <div class="grid-3">
+
+            <div class="card">
+              <h3 class="lang-es">Paquete Inicial</h3>
+              <h3 class="lang-en">Starter Package</h3>
+              <p class="lang-es">Ideal para comenzar tu presencia en línea de forma rápida.</p>
+              <p class="lang-en">Ideal for launching your online presence quickly.</p>
+              <div class="price">$200 - $300</div>
+
+              <ul class="lang-es">
+                <li><strong>1 a 3 páginas</strong> con diseño limpio y moderno</li>
+                <li>100% adaptado a dispositivos móviles</li>
+                <li>Información esencial: servicios, horarios, ubicación</li>
+                <li>Enlaces directos a redes y WhatsApp</li>
+              </ul>
+              <ul class="lang-en">
+                <li><strong>1 to 3 pages</strong> with a clean, modern design</li>
+                <li>100% mobile-friendly</li>
+                <li>Essential info: services, hours, location</li>
+                <li>Direct links to socials and WhatsApp</li>
+              </ul>
+
+              <div class="example-box">
+                <span class="lang-es"><strong>Ejemplo:</strong> La página web de un estudio de
+                  fotografía con una página de Inicio (portafolio), otra de Servicios/Precios y una de
+                  Contacto.</span>
+                <span class="lang-en"><strong>Example:</strong> A website for a photography studio with
+                  a Home page (portfolio), a Services/Pricing page, and a Contact page.</span>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3 class="lang-es">Paquete Estándar</h3>
+              <h3 class="lang-en">Standard Package</h3>
+              <p class="lang-es">La opción más popular para organizaciones activas y negocios
+                establecidos.</p>
+              <p class="lang-en">The most popular option for active organizations and established
+                businesses.</p>
+              <div class="price">$400 - $600</div>
+
+              <ul class="lang-es">
+                <li><strong>3 a 5 páginas</strong> bien estructuradas</li>
+                <li>Formularios interactivos para contacto y atracción de clientes (Leads)</li>
+                <li>Navegación intuitiva y diseño UI profesional</li>
+                <li>Optimización de carga y rendimiento</li>
+                <li><em>Soporte técnico opcional si lo necesita</em></li>
+                <li>Implementación de tema claro/oscuro (opcional)</li>
+                <li>Implementación de selector de idioma (opcional)</li>
+              </ul>
+              <ul class="lang-en">
+                <li><strong>3 to 5 well-structured pages</strong></li>
+                <li>Interactive forms for contact and lead generation</li>
+                <li>Intuitive navigation and professional UI design</li>
+                <li>Load and performance optimization</li>
+                <li><em>Optional technical support if needed</em></li>
+                <li>Implementation of light/dark theme (optional)</li>
+                <li>Implementation of language selector (optional)</li>
+              </ul>
+
+              <div class="example-box">
+                <span class="lang-es"><strong>Ejemplo:</strong> Sitio para una clínica dental con:
+                  Inicio, Nosotros, Tratamientos, Casos de Éxito y un Formulario para agendar
+                  consultas y captar pacientes.</span>
+                <span class="lang-en"><strong>Example:</strong> A dental clinic site featuring: Home,
+                  About Us, Treatments, Success Stories, and a Form to schedule appointments and
+                  capture patients.</span>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3 class="lang-es">Paquete Comunidad</h3>
+              <h3 class="lang-en">Community Package</h3>
+              <p class="lang-es">Para organizaciones que necesitan plataformas dinámicas, gestión de
+                usuarios y bases de datos.</p>
+              <p class="lang-en">For organizations needing dynamic platforms, user management, and
+                databases.</p>
+              <div class="price">$700 - $1000</div>
+
+              <ul class="lang-es">
+                <li><strong>5+ páginas</strong> con arquitectura robusta</li>
+                <li>Autenticación (Login) y gestión de Roles de usuario</li>
+                <li>Backend como Servicio (SaaS) integrado con <strong>Supabase</strong></li>
+                <li>UI/UX altamente personalizada y Mapas interactivos</li>
+                <li>Formularios avanzados de captación de clientes</li>
+                <li><strong>Incluye 1 mes de soporte técnico post-entrega</strong></li>
+                <li>Implementación de tema claro/oscuro (opcional)</li>
+                <li>Implementación de selector de idioma (opcional)</li>
+              </ul>
+              <ul class="lang-en">
+                <li><strong>3 to 5 pages</strong> with robust architecture</li>
+                <li>User Authentication (Login) and Role management</li>
+                <li>Backend as a Service (SaaS) integrated with <strong>Supabase</strong></li>
+                <li>Highly customized UI/UX and Interactive Maps</li>
+                <li>Advanced lead capture forms</li>
+                <li><strong>Includes 1 month of post-delivery tech support</strong></li>
+                <li>Implementation of light/dark theme (optional)</li>
+                <li>Implementation of language selector (optional)</li>
+              </ul>
+
+              <div class="example-box">
+                <span class="lang-es"><strong>Ejemplo:</strong> Plataforma para una ONG donde los
+                  usuarios inician sesión, ven un mapa interactivo de proyectos y las empresas llenan
+                  formularios avanzados para donaciones.</span>
+                <span class="lang-en"><strong>Example:</strong> A platform for an NGO where users log
+                  in, view an interactive project map, and companies fill out advanced forms for
+                  donations.</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-white">
+        <div class="container">
+          <div class="scope-alert">
+            <h3 class="lang-es">⚠️ Sobre los Tiempos de Entrega y Alcance del Proyecto</h3>
+            <h3 class="lang-en">⚠️ About Delivery Times and Project Scope</h3>
+
+            <p class="lang-es">
+              El tiempo estimado de entrega para todos los proyectos es de <strong>1 a 4 semanas</strong>,
+              el cual puede variar según la complejidad técnica del paquete elegido y la rapidez con la
+              que proveas los textos, imágenes e información requerida.<br><br>
+              <strong>Importante:</strong> Es fundamental definir todas las características antes de
+              comenzar. Cualquier adición de páginas, integraciones o funcionalidades solicitadas
+              <em>después</em> de haber aprobado el alcance inicial (Scope) impactará en el costo final y
+              ajustará la fecha de entrega del proyecto.
+            </p>
+            <p class="lang-en">
+              The estimated delivery time for all projects is <strong>1 to 4 weeks</strong>, which may
+              vary based on the technical complexity of the chosen package and how quickly you provide the
+              required texts, images, and information.<br><br>
+              <strong>Important:</strong> It is essential to define all features before starting. Any
+              addition of pages, integrations, or functionalities requested <em>after</em> the initial
+              scope has been approved will impact the final cost and adjust the project's delivery date.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <h2 class="text-center lang-es">Cómo Trabajamos Juntos</h2>
+          <h2 class="text-center lang-en">How We Work Together</h2>
+
+          <div class="grid-4"
+               style="margin-top: 50px;">
+            <div class="step">
+              <div class="step-number">1</div>
+              <h3 class="lang-es">Entender</h3>
+              <h3 class="lang-en">Understand</h3>
+              <p class="lang-es">Definimos tus objetivos, la audiencia y el alcance exacto del sitio web.
+              </p>
+              <p class="lang-en">We define your goals, audience, and the exact scope of the website.</p>
+            </div>
+            <div class="step">
+              <div class="step-number">2</div>
+              <h3 class="lang-es">Planificar</h3>
+              <h3 class="lang-en">Plan</h3>
+              <p class="lang-es">Alineamos expectativas visuales y funcionales antes de escribir código.
+              </p>
+              <p class="lang-en">We align visual and functional expectations before writing any code.</p>
+            </div>
+            <div class="step">
+              <div class="step-number">3</div>
+              <h3 class="lang-es">Construir</h3>
+              <h3 class="lang-en">Build</h3>
+              <p class="lang-es">Desarrollo la plataforma basándome estrictamente en el plan aprobado.</p>
+              <p class="lang-en">I develop the platform strictly based on the approved plan.</p>
+            </div>
+            <div class="step">
+              <div class="step-number">4</div>
+              <h3 class="lang-es">Entregar</h3>
+              <h3 class="lang-en">Deliver</h3>
+              <p class="lang-es">Publicamos el sitio para tus visitantes. Activo soporte técnico si
+                aplica.</p>
+              <p class="lang-en">We publish the site for your visitors. Active tech support if applicable.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-white text-center">
+        <div class="container">
+          <h2 class="lang-es">Hablemos</h2>
+          <h2 class="lang-en">Let's Talk</h2>
+
+          <p class="lang-es">Construyamos juntos el sitio web que tu organización necesita.</p>
+          <p class="lang-en">Let's build the website your organization needs together.</p>
+
+          <div class="contact-info">
+            <p><i class="fab fa-whatsapp"
+                 aria-hidden="true"
+                 style="color:#25d366;margin-right:8px;"></i> <a
+                 href="mailto:robertoverdeciasanchez@gmail.com">robertoverdeciasanchez@gmail.com</a></p>
+            <p><i class="fab fa-whatsapp"
+                 aria-hidden="true"
+                 style="color:#25d366;margin-right:8px;"></i> <a href="https://wa.me/5356408532"
+                 target="_blank">WhatsApp: +53 56408532</a></p>
+          </div>
+
+        </div>
+      </section>
+
+      <footer>
+        <div class="container">
+          <p>&copy; 2026 Roberto Verdecia Sánchez. <span class="lang-es">Todos los derechos
+              reservados.</span><span class="lang-en">All rights reserved.</span></p>
+        </div>
+      </footer>
+
+    </div>
+  </body>
+
+  <script>
+    // Cambio de tema claro/oscuro con FontAwesome
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    // Textos ocultos para accesibilidad
+    const themeToggleText = document.getElementById('theme-toggle-text');
+    const themeToggleTextEn = document.getElementById('theme-toggle-text-en');
+
+    function setTheme(dark) {
+      if (dark) {
+        document.body.classList.add('dark-mode');
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+        themeToggle.title = 'Modo claro';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.body.classList.remove('dark-mode');
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+        themeToggle.title = 'Modo oscuro';
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    // Inicializar tema
+    const userTheme = localStorage.getItem('theme');
+    if (userTheme === 'dark' || (!userTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      setTheme(true);
+    } else {
+      setTheme(false);
+    }
+
+    themeToggle.addEventListener('click', () => {
+      setTheme(!document.body.classList.contains('dark-mode'));
+    });
+  </script>
+
+</html>
