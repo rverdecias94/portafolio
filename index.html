@@ -23,9 +23,9 @@
            VARIABLES Y CONFIGURACIÓN GENERAL
            ========================================================= */
       :root {
-        --primary: #2563eb;
-        --primary-dark: #1d4ed8;
-        --accent: #7c3aed;
+        --primary: #92314c;
+        --primary-dark: #229682;
+        --accent: #127b68;
         --text-dark: #0f172a;
         /* Más oscuro para contraste tech */
         --text-light: #475569;
@@ -40,7 +40,7 @@
 
       /* ===================== TEMA OSCURO ===================== */
       body.dark-mode {
-        --primary: #60a5fa;
+        --primary: #b3be68;
         --primary-dark: #2563eb;
         --accent: #a78bfa;
         --text-dark: #f1f5f9;
@@ -107,6 +107,29 @@
         border-bottom: 1px solid #23293a;
       }
 
+      body.dark-mode .topbar-nav a {
+        color: rgba(241, 245, 249, 0.75);
+      }
+
+      body.dark-mode .topbar-nav a:hover {
+        color: var(--text-dark);
+        background: rgba(96, 165, 250, 0.12);
+      }
+
+      body.dark-mode .mobile-menu {
+        background: rgba(24, 30, 41, 0.98);
+        border: 1px solid #23293a;
+      }
+
+      body.dark-mode .mobile-menu a {
+        color: var(--text-dark);
+        background: rgba(96, 165, 250, 0.12);
+      }
+
+      body.dark-mode .mobile-menu-header {
+        border-bottom: 1px solid rgba(241, 245, 249, 0.12);
+      }
+
       body.dark-mode .lang-btn {
         background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
         color: var(--white);
@@ -145,6 +168,27 @@
         /* Scroll suave nativo */
       }
 
+      [hidden] {
+        display: none !important;
+      }
+
+      body.menu-open {
+        overflow: hidden;
+        touch-action: none;
+      }
+
+      .mobile-menu-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.45);
+        backdrop-filter: blur(6px);
+        z-index: 1500;
+      }
+
+      body.dark-mode .mobile-menu-overlay {
+        background: rgba(2, 6, 23, 0.6);
+      }
+
       .container {
         max-width: 1100px;
         margin: 0 auto;
@@ -163,11 +207,6 @@
         font-weight: 800;
         letter-spacing: -0.03em;
         transition: var(--ease-out);
-      }
-
-      h2:hover {
-        background-position: right center;
-        /* Movimiento del degradado */
       }
 
       h3 {
@@ -207,39 +246,200 @@
         display: inline;
       }
 
+      /* Header con nombre a la izquierda, menú hamburguesa en móvil, switches solo icono y fondo blur igual al header */
       .top-bar {
         background-color: rgba(241, 245, 249, 0.8);
         backdrop-filter: blur(12px);
-        padding: 18px 24px;
-        text-align: right;
+        padding: 28px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         position: sticky;
         top: 0;
         z-index: 1000;
         border-bottom: 1px solid rgba(0, 0, 0, 0.03);
       }
 
-      /* Botón con degradado dinámico */
-      .lang-btn {
-        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-        background-size: 150% auto;
-        color: var(--white);
-        padding: 11px 26px;
-        border-radius: 12px;
-        /* Menos redondeado, más app style */
-        cursor: pointer;
-        font-weight: 600;
-        font-size: 14px;
-        transition: var(--ease-out);
-        user-select: none;
-        display: inline-block;
-        border: none;
-        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+      .topbar-left {
+        font-weight: 800;
+        font-size: 1.15rem;
+        color: var(--primary);
+        letter-spacing: -0.01em;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        white-space: nowrap;
       }
 
-      .lang-btn:hover {
-        background-position: right center;
-        transform: translateY(-2px) scale(1.01);
-        box-shadow: 0 6px 18px rgba(124, 58, 237, 0.3);
+      .topbar-center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        padding: 0 20px;
+      }
+
+      .topbar-nav {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+
+      .topbar-nav a {
+        text-decoration: none;
+        color: var(--text-light);
+        font-weight: 600;
+        font-size: 0.98rem;
+        letter-spacing: -0.01em;
+        transition: var(--ease-out);
+        padding: 10px 10px;
+        border-radius: 12px;
+      }
+
+      .topbar-nav a:hover {
+        color: var(--text-dark);
+        background: rgba(37, 99, 235, 0.06);
+      }
+
+      .topbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .icon-switch {
+        background: rgba(241, 245, 249, 0.8);
+        backdrop-filter: blur(12px);
+        border: none;
+        border-radius: 50%;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        color: var(--primary-dark);
+        cursor: pointer;
+        transition: background 0.2s;
+        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.04);
+      }
+
+      .icon-switch:active,
+      .icon-switch:focus {
+        outline: none;
+        background: rgba(226, 232, 240, 0.9);
+      }
+
+      .icon-switch:focus-visible,
+      .topbar-nav a:focus-visible,
+      .cta:focus-visible,
+      input:focus-visible,
+      select:focus-visible,
+      textarea:focus-visible {
+        outline: 3px solid rgba(37, 99, 235, 0.35);
+        outline-offset: 2px;
+      }
+
+      .lang-btn {
+        display: none !important;
+      }
+
+      .hamburger {
+        display: none;
+        background: rgba(241, 245, 249, 0.8);
+        border: none;
+        border-radius: 10px;
+        padding: 10px 12px;
+        font-size: 1.5rem;
+        color: var(--primary-dark);
+        cursor: pointer;
+        margin-left: 10px;
+        backdrop-filter: blur(12px);
+      }
+
+      @media (max-width: 768px) {
+        .top-bar {
+          padding: 18px 16px;
+        }
+
+        .topbar-center {
+          display: none;
+        }
+
+        .topbar-actions {
+          display: none;
+        }
+
+        .hamburger {
+          display: flex;
+        }
+
+        .mobile-menu {
+          display: flex;
+          flex-direction: column;
+          position: fixed;
+          top: 0;
+          right: 0;
+          height: 100vh;
+          width: min(420px, 80vw);
+          background: rgba(241, 245, 249, 0.98);
+          border-radius: 24px 0 0 24px;
+          box-shadow: 0 12px 48px rgba(2, 6, 23, 0.18);
+          padding: calc(18px + env(safe-area-inset-top, 0px)) 18px calc(18px + env(safe-area-inset-bottom, 0px)) 18px;
+          z-index: 1600;
+          gap: 12px;
+          min-width: 0;
+          align-items: stretch;
+          overflow-y: auto;
+        }
+
+        .mobile-menu-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          padding-bottom: 8px;
+          border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+        }
+
+        .mobile-menu-title {
+          font-weight: 900;
+          letter-spacing: -0.02em;
+          color: var(--text-dark);
+        }
+
+        .mobile-menu .icon-switch {
+          margin: 0;
+        }
+
+        .mobile-menu a {
+          text-decoration: none;
+          color: var(--text-dark);
+          font-weight: 700;
+          padding: 12px 12px;
+          border-radius: 12px;
+          background: rgba(37, 99, 235, 0.04);
+        }
+
+        .mobile-menu a:active {
+          background: rgba(37, 99, 235, 0.08);
+        }
+
+        .mobile-menu-actions {
+          margin-top: 6px;
+          display: flex;
+          gap: 10px;
+          justify-content: flex-end;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .mobile-menu {
+          width: 100vw;
+          border-radius: 0;
+        }
       }
 
       /* =========================================================
@@ -248,6 +448,7 @@
       section {
         padding: 120px 0;
         position: relative;
+        scroll-margin-top: 120px;
       }
 
       .bg-white {
@@ -283,11 +484,47 @@
 
       /* Hero con patrón de fondo */
       .hero {
-        padding: 160px 20px;
+        padding: 80px 20px;
         background-color: var(--bg-light);
         background-image: radial-gradient(#e2e8f0 1.1px, transparent 1.1px), radial-gradient(#e2e8f0 1.1px, var(--bg-light) 1.1px);
         background-size: 44px 44px;
         background-position: 0 0, 22px 22px;
+      }
+
+      .cta-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-top: 26px;
+      }
+
+      .cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 14px 18px;
+        border-radius: 14px;
+        border: 1px solid rgba(37, 99, 235, 0.12);
+        text-decoration: none;
+        font-weight: 800;
+        color: var(--text-dark);
+        background: rgba(255, 255, 255, 0.6);
+        transition: var(--ease-out);
+        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.06);
+      }
+
+      .cta.primary {
+        color: var(--white);
+        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+        border-color: transparent;
+      }
+
+      .cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px rgba(37, 99, 235, 0.12);
       }
 
       .tags {
@@ -521,52 +758,134 @@
 
       /* Contacto estilo botones grandes */
       .contact-info {
-        margin-top: 60px;
+        margin-top: 40px;
         font-size: 1.2rem;
         display: flex;
         gap: 20px;
         justify-content: center;
         flex-wrap: wrap;
+        flex-direction: row;
       }
 
       .contact-info p {
         margin: 0;
         background: var(--white);
-        padding: 20px 35px;
+        padding: 16px 18px;
         border-radius: 16px;
         border: 1px solid #e2e8f0;
         transition: var(--ease-out);
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
-      }
-
-      .contact-info p:hover {
-        border-color: var(--primary);
-        transform: translateY(-4px);
-        box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.1);
+        max-width: 100vw;
+        overflow-wrap: anywhere;
+        word-break: break-all;
+        display: flex;
+        align-items: center;
       }
 
       .contact-info a {
         color: var(--text-dark);
         text-decoration: none;
         font-weight: 600;
+        word-break: break-all;
       }
 
-      .contact-info p:hover a {
-        color: var(--primary);
+      .contact-form {
+        max-width: 720px;
+        margin: 35px auto 0 auto;
+        text-align: left;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      label {
+        font-weight: 700;
+        color: var(--text-dark);
+        font-size: 0.98rem;
+      }
+
+      input,
+      select,
+      textarea {
+        font-family: var(--font-main);
+        font-size: 1rem;
+        padding: 14px 14px;
+        border-radius: 14px;
+        border: 1px solid #e2e8f0;
+        background: var(--white);
+        color: var(--text-dark);
+        transition: var(--ease-out);
+      }
+
+      textarea {
+        min-height: 140px;
+        resize: vertical;
+      }
+
+      .form-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 14px;
+      }
+
+      .hint {
+        font-size: 0.95rem;
+        color: var(--text-light);
+        margin: 10px 0 0 0;
+      }
+
+      @media (max-width: 768px) {
+        .contact-info {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 12px;
+        }
+
+        .contact-info p {
+          font-size: 1rem;
+          padding: 14px 8px;
+          word-break: break-all;
+        }
+
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
       }
 
       /* Footer */
       footer {
-        background: var(--text-dark);
-        color: rgba(255, 255, 255, 0.7);
+        background: var(--white);
+        color: var(--text-dark);
         text-align: center;
         padding: 50px 20px;
+        border-top: 1px solid rgba(0, 0, 0, 0.03);
+        backdrop-filter: blur(12px);
       }
 
       footer p {
-        color: rgba(255, 255, 255, 0.5);
+        color: var(--text-light);
         margin: 0;
         font-size: 0.95rem;
+      }
+
+      body.dark-mode footer {
+        background: #181e29;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      body.dark-mode footer p {
+        color: rgba(255, 255, 255, 0.5);
       }
 
       /* Responsive */
@@ -584,12 +903,20 @@
         }
 
         .hero {
-          padding: 120px 20px;
+          padding: 10px 20px;
         }
 
         .contact-info {
           flex-direction: column;
           align-items: center;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+          animation: none !important;
+          scroll-behavior: auto !important;
         }
       }
     </style>
@@ -602,29 +929,86 @@
 
     <div class="page-wrapper">
 
-      <div class="top-bar"
-           style="display: flex; align-items: center; justify-content: end;">
-        <label for="lang-toggle"
-               class="lang-btn">
-          <span class="lang-es">Switch to English</span>
-          <span class="lang-en">Cambiar a Español</span>
-        </label>
-        <button id="theme-toggle"
-                class="lang-btn"
-                style="margin-left: 16px; display: flex; align-items: center; gap: 8px;">
-          <i id="theme-icon"
-             class="fa-solid fa-moon"
-             aria-hidden="true"></i>
-          <span class="lang-es"
-                id="theme-toggle-text"
-                style="display:none;">Modo Oscuro</span>
-          <span class="lang-en"
-                id="theme-toggle-text-en"
-                style="display:none;">Dark Mode</span>
+      <div class="top-bar">
+        <div class="topbar-left">
+          Roberto Verdecia Sánchez
+        </div>
+        <div class="topbar-center">
+          <ul class="topbar-nav"
+              style="display: flex;justify-content: center;">
+            <li><a href="#home"><span class="lang-es">Inicio</span><span class="lang-en">Home</span></a></li>
+            <li><a href="#services"><span class="lang-es">Servicios</span><span class="lang-en">Services</span></a></li>
+            <li><a href="#portfolio"><span class="lang-es">Casos</span><span class="lang-en">Work</span></a></li>
+            <li><a href="#process"><span class="lang-es">Proceso</span><span class="lang-en">Process</span></a></li>
+            <li><a href="#resources"><span class="lang-es">Recursos</span><span class="lang-en">Resources</span></a>
+            </li>
+            <li><a href="#faq"><span class="lang-es">FAQ</span><span class="lang-en">FAQ</span></a></li>
+            <li><a href="#contact"><span class="lang-es">Contacto</span><span class="lang-en">Contact</span></a></li>
+          </ul>
+        </div>
+        <div class="topbar-actions">
+          <button id="lang-switch"
+                  class="icon-switch"
+                  title="Cambiar idioma">
+            <i class="fa-solid fa-language"></i>
+          </button>
+          <button id="theme-toggle"
+                  class="icon-switch"
+                  title="Cambiar tema">
+            <i id="theme-icon"
+               class="fa-solid fa-moon"
+               aria-hidden="true"></i>
+          </button>
+        </div>
+        <button class="hamburger"
+                id="hamburger-menu"
+                aria-label="Abrir menú">
+          <i class="fa-solid fa-bars"></i>
         </button>
       </div>
+      <div id="mobile-menu-overlay"
+           class="mobile-menu-overlay"
+           hidden></div>
+      <div id="mobile-menu"
+           class="mobile-menu"
+           hidden>
+        <div class="mobile-menu-header">
+          <div class="mobile-menu-title"><span class="lang-es">Menú</span><span class="lang-en">Menu</span></div>
+          <button id="mobile-menu-close"
+                  class="icon-switch"
+                  title="Cerrar"
+                  aria-label="Cerrar">
+            <i class="fa-solid fa-xmark"
+               aria-hidden="true"></i>
+          </button>
+        </div>
+        <a href="#home"><span class="lang-es">Inicio</span><span class="lang-en">Home</span></a>
+        <a href="#services"><span class="lang-es">Servicios</span><span class="lang-en">Services</span></a>
+        <a href="#portfolio"><span class="lang-es">Casos</span><span class="lang-en">Work</span></a>
+        <a href="#process"><span class="lang-es">Proceso</span><span class="lang-en">Process</span></a>
+        <a href="#resources"><span class="lang-es">Recursos</span><span class="lang-en">Resources</span></a>
+        <a href="#faq"><span class="lang-es">Preguntas frecuentes</span><span class="lang-en">FAQ</span></a>
+        <a href="#contact"><span class="lang-es">Contacto</span><span class="lang-en">Contact</span></a>
+        <div class="mobile-menu-actions">
+          <button id="lang-switch-mobile"
+                  class="icon-switch"
+                  title="Cambiar idioma"
+                  aria-label="Cambiar idioma">
+            <i class="fa-solid fa-language"></i>
+          </button>
+          <button id="theme-toggle-mobile"
+                  class="icon-switch"
+                  title="Cambiar tema"
+                  aria-label="Cambiar tema">
+            <i id="theme-icon-mobile"
+               class="fa-solid fa-moon"
+               aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
 
-      <section class="hero text-center">
+      <section id="home"
+               class="hero text-center">
         <div class="container">
           <h1 class="lang-es">Sitios Web Simples, Limpios y Efectivos para tu Organización</h1>
           <h1 class="lang-en">Simple, Clean, and Effective Websites for Your Organization</h1>
@@ -633,6 +1017,17 @@
             UX/UI</p>
           <p class="lang-en"><strong>Roberto Verdecia Sánchez</strong> | Frontend React Developer & UX/UI
             Design</p>
+
+          <div class="cta-row">
+            <a class="cta primary"
+               href="#services"><i class="fa-solid fa-briefcase"
+                 aria-hidden="true"></i><span class="lang-es">Ver servicios</span><span class="lang-en">View
+                services</span></a>
+            <a class="cta"
+               href="#contact"><i class="fa-solid fa-paper-plane"
+                 aria-hidden="true"></i><span class="lang-es">Pedir propuesta</span><span class="lang-en">Request a
+                quote</span></a>
+          </div>
 
           <div class="tags">
             <span class="tag highlight lang-es">⏱️ 1 a 4 Semanas Estimadas</span>
@@ -647,35 +1042,46 @@
         </div>
       </section>
 
-      <section class="bg-white">
+      <section id="about"
+               class="bg-white">
         <div class="container text-center">
           <h2 class="lang-es">Sobre Mí</h2>
           <h2 class="lang-en">About Me</h2>
 
           <p class="lang-es">
-            Me llamo <strong>Roberto Verdecia Sánchez</strong>. Desarrollador frontend enfocado en UX/UI y
-            diseño limpio.
+            <strong>
+              Roberto Verdecia Sánchez
+            </strong>
+            desarrollador Frontend | Especialista UX/UI
 
-            Ayudo a pequeñas empresas y organizaciones a construir sitios web y aplicaciones sencillas y
-            efectivas utilizando React. Con más de 6 años de experiencia, me especializo en mejorar la
-            usabilidad, crear interfaces claras y entregar resultados fiables.
+            Diseño y desarrollo de interfaces digitales enfocadas en claridad, usabilidad y precisión visual. Con
+            más de 6 años de experiencia en entornos profesionales, he contribuido al desarrollo de plataformas de
+            datos y sistemas CRM, trabajando en equipo estructurado y productos reales.
 
-            Rápido, sencillo y profesional.
+            Mi trabajo se centra en el diseño limpio, experiencia de usuario pensada y ejecución consistente. Busco
+            entregar soluciones que no solo sean visuales refinadas, sino también prácticas y fácil de usar.
+
+            Profesionalismo, atención al detalle y fiabilidad definen la manera en la que abordamos cada proyecto.
           </p>
           <p class="lang-en">
-            My name is <strong>Roberto Verdecia Sánchez</strong>. Frontend developer focused on UX/UI and
-            clean design.
+            <strong>
+              Roberto Verdecia Sánchez
+            </strong>
+            frontend Developer | UX/UI Specialist
 
-            I help small businesses and organizations build simple, effective websites and applications
-            using React. With 6+ years of experience, I specialize in improving usability, creating clear
-            interfaces and delivering reliable results.
+            I design and build digital interfaces focused on clarity, usability and visual precision. With more than 6
+            years of experience in professional environments, I have contributed to the development of data platforms
+            and CRM systems, working closely within structured teams and real-world products.
 
-            Fast, simple and professional.
+            My work emphasizes clean design, thoughtful user experience and consistent execution. I aim to deliver
+            solutions that are not only visually refined, but also practical and easy to use.
+
+            Professionalism, attention to detail and reliability define the way I approach every project.
           </p>
         </div>
       </section>
 
-      <section>
+      <section id="services">
         <div class="container">
           <h2 class="text-center lang-es">Paquetes de Desarrollo Web</h2>
           <h2 class="text-center lang-en">Web Development Packages</h2>
@@ -827,7 +1233,92 @@
         </div>
       </section>
 
-      <section>
+      <section id="portfolio">
+        <div class="container">
+          <h2 class="text-center lang-es">Casos de Éxito</h2>
+          <h2 class="text-center lang-en">Representative Work (Anonymized)</h2>
+
+          <p class="text-center lang-es"
+             style="margin-bottom: 50px;">No comparto pantallas ni nombres por acuerdos de confidencialidad (NDA). En su
+            lugar, muestro el tipo de problema y el resultado que se suele conseguir.</p>
+          <p class="text-center lang-en"
+             style="margin-bottom: 50px;">I can’t share screenshots or client names due to NDAs. Instead, I show the
+            type of problem and the kind of results we typically achieve.</p>
+
+          <div class="grid-3">
+            <div class="card">
+              <h3 class="lang-es">Dashboard de CRM (B2B)</h3>
+              <h3 class="lang-en">CRM Dashboard (B2B)</h3>
+              <p class="lang-es">Rediseño de interfaz para reducir fricción y acelerar tareas repetitivas.</p>
+              <p class="lang-en">UI redesign to reduce friction and speed up repetitive workflows.</p>
+              <ul class="lang-es">
+                <li>Jerarquía visual y componentes consistentes</li>
+                <li>Mejoras de accesibilidad y estados</li>
+                <li>Optimización de tablas, filtros y formularios</li>
+              </ul>
+              <ul class="lang-en">
+                <li>Clear visual hierarchy and consistent components</li>
+                <li>Accessibility and state improvements</li>
+                <li>Optimized tables, filters and forms</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3 class="lang-es">Plataforma de Datos</h3>
+              <h3 class="lang-en">Data Platform UI</h3>
+              <p class="lang-es">Interfaz enfocada en claridad y rendimiento para vistas con alta densidad de
+                información.</p>
+              <p class="lang-en">Clarity-first UI and performance improvements for high-density screens.</p>
+              <ul class="lang-es">
+                <li>Diseño responsive para analítica</li>
+                <li>Patrones reutilizables y escalables</li>
+                <li>Mejoras de carga percibida</li>
+              </ul>
+              <ul class="lang-en">
+                <li>Responsive analytics layout</li>
+                <li>Reusable and scalable patterns</li>
+                <li>Better perceived performance</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3 class="lang-es">Sitio de Servicios (Lead Gen)</h3>
+              <h3 class="lang-en">Service Website (Lead Gen)</h3>
+              <p class="lang-es">Estructura orientada a conversión: propuesta de valor, servicios, confianza y contacto.
+              </p>
+              <p class="lang-en">Conversion-focused structure: value proposition, services, trust, and contact.</p>
+              <ul class="lang-es">
+                <li>Secciones estándar de captación (FAQ, CTA, contacto)</li>
+                <li>Copy claro y jerarquía de contenido</li>
+                <li>Microinteracciones con intención</li>
+              </ul>
+              <ul class="lang-en">
+                <li>Standard lead-gen sections (FAQ, CTA, contact)</li>
+                <li>Clear copy and content hierarchy</li>
+                <li>Intentional microinteractions</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="testimonials"
+               class="bg-white">
+        <div class="container text-center">
+          <h2 class="lang-es">Testimonios y Referencias</h2>
+          <h2 class="lang-en">Testimonials & References</h2>
+          <p class="lang-es">Por confidencialidad, muchas veces no puedo publicar testimonios ni pantallas. Si lo
+            deseas, puedo compartir referencias verificables por privado.</p>
+          <p class="lang-en">Due to confidentiality, I often can’t publish testimonials or screenshots. If you want, I
+            can share verifiable references privately.</p>
+          <div class="cta-row">
+            <a class="cta primary"
+               href="#contact"><i class="fa-solid fa-comment-dots"
+                 aria-hidden="true"></i><span class="lang-es">Solicitar referencias</span><span class="lang-en">Request
+                references</span></a>
+          </div>
+        </div>
+      </section>
+
+      <section id="process">
         <div class="container">
           <h2 class="text-center lang-es">Cómo Trabajamos Juntos</h2>
           <h2 class="text-center lang-en">How We Work Together</h2>
@@ -870,7 +1361,93 @@
         </div>
       </section>
 
-      <section class="bg-white text-center">
+      <section id="resources"
+               class="bg-white">
+        <div class="container">
+          <h2 class="text-center lang-es">Recursos</h2>
+          <h2 class="text-center lang-en">Resources</h2>
+
+          <p class="text-center lang-es"
+             style="margin-bottom: 50px;">Mini guías rápidas para ayudarte a tomar mejores decisiones antes de invertir
+            en tu web.</p>
+          <p class="text-center lang-en"
+             style="margin-bottom: 50px;">Short practical guides to help you make better decisions before investing in
+            your website.</p>
+
+          <div class="grid-3">
+            <div class="card">
+              <h3 class="lang-es">Checklist de Contenido</h3>
+              <h3 class="lang-en">Content Checklist</h3>
+              <p class="lang-es">Lo que necesitas tener listo para avanzar rápido (textos, fotos, datos, CTA).</p>
+              <p class="lang-en">What you should have ready to move fast (copy, photos, business info, CTAs).</p>
+              <div class="example-box">
+                <span class="lang-es"><strong>Tip:</strong> Define tu oferta, tu público y un CTA principal antes de
+                  diseñar.</span>
+                <span class="lang-en"><strong>Tip:</strong> Define your offer, audience and one primary CTA before
+                  design.</span>
+              </div>
+            </div>
+            <div class="card">
+              <h3 class="lang-es">Estructura que Convierte</h3>
+              <h3 class="lang-en">High-Converting Structure</h3>
+              <p class="lang-es">Orden recomendado: propuesta de valor, servicios, prueba social, FAQ y contacto.</p>
+              <p class="lang-en">Recommended order: value proposition, services, social proof, FAQ and contact.</p>
+              <div class="example-box">
+                <span class="lang-es"><strong>Tip:</strong> Un visitante decide en segundos. Que el “qué haces” sea
+                  obvio.</span>
+                <span class="lang-en"><strong>Tip:</strong> Visitors decide in seconds. Make “what you do”
+                  obvious.</span>
+              </div>
+            </div>
+            <div class="card">
+              <h3 class="lang-es">Rendimiento Básico</h3>
+              <h3 class="lang-en">Performance Basics</h3>
+              <p class="lang-es">Buenas prácticas: tipografías, imágenes ligeras, JS mínimo, y diseño móvil primero.</p>
+              <p class="lang-en">Best practices: fonts, lightweight images, minimal JS, and mobile-first design.</p>
+              <div class="example-box">
+                <span class="lang-es"><strong>Tip:</strong> Si una web carga lento en móvil, estás perdiendo
+                  leads.</span>
+                <span class="lang-en"><strong>Tip:</strong> If your site is slow on mobile, you’re losing leads.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq">
+        <div class="container">
+          <h2 class="text-center lang-es">Preguntas Frecuentes</h2>
+          <h2 class="text-center lang-en">Frequently Asked Questions</h2>
+
+          <div class="grid-3">
+            <div class="card">
+              <h3 class="lang-es">¿Qué necesitas de mí?</h3>
+              <h3 class="lang-en">What do you need from me?</h3>
+              <p class="lang-es">Textos, datos del negocio, y si tienes: fotos, logo y enlaces. Si no, te ayudo a
+                estructurarlo.</p>
+              <p class="lang-en">Copy, business info, and if available: photos, logo and links. If not, I’ll help
+                structure it.</p>
+            </div>
+            <div class="card">
+              <h3 class="lang-es">¿Incluye hosting o dominio?</h3>
+              <h3 class="lang-en">Does it include hosting or domain?</h3>
+              <p class="lang-es">Puedo asesorarte y ayudarte a configurarlo. Se cotiza según proveedor y necesidades.
+              </p>
+              <p class="lang-en">I can guide you and help set it up. Pricing depends on provider and needs.</p>
+            </div>
+            <div class="card">
+              <h3 class="lang-es">¿Se puede escalar luego?</h3>
+              <h3 class="lang-en">Can it scale later?</h3>
+              <p class="lang-es">Sí. Diseñamos una base sólida: estructura, componentes y contenido listos para crecer.
+              </p>
+              <p class="lang-en">Yes. We build a solid base: structure, components and content ready to grow.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact"
+               class="bg-white text-center">
         <div class="container">
           <h2 class="lang-es">Hablemos</h2>
           <h2 class="lang-en">Let's Talk</h2>
@@ -879,9 +1456,9 @@
           <p class="lang-en">Let's build the website your organization needs together.</p>
 
           <div class="contact-info">
-            <p><i class="fab fa-whatsapp"
+            <p><i class="fa-solid fa-envelope"
                  aria-hidden="true"
-                 style="color:#25d366;margin-right:8px;"></i> <a
+                 style="color:#2563eb;margin-right:8px;"></i> <a
                  href="mailto:robertoverdeciasanchez@gmail.com">robertoverdeciasanchez@gmail.com</a></p>
             <p><i class="fab fa-whatsapp"
                  aria-hidden="true"
@@ -889,6 +1466,74 @@
                  target="_blank">WhatsApp: +53 56408532</a></p>
           </div>
 
+          <form class="contact-form"
+                id="lead-form">
+            <div class="form-grid">
+              <div class="field">
+                <label for="lead-name"><span class="lang-es">Nombre</span><span class="lang-en">Name</span></label>
+                <input id="lead-name"
+                       name="name"
+                       autocomplete="name"
+                       required>
+              </div>
+              <div class="field">
+                <label for="lead-email"><span class="lang-es">Email</span><span class="lang-en">Email</span></label>
+                <input id="lead-email"
+                       name="email"
+                       type="email"
+                       autocomplete="email"
+                       required>
+              </div>
+              <div class="field">
+                <label for="lead-service"><span class="lang-es">Servicio</span><span
+                        class="lang-en">Service</span></label>
+                <select id="lead-service"
+                        name="service"
+                        required>
+                  <option value="">Selecciona / Select</option>
+                  <option value="Starter">Starter</option>
+                  <option value="Standard">Standard</option>
+                  <option value="Community">Community</option>
+                  <option value="Other">Otro / Other</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="lead-budget"><span class="lang-es">Presupuesto estimado</span><span
+                        class="lang-en">Estimated budget</span></label>
+                <select id="lead-budget"
+                        name="budget"
+                        required>
+                  <option value="">Selecciona / Select</option>
+                  <option value="200-300">$200–$300</option>
+                  <option value="400-600">$400–$600</option>
+                  <option value="700-1000">$700–$1000</option>
+                  <option value="1000+">$1000+</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field"
+                 style="margin-top:14px;">
+              <label for="lead-message"><span class="lang-es">Mensaje</span><span class="lang-en">Message</span></label>
+              <textarea id="lead-message"
+                        name="message"
+                        required
+                        placeholder="Cuéntame qué necesitas… / Tell me what you need…"></textarea>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit"
+                      class="cta primary"><i class="fa-solid fa-paper-plane"
+                   aria-hidden="true"></i><span class="lang-es">Enviar</span><span class="lang-en">Send</span></button>
+              <a class="cta"
+                 href="https://wa.me/5356408532"
+                 target="_blank"><i class="fab fa-whatsapp"
+                   aria-hidden="true"></i><span class="lang-es">Escribir por WhatsApp</span><span
+                      class="lang-en">Message on WhatsApp</span></a>
+            </div>
+            <p class="hint lang-es">Al enviar, se abrirá tu cliente de correo con el mensaje prellenado.</p>
+            <p class="hint lang-en">On submit, your email client will open with a prefilled message.</p>
+          </form>
         </div>
       </section>
 
@@ -903,39 +1548,154 @@
   </body>
 
   <script>
-    // Cambio de tema claro/oscuro con FontAwesome
+    const hamburger = document.getElementById('hamburger-menu');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuClose = document.getElementById('mobile-menu-close');
+    const langToggle = document.getElementById('lang-toggle');
+    const langSwitch = document.getElementById('lang-switch');
+    const langSwitchMobile = document.getElementById('lang-switch-mobile');
     const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleMobile = document.getElementById('theme-toggle-mobile');
     const themeIcon = document.getElementById('theme-icon');
-    // Textos ocultos para accesibilidad
-    const themeToggleText = document.getElementById('theme-toggle-text');
-    const themeToggleTextEn = document.getElementById('theme-toggle-text-en');
+    const themeIconMobile = document.getElementById('theme-icon-mobile');
 
-    function setTheme(dark) {
-      if (dark) {
-        document.body.classList.add('dark-mode');
-        themeIcon.classList.remove('fa-moon');
-        themeIcon.classList.add('fa-sun');
-        themeToggle.title = 'Modo claro';
-        localStorage.setItem('theme', 'dark');
+    function getUiLang() {
+      return (document.documentElement.getAttribute('lang') || 'es').toLowerCase().startsWith('en') ? 'en' : 'es';
+    }
+
+    function setMenuOpen(open) {
+      const isOpen = Boolean(open);
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+      if (isOpen) {
+        mobileMenu.removeAttribute('hidden');
+        mobileMenuOverlay.removeAttribute('hidden');
+        document.body.classList.add('menu-open');
       } else {
-        document.body.classList.remove('dark-mode');
-        themeIcon.classList.remove('fa-sun');
-        themeIcon.classList.add('fa-moon');
-        themeToggle.title = 'Modo oscuro';
-        localStorage.setItem('theme', 'light');
+        mobileMenu.setAttribute('hidden', '');
+        mobileMenuOverlay.setAttribute('hidden', '');
+        document.body.classList.remove('menu-open');
       }
     }
 
-    // Inicializar tema
-    const userTheme = localStorage.getItem('theme');
-    if (userTheme === 'dark' || (!userTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      setTheme(true);
-    } else {
-      setTheme(false);
+    function setTheme(dark) {
+      const isDark = Boolean(dark);
+      document.body.classList.toggle('dark-mode', isDark);
+
+      const iconPairs = [
+        [themeIcon, isDark],
+        [themeIconMobile, isDark],
+      ];
+
+      iconPairs.forEach(([el, darkOn]) => {
+        if (!el) return;
+        el.classList.toggle('fa-moon', !darkOn);
+        el.classList.toggle('fa-sun', darkOn);
+      });
+
+      const uiLang = getUiLang();
+      const label = uiLang === 'en'
+        ? (isDark ? 'Light mode' : 'Dark mode')
+        : (isDark ? 'Modo claro' : 'Modo oscuro');
+      themeToggle.title = label;
+      themeToggleMobile.title = label;
+      themeToggle.setAttribute('aria-label', label);
+      themeToggleMobile.setAttribute('aria-label', label);
+
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
     }
 
-    themeToggle.addEventListener('click', () => {
+    function setLangEnglish(english) {
+      const isEn = Boolean(english);
+      langToggle.checked = isEn;
+      document.documentElement.setAttribute('lang', isEn ? 'en' : 'es');
+      localStorage.setItem('lang', isEn ? 'en' : 'es');
+
+      const label = isEn ? 'Switch to Spanish' : 'Cambiar a Inglés';
+      langSwitch.title = label;
+      langSwitchMobile.title = label;
+      langSwitch.setAttribute('aria-label', label);
+      langSwitchMobile.setAttribute('aria-label', label);
+
+      const closeLabel = isEn ? 'Close menu' : 'Cerrar menú';
+      mobileMenuClose.title = closeLabel;
+      mobileMenuClose.setAttribute('aria-label', closeLabel);
+
+      const isDark = document.body.classList.contains('dark-mode');
+      setTheme(isDark);
+    }
+
+    const savedLang = localStorage.getItem('lang');
+    if (savedLang === 'en') setLangEnglish(true);
+    if (savedLang === 'es') setLangEnglish(false);
+    if (savedLang !== 'en' && savedLang !== 'es') setLangEnglish(langToggle.checked);
+
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setTheme(savedTheme ? savedTheme === 'dark' : prefersDark);
+
+    setMenuOpen(false);
+
+    hamburger.addEventListener('click', () => {
+      const open = mobileMenu.hasAttribute('hidden');
+      setMenuOpen(open);
+    });
+
+    mobileMenuClose.addEventListener('click', () => setMenuOpen(false));
+    mobileMenuOverlay.addEventListener('click', () => setMenuOpen(false));
+
+    document.addEventListener('click', (e) => {
+      if (mobileMenu.hasAttribute('hidden')) return;
+      if (mobileMenu.contains(e.target)) return;
+      if (hamburger.contains(e.target)) return;
+      setMenuOpen(false);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      if (mobileMenu.hasAttribute('hidden')) return;
+      setMenuOpen(false);
+    });
+
+    mobileMenu.addEventListener('click', (e) => {
+      const el = e.target.closest('a');
+      if (!el) return;
+      setMenuOpen(false);
+    });
+
+    langSwitch.addEventListener('click', () => setLangEnglish(!langToggle.checked));
+    langSwitchMobile.addEventListener('click', () => {
+      setLangEnglish(!langToggle.checked);
+      setMenuOpen(false);
+    });
+
+    themeToggle.addEventListener('click', () => setTheme(!document.body.classList.contains('dark-mode')));
+    themeToggleMobile.addEventListener('click', () => {
       setTheme(!document.body.classList.contains('dark-mode'));
+      setMenuOpen(false);
+    });
+
+    const leadForm = document.getElementById('lead-form');
+    leadForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('lead-name').value.trim();
+      const email = document.getElementById('lead-email').value.trim();
+      const service = document.getElementById('lead-service').value.trim();
+      const budget = document.getElementById('lead-budget').value.trim();
+      const message = document.getElementById('lead-message').value.trim();
+
+      const lang = langToggle.checked ? 'en' : 'es';
+      const subject = lang === 'en'
+        ? `Website request (${service || 'Service'})`
+        : `Solicitud de sitio web (${service || 'Servicio'})`;
+
+      const body = lang === 'en'
+        ? `Name: ${name}\nEmail: ${email}\nService: ${service}\nBudget: ${budget}\n\nMessage:\n${message}`
+        : `Nombre: ${name}\nEmail: ${email}\nServicio: ${service}\nPresupuesto: ${budget}\n\nMensaje:\n${message}`;
+
+      const mailto = `mailto:robertoverdeciasanchez@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailto;
     });
   </script>
 
