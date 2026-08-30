@@ -1,39 +1,10 @@
-# Sitio estático: sin paso de build, se publica la carpeta public/.
+# Sitio estático: publicar public/ sin build ni post-procesamiento pesado.
 [build]
   publish = "public"
-  command = ""
 
-# Fija Node a una versión LTS estable (evita que Netlify use una muy reciente).
 [build.environment]
-  NODE_VERSION = "20"
+  # Sin package.json: evita instalar Python/Ruby/Go/Node en noble-new-builds.
+  NETLIFY_SKIP_DEPENDENCY_INSTALL = "true"
 
-# Cabeceras de seguridad para todo el sitio.
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "SAMEORIGIN"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
-
-# El HTML siempre se revalida (para servir la última versión al instante).
-[[headers]]
-  for = "/index.html"
-  [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
-
-# Los assets llevan versión (?v=N) en el HTML, así que se pueden cachear a largo plazo.
-[[headers]]
-  for = "/css/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/js/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/assets/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+[build.processing]
+  skip_processing = true
