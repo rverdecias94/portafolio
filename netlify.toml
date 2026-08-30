@@ -1,10 +1,15 @@
 # Sitio estático: publicar public/ sin build ni post-procesamiento pesado.
 [build]
   publish = "public"
+  command = ""
 
 [build.environment]
-  # Sin package.json: evita instalar Python/Ruby/Go/Node en noble-new-builds.
+  # Sin package.json: evita instalar runtimes en noble-new-builds.
   NETLIFY_SKIP_DEPENDENCY_INSTALL = "true"
+  NODE_VERSION = "20"
 
 [build.processing]
   skip_processing = true
+
+[build.processing.html]
+  pretty_urls = false
