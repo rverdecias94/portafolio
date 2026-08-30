@@ -650,9 +650,102 @@ p {
 
 .quote-layout {
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 28px;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 440px);
+  gap: 24px;
   align-items: start;
+}
+
+.quote-layout .board-quote {
+  position: sticky;
+  top: 88px;
+  max-height: calc(100vh - 104px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 18px 20px 16px;
+}
+
+.board-head {
+  flex-shrink: 0;
+  margin-bottom: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--board-rule);
+}
+
+.board-head h3 {
+  margin-bottom: 6px;
+}
+
+.board-total {
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.board-total [data-range] {
+  color: var(--board-accent);
+}
+
+.board-total small {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.4;
+  opacity: 0.75;
+}
+
+.board-lines {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px 12px;
+  margin: 0;
+  padding: 6px 0 4px;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--board-accent) 45%, transparent) transparent;
+}
+
+.board-lines li {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 7px 0;
+  border-bottom: 1px dashed var(--board-rule);
+  font-size: 0.82rem;
+  line-height: 1.3;
+}
+
+.board-lines li > span:first-child {
+  font-size: 0.72rem;
+  opacity: 0.72;
+  line-height: 1.25;
+}
+
+.board-lines li > span:last-child {
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.quote-layout .board-quote .board-actions {
+  flex-shrink: 0;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--board-rule);
+}
+
+.quote-layout .board-quote .board-interview-note {
+  flex-shrink: 0;
+}
+
+.quote-layout .board-quote > .btn {
+  flex-shrink: 0;
+  margin-top: 12px;
 }
 
 #quote-form {
@@ -679,8 +772,9 @@ p {
 }
 
 .field > label,
-.field > .label-row {
-  min-height: 2.6em;
+.field > .label-row,
+.field > .field-label {
+  min-height: auto;
   display: flex;
   align-items: flex-start;
   margin: 0;
@@ -708,11 +802,6 @@ p {
 .label-row label {
   flex: 1;
   min-height: 0;
-}
-
-.quote-layout .board {
-  position: sticky;
-  top: 96px;
 }
 
 .hero.is-ready h1,
@@ -935,7 +1024,9 @@ footer {
   color: var(--text);
 }
 
-#field-pages .field-help {
+#field-pages .field-help,
+#field-seo .field-help,
+#field-maintenance .field-help {
   order: 0;
   margin: 0 0 4px;
 }
@@ -994,6 +1085,37 @@ footer {
   line-height: 1.4;
 }
 
+.rc-note {
+  font-size: 0.8rem;
+  color: color-mix(in srgb, var(--muted) 85%, var(--text));
+  line-height: 1.45;
+  margin-top: 2px;
+  padding-top: 6px;
+  border-top: 1px dashed color-mix(in srgb, var(--edge) 80%, transparent);
+}
+
+.radio-cards--cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.radio-cards--cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.radio-cards--cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+@media (max-width: 900px) {
+  .radio-cards--cols-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .radio-cards--cols-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 .radio-card:has(input:checked) {
   border-color: var(--graphite);
   background: color-mix(in srgb, var(--mint) 30%, var(--surface));
@@ -1030,6 +1152,20 @@ footer {
   background: transparent;
   color: var(--board-text);
   border-color: color-mix(in srgb, var(--board-text) 34%, transparent);
+}
+
+.board-quote .btn-primary {
+  background: var(--board-accent);
+  color: var(--graphite);
+  border-color: transparent;
+}
+
+body.theme-obsidian .board-quote .btn-primary {
+  color: var(--brass-ink);
+}
+
+.board-quote .btn-primary:hover {
+  background: color-mix(in srgb, var(--board-accent) 88%, #fff);
 }
 
 /* Maintenance value list + featured plan */
@@ -1139,8 +1275,14 @@ footer {
     grid-template-columns: 1fr;
   }
 
-  .quote-layout .board {
+  .quote-layout .board-quote {
     position: static;
+    max-height: none;
+  }
+
+  .board-lines {
+    grid-template-columns: 1fr;
+    overflow: visible;
   }
 
   .work-grid {

@@ -10,7 +10,8 @@ const {
   formatUsd,
   isInterviewType,
   quoteMessage,
-  rangeUsd,
+  priceUsd,
+  roundUpTo50,
 } = window.RVQuote;
 
 const { initThemeLang } = window.RVLang;
@@ -68,49 +69,7 @@ function initMenu() {
     if (e.target.closest("a")) setMenuOpen(false);
   });
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      setMenuOpen(false);
-      closeSeoTip();
-    }
-  });
-}
-
-function closeSeoTip() {
-  const tip = document.getElementById("seo-tip");
-  const btn = document.getElementById("seo-tip-btn");
-  if (!tip || !btn) return;
-  tip.hidden = true;
-  btn.setAttribute("aria-expanded", "false");
-}
-
-function initSeoTip() {
-  const tip = document.getElementById("seo-tip");
-  const btn = document.getElementById("seo-tip-btn");
-  const wrap = document.getElementById("seo-tip-wrap");
-  if (!tip || !btn || !wrap) return;
-
-  const open = () => {
-    tip.hidden = false;
-    btn.setAttribute("aria-expanded", "true");
-  };
-  const toggle = () => {
-    const next = tip.hidden;
-    tip.hidden = !next;
-    btn.setAttribute("aria-expanded", String(next));
-  };
-
-  btn.addEventListener("click", (e) => {
-    e.preventDefault();
-    toggle();
-  });
-  wrap.addEventListener("mouseenter", open);
-  wrap.addEventListener("mouseleave", closeSeoTip);
-  btn.addEventListener("focus", open);
-  wrap.addEventListener("focusout", (e) => {
-    if (!wrap.contains(e.relatedTarget)) closeSeoTip();
-  });
-  document.addEventListener("click", (e) => {
-    if (!wrap.contains(e.target)) closeSeoTip();
+    if (e.key === "Escape") setMenuOpen(false);
   });
 }
 
@@ -174,43 +133,38 @@ function initMotion() {
   items.forEach((el) => io.observe(el));
 }
 
-let rangeRaf = 0;
-let lastLow = null;
-let lastHigh = null;
+let priceRaf = 0;
+let lastPrice = null;
 
-function formatRange(low, high) {
-  return `${formatUsd(low)} – ${formatUsd(high)} USD`;
+function formatPrice(price) {
+  return `${formatUsd(price)} USD`;
 }
 
-function animateRange(low, high) {
-  if (prefersReducedMotion() || lastLow === null) {
-    rangeEl.textContent = formatRange(low, high);
-    lastLow = low;
-    lastHigh = high;
+function animatePrice(price) {
+  if (prefersReducedMotion() || lastPrice === null) {
+    rangeEl.textContent = formatPrice(price);
+    lastPrice = price;
     return;
   }
-  if (low === lastLow && high === lastHigh) return;
+  if (price === lastPrice) return;
 
-  const startLow = lastLow;
-  const startHigh = lastHigh;
+  const start = lastPrice;
   const t0 = performance.now();
   const dur = 480;
-  cancelAnimationFrame(rangeRaf);
+  cancelAnimationFrame(priceRaf);
 
   const step = (now) => {
     const p = Math.min(1, (now - t0) / dur);
     const e = 1 - Math.pow(1 - p, 3);
-    const cl = Math.round(startLow + (low - startLow) * e);
-    const ch = Math.round(startHigh + (high - startHigh) * e);
-    rangeEl.textContent = formatRange(cl, ch);
+    const current = roundUpTo50(Math.round(start + (price - start) * e));
+    rangeEl.textContent = formatPrice(current);
     if (p < 1) {
-      rangeRaf = requestAnimationFrame(step);
+      priceRaf = requestAnimationFrame(step);
     } else {
-      lastLow = low;
-      lastHigh = high;
+      lastPrice = price;
     }
   };
-  rangeRaf = requestAnimationFrame(step);
+  priceRaf = requestAnimationFrame(step);
 }
 
 const { getLang, t } = initThemeLang({
@@ -221,7 +175,6 @@ const { getLang, t } = initThemeLang({
 });
 
 initMenu();
-initSeoTip();
 updateThemeIcons();
 
 document.querySelectorAll("[data-theme-toggle]").forEach((btn) => {
@@ -238,8 +191,6 @@ const interviewNote = document.getElementById("quote-note-interview");
 const interviewEl = document.getElementById("quote-interview");
 const extras = document.getElementById("quote-extras");
 const pagesField = document.getElementById("field-pages");
-const typeDesc = document.getElementById("type-desc");
-const imagesHelp = document.getElementById("images-help");
 const quoteWa = document.getElementById("quote-wa");
 const boardWa = document.getElementById("board-wa");
 const boardActions = document.getElementById("board-actions");
@@ -267,11 +218,6 @@ function syncSendLinks(quote) {
   if (boardSendMail) boardSendMail.href = mailtoHref(quote);
 }
 
-function updateFieldHelp(quote) {
-  if (typeDesc) typeDesc.textContent = t(`q.type.${quote.type}.desc`);
-  if (imagesHelp) imagesHelp.textContent = t(`q.images.help.${quote.images}`);
-}
-
 bindQuote(form, {
   onChange(quote) {
     try {
@@ -291,7 +237,6 @@ function paintQuote(quote) {
     if (boardWa) boardWa.hidden = !interview;
     if (boardActions) boardActions.hidden = interview;
     if (pagesField) pagesField.hidden = quote.type === "landing";
-    updateFieldHelp(quote);
     syncSendLinks(quote);
 
     if (interview) {
@@ -305,19 +250,18 @@ function paintQuote(quote) {
 
     if (interviewNote) interviewNote.hidden = true;
 
-    const range = rangeUsd(quote);
+    const price = priceUsd(quote);
     renderBoard(board, quote, t);
     chalkWrite(board);
 
-    if (range) {
-      const changed = range.low !== lastLow || range.high !== lastHigh;
-      animateRange(range.low, range.high);
+    if (price != null) {
+      const changed = price !== lastPrice;
+      animatePrice(price);
       if (changed) pulseRange(rangeEl);
     } else {
-      cancelAnimationFrame(rangeRaf);
+      cancelAnimationFrame(priceRaf);
       rangeEl.textContent = t("quote_empty");
-      lastLow = null;
-      lastHigh = null;
+      lastPrice = null;
     }
     noteEl.textContent = t("quote_not_final");
 }

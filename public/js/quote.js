@@ -1,13 +1,10 @@
 /**
- * Cotizador: rango estimado, no precio final.
+ * Cotizador: estimado redondeado (intervalos de $50), no precio final.
  * Dominio y hosting no entran en el número.
  */
 
 const QUOTE_RATES = {
-  base: 100,
-  extraPage: 40,
-  landing: 80,
-  forms: { 0: 0, 1: 20, 2: 50 },
+  forms: { none: 0, contact: 20, multi: 50 },
   admin: { none: 0, basic: 80, advanced: 180 },
   seo: { none: 0, basic: 20, local: 50, advanced: 100 },
   designScratch: 50,
@@ -15,23 +12,29 @@ const QUOTE_RATES = {
   dualTheme: 10,
   multilingual: 10,
   images: 20,
-  rangeLow: 0.88,
-  rangeHigh: 1.12,
 };
 
-// Presets de páginas → número aproximado para el cálculo.
-const PAGE_PRESETS = { one: 1, basic: 3, standard: 5, wide: 8 };
+/** Página de contacto o promoción: una sola página enfocada (por debajo de un sitio de 3 páginas) */
+const LANDING_SUBTOTAL_USD = 120;
+
+/** Precio base por tamaño de sitio web (antes de addons y redondeo) */
+const PAGE_TIER_USD = {
+  one: 120,
+  basic: 220,
+  standard: 340,
+  wide: 480,
+};
 
 const DEFAULT_QUOTE = {
   type: "web",
   pages: "basic",
-  forms: 1,
+  forms: "contact",
   admin: "none",
   seo: "basic",
   design: "preset",
   identity: "defined",
   theme: "light",
-  languages: 1,
+  languages: "one",
   images: "process",
   maintenance: "light",
 };
@@ -40,44 +43,49 @@ function isInterviewType(type) {
   return type === "system" || type === "shop";
 }
 
-function presetPages(key) {
-  return PAGE_PRESETS[key] ?? 3;
+function roundUpTo50(amount) {
+  return Math.ceil(amount / 50) * 50;
 }
 
-function midpointUsd(input) {
+function siteSubtotalUsd(q) {
+  if (q.type === "landing") return LANDING_SUBTOTAL_USD;
+  return PAGE_TIER_USD[q.pages] ?? PAGE_TIER_USD.basic;
+}
+
+function rawTotalUsd(input) {
   const q = { ...DEFAULT_QUOTE, ...input };
   if (isInterviewType(q.type)) return null;
 
-  const pages = q.type === "landing" ? 1 : presetPages(q.pages);
-  const extraPages = Math.max(0, pages - 1);
-  const formKey = q.forms >= 2 ? 2 : q.forms >= 1 ? 1 : 0;
-  const landingFee = q.type === "landing" ? QUOTE_RATES.landing : 0;
   const imagesFee = q.images === "process" ? QUOTE_RATES.images : 0;
 
-  const mid =
-    QUOTE_RATES.base +
-    extraPages * QUOTE_RATES.extraPage +
-    landingFee +
-    QUOTE_RATES.forms[formKey] +
+  return (
+    siteSubtotalUsd(q) +
+    (QUOTE_RATES.forms[q.forms] ?? 0) +
     (QUOTE_RATES.admin[q.admin] ?? 0) +
     (QUOTE_RATES.seo[q.seo] ?? 0) +
     (q.design === "scratch" ? QUOTE_RATES.designScratch : 0) +
     (q.identity === "create" ? QUOTE_RATES.identityCreate : 0) +
     (q.theme === "both" ? QUOTE_RATES.dualTheme : 0) +
-    (Number(q.languages) >= 2 ? QUOTE_RATES.multilingual : 0) +
-    imagesFee;
-
-  return Math.round(mid);
+    (q.languages === "multi" ? QUOTE_RATES.multilingual : 0) +
+    imagesFee
+  );
 }
 
+function priceUsd(input) {
+  const raw = rawTotalUsd(input);
+  if (raw == null) return null;
+  return roundUpTo50(raw);
+}
+
+/** @deprecated Usar priceUsd; mantiene compatibilidad temporal */
 function rangeUsd(input) {
-  const mid = midpointUsd(input);
-  if (mid == null) return null;
-  return {
-    mid,
-    low: Math.round(mid * QUOTE_RATES.rangeLow),
-    high: Math.round(mid * QUOTE_RATES.rangeHigh),
-  };
+  const price = priceUsd(input);
+  if (price == null) return null;
+  return { mid: price, low: price, high: price };
+}
+
+function midpointUsd(input) {
+  return priceUsd(input);
 }
 
 function readQuoteForm(form) {
@@ -92,13 +100,13 @@ function readQuoteForm(form) {
   return {
     type: get("type") || "web",
     pages: get("pages") || "basic",
-    forms: Number(get("forms") || 0),
+    forms: get("forms") || "contact",
     admin: get("admin") || "none",
-    seo: get("seo") || "none",
+    seo: get("seo") || "basic",
     design: get("design") || "preset",
     identity: get("identity") || "defined",
     theme: get("theme") || "light",
-    languages: Number(get("languages") || 1),
+    languages: get("languages") || "one",
     images: get("images") || "process",
     maintenance: get("maintenance") || "light",
   };
@@ -111,13 +119,13 @@ function breakdownLines(input, t) {
   return [
     [t("q.type"), t(`q.type.${q.type}`)],
     [t("q.pages"), pagesLabel],
-    [t("q.forms"), String(q.forms >= 2 ? "2+" : q.forms)],
+    [t("q.forms"), t(`q.forms.${q.forms}`)],
     [t("q.admin"), t(`q.admin.${q.admin}`)],
     [t("q.seo"), t(`q.seo.${q.seo}`)],
     [t("q.design"), t(`q.design.${q.design}`)],
     [t("q.identity"), t(`q.identity.${q.identity}`)],
     [t("q.theme"), t(`q.theme.${q.theme}`)],
-    [t("q.languages"), Number(q.languages) >= 2 ? t("q.languages.multi") : t("q.languages.one")],
+    [t("q.languages"), t(`q.languages.${q.languages}`)],
     [t("q.images"), t(`q.images.${q.images}`)],
     [t("q.maintenance"), t(`q.maintenance.${q.maintenance}`)],
   ];
@@ -147,14 +155,14 @@ function quoteMessage(input, t, lang) {
       : `Hola Roberto, necesito un proyecto de ${kind}. Quiero revisar la viabilidad por WhatsApp.`;
   }
 
-  const range = rangeUsd(q);
-  const rangeLine = range
+  const price = priceUsd(q);
+  const priceLine = price
     ? lang === "en"
-      ? `Estimated range: ${formatUsd(range.low)} – ${formatUsd(range.high)} USD (not a final price). Domain and hosting are separate.`
-      : `Rango estimado: ${formatUsd(range.low)} – ${formatUsd(range.high)} USD (no es precio final). Dominio y hosting van aparte.`
+      ? `Estimated total: ${formatUsd(price)} USD (rounded up; I review and confirm). Domain and hosting are separate.`
+      : `Total estimado: ${formatUsd(price)} USD (redondeado al alza; yo lo reviso y confirmo). Dominio y hosting van aparte.`
     : "";
 
-  return `${header}\n\n${lines}\n\n${rangeLine}`;
+  return `${header}\n\n${lines}\n\n${priceLine}`;
 }
 
 function bindQuote(form, { onChange }) {
@@ -167,10 +175,14 @@ function bindQuote(form, { onChange }) {
 
 window.RVQuote = {
   QUOTE_RATES,
-  PAGE_PRESETS,
+  PAGE_TIER_USD,
+  LANDING_SUBTOTAL_USD,
   DEFAULT_QUOTE,
   isInterviewType,
-  presetPages,
+  siteSubtotalUsd,
+  roundUpTo50,
+  rawTotalUsd,
+  priceUsd,
   midpointUsd,
   rangeUsd,
   readQuoteForm,

@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=6">
+    <link rel="stylesheet" href="css/styles.css?v=10">
   </head>
   <body>
     <!--
@@ -78,10 +78,10 @@
             <p data-i18n="hero_board_note">Esto se actualiza de verdad en el cotizador.</p>
             <ul>
               <li><span data-i18n="hb_pages">Páginas</span><span>3</span></li>
-              <li><span data-i18n="hb_forms">Formularios</span><span>1</span></li>
+              <li><span data-i18n="hb_forms">Formularios</span><span data-i18n="hb_forms_v">Contacto</span></li>
               <li><span data-i18n="hb_seo">Aparecer en Google</span><span data-i18n="hb_seo_v">Esencial</span></li>
             </ul>
-            <div class="total">$211 – $269 USD</div>
+            <div class="total">$300 USD</div>
           </aside>
         </div>
       </section>
@@ -214,19 +214,46 @@
       <section class="band" id="quote">
         <div class="wrap">
           <h2 data-i18n="quote_h">Arma tu cotización</h2>
-          <p class="lede" data-i18n="quote_p">Marca lo que necesitas. El rango se escribe en la pizarra al instante. No es precio final: yo lo reviso y te confirmo.</p>
+          <p class="lede" data-i18n="quote_p">Marca lo que necesitas. Lee cada opción: abajo explico ventajas, límites e implicaciones. El total en la pizarra se redondea al alza en intervalos de $50.</p>
           <div class="quote-layout">
             <form id="quote-form">
               <div class="fields">
-                <div class="field field-full">
-                  <label for="type" data-i18n="q.type">Tipo de proyecto</label>
-                  <select id="type" name="type">
-                    <option value="web" data-i18n="q.type.web">Sitio Web</option>
-                    <option value="landing" data-i18n="q.type.landing">Página de aterrizaje (Landing)</option>
-                    <option value="shop" data-i18n="q.type.shop">Tienda online</option>
-                    <option value="system" data-i18n="q.type.system">CRM / SaaS / Sistema de gestión</option>
-                  </select>
-                  <p class="field-help" id="type-desc" data-type-desc>Un sitio de varias secciones para presentar tu negocio: quién eres, qué ofreces y cómo contactarte.</p>
+                <div class="field field-full" id="field-type">
+                  <span class="field-label" data-i18n="q.type">Tipo de proyecto</span>
+                  <div class="radio-cards radio-cards--cols-2" role="radiogroup" aria-labelledby="field-type">
+                    <label class="radio-card">
+                      <input type="radio" name="type" value="web" checked>
+                      <span class="rc-body">
+                        <span class="rc-title" data-i18n="q.type.web">Sitio Web</span>
+                        <span class="rc-desc" data-i18n="q.type.web.desc">Un sitio de varias secciones para presentar tu negocio.</span>
+                        <span class="rc-note" data-i18n="q.type.web.note">Varias secciones conectadas: presentas tu negocio con claridad sin límites de una sola pantalla.</span>
+                      </span>
+                    </label>
+                    <label class="radio-card">
+                      <input type="radio" name="type" value="landing">
+                      <span class="rc-body">
+                        <span class="rc-title" data-i18n="q.type.landing">Página de contacto o promoción</span>
+                        <span class="rc-desc" data-i18n="q.type.landing.desc">Una sola página con un solo objetivo.</span>
+                        <span class="rc-note" data-i18n="q.type.landing.note">Ideal para campañas o un solo llamado a la acción. No sustituye un sitio completo si necesitas muchas secciones.</span>
+                      </span>
+                    </label>
+                    <label class="radio-card">
+                      <input type="radio" name="type" value="shop">
+                      <span class="rc-body">
+                        <span class="rc-title" data-i18n="q.type.shop">Tienda online</span>
+                        <span class="rc-desc" data-i18n="q.type.shop.desc">Catálogo, pedidos y pagos en línea.</span>
+                        <span class="rc-note" data-i18n="q.type.shop.note">Por complejidad no se cotiza aquí: lo analizamos por WhatsApp antes de comprometer precio o plazo.</span>
+                      </span>
+                    </label>
+                    <label class="radio-card">
+                      <input type="radio" name="type" value="system">
+                      <span class="rc-body">
+                        <span class="rc-title" data-i18n="q.type.system">CRM / SaaS / Sistema de gestión</span>
+                        <span class="rc-desc" data-i18n="q.type.system.desc">Paneles, usuarios y datos a medida.</span>
+                        <span class="rc-note" data-i18n="q.type.system.note">No entra en el cotizador automático: revisamos viabilidad, alcance y costo real por WhatsApp.</span>
+                      </span>
+                    </label>
+                  </div>
                 </div>
                 <div class="interview field-full" id="quote-interview" hidden>
                   <p data-i18n="quote_interview">Un CRM, SaaS, sistema de gestión o tienda online no se cotiza a ciegas. Escríbeme por WhatsApp y analizamos si el proyecto es viable.</p>
@@ -237,12 +264,13 @@
                     <div class="field field-full" id="field-pages">
                       <span class="field-label" data-i18n="q.pages">¿Qué tan grande es tu sitio?</span>
                       <p class="field-help" data-i18n="q.pages.help">Elige lo que más se parezca a lo que necesitas. Son secciones dentro del mismo sitio.</p>
-                      <div class="radio-cards" role="radiogroup" aria-labelledby="field-pages">
+                      <div class="radio-cards radio-cards--cols-2" role="radiogroup" aria-labelledby="field-pages">
                         <label class="radio-card">
                           <input type="radio" name="pages" value="one">
                           <span class="rc-body">
                             <span class="rc-title" data-i18n="q.pages.one">Todo en una página</span>
                             <span class="rc-desc" data-i18n="q.pages.one.desc">Una sola página con todo. Ideal para empezar.</span>
+                            <span class="rc-note" data-i18n="q.pages.one.note">Más barato al inicio, pero Google prefiere separar temas en páginas distintas. Productos o servicios mezclados en inicio suelen posicionar peor.</span>
                           </span>
                         </label>
                         <label class="radio-card">
@@ -250,6 +278,7 @@
                           <span class="rc-body">
                             <span class="rc-title" data-i18n="q.pages.basic">Sitio básico · unas 3 páginas</span>
                             <span class="rc-desc" data-i18n="q.pages.basic.desc">Inicio, Servicios y Contacto.</span>
+                            <span class="rc-note" data-i18n="q.pages.basic.note">Buen equilibrio para un negocio local: cada tema tiene su espacio y Google entiende mejor tu oferta.</span>
                           </span>
                         </label>
                         <label class="radio-card">
@@ -257,6 +286,7 @@
                           <span class="rc-body">
                             <span class="rc-title" data-i18n="q.pages.standard">Sitio completo · unas 5 páginas</span>
                             <span class="rc-desc" data-i18n="q.pages.standard.desc">Inicio, Sobre ti, Servicios, Galería y Contacto.</span>
+                            <span class="rc-note" data-i18n="q.pages.standard.note">Ideal si quieres galería, equipo o varios servicios sin mezclarlo todo en inicio. Mejor para SEO que una sola página.</span>
                           </span>
                         </label>
                         <label class="radio-card">
@@ -264,111 +294,247 @@
                           <span class="rc-body">
                             <span class="rc-title" data-i18n="q.pages.wide">Sitio amplio · 7 a 8 páginas</span>
                             <span class="rc-desc" data-i18n="q.pages.wide.desc">Lo anterior más blog, preguntas o precios.</span>
+                            <span class="rc-note" data-i18n="q.pages.wide.note">Para catálogo amplio, blog o muchas secciones. Cada página dedicada ayuda en búsquedas específicas (ej. productos fuera de inicio).</span>
                           </span>
                         </label>
                       </div>
                     </div>
-                    <div class="field">
-                      <label for="forms" data-i18n="q.forms">Formularios</label>
-                      <select id="forms" name="forms">
-                        <option value="0">0</option>
-                        <option value="1" selected>1</option>
-                        <option value="2">2+</option>
-                      </select>
-                      <p class="field-help" data-i18n="q.forms.help">Un formulario recoge datos de tus clientes: contacto, reservas o pedidos. Si dudas, con 1 suele bastar.</p>
-                    </div>
-                    <div class="field">
-                      <label for="admin" data-i18n="q.admin">Administración del sitio</label>
-                      <select id="admin" name="admin">
-                        <option value="none" selected data-i18n="q.admin.none">No la necesito</option>
-                        <option value="basic" data-i18n="q.admin.basic">Básica: editar textos e imágenes</option>
-                        <option value="advanced" data-i18n="q.admin.advanced">Avanzada: productos, publicaciones o usuarios</option>
-                      </select>
-                      <p class="field-help" data-i18n="q.admin.help">¿Quieres poder editar el contenido tú mismo, sin depender de mí?</p>
-                    </div>
-                    <div class="field" id="seo-tip-wrap">
-                      <div class="label-row">
-                        <label for="seo" data-i18n="q.seo">Aparecer en Google (SEO)</label>
-                        <button type="button" class="tip-btn" id="seo-tip-btn" aria-expanded="false" aria-controls="seo-tip" data-i18n-aria="q.seo.tip_aria">
-                          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 10v7M12 7.2h.01"/></svg>
-                        </button>
+                    <div class="field field-full" id="field-forms">
+                      <span class="field-label" data-i18n="q.forms">Formularios</span>
+                      <div class="radio-cards radio-cards--cols-3" role="radiogroup" aria-labelledby="field-forms">
+                        <label class="radio-card">
+                          <input type="radio" name="forms" value="none">
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.forms.none">Sin formulario</span>
+                            <span class="rc-desc" data-i18n="q.forms.none.desc">Solo WhatsApp, teléfono o correo visibles.</span>
+                            <span class="rc-note" data-i18n="q.forms.none.note">Más simple y barato, pero tú recibes los mensajes fuera del sitio.</span>
+                          </span>
+                        </label>
+                        <label class="radio-card">
+                          <input type="radio" name="forms" value="contact" checked>
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.forms.contact">Formulario de contacto</span>
+                            <span class="rc-desc" data-i18n="q.forms.contact.desc">Nombre, correo y mensaje en tu web.</span>
+                            <span class="rc-note" data-i18n="q.forms.contact.note">La opción habitual: el cliente te escribe sin salir de tu sitio.</span>
+                          </span>
+                        </label>
+                        <label class="radio-card">
+                          <input type="radio" name="forms" value="multi">
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.forms.multi">Varios formularios</span>
+                            <span class="rc-desc" data-i18n="q.forms.multi.desc">Contacto, reservas, pedidos u otros flujos.</span>
+                            <span class="rc-note" data-i18n="q.forms.multi.note">Cada formulario extra implica validación, correos y pruebas. Solo si realmente los necesitas.</span>
+                          </span>
+                        </label>
                       </div>
-                      <div class="tip-pop" id="seo-tip" role="tooltip" hidden>
-                        <p data-i18n="q.seo.tip_what">SEO es cómo Google te encuentra cuando alguien busca lo que ofreces. Sin eso, tu web existe, pero casi nadie llega desde el buscador.</p>
-                        <ul>
-                          <li data-i18n="q.seo.tip_none">Sin SEO: no preparo el sitio para buscadores.</li>
-                          <li data-i18n="q.seo.tip_basic">Esencial: títulos, descripción y lo mínimo para que Google te indexe.</li>
-                          <li data-i18n="q.seo.tip_local">Local: además, te oriento para que te hallen en tu ciudad o barrio.</li>
-                          <li data-i18n="q.seo.tip_advanced">Completo: estructura, velocidad y contenido para competir con otros negocios.</li>
-                        </ul>
+                    </div>
+                    <div class="field field-full" id="field-admin">
+                      <span class="field-label" data-i18n="q.admin">Administración del sitio</span>
+                      <div class="radio-cards radio-cards--cols-3" role="radiogroup" aria-labelledby="field-admin">
+                        <label class="radio-card">
+                          <input type="radio" name="admin" value="none" checked>
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.admin.none">No la necesito</span>
+                            <span class="rc-desc" data-i18n="q.admin.none.desc">Yo actualizo el contenido cuando lo pides.</span>
+                            <span class="rc-note" data-i18n="q.admin.none.note">Cada cambio se cotiza aparte. Funciona si el sitio cambia poco.</span>
+                          </span>
+                        </label>
+                        <label class="radio-card">
+                          <input type="radio" name="admin" value="basic">
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.admin.basic">Básica: editar textos e imágenes</span>
+                            <span class="rc-desc" data-i18n="q.admin.basic.desc">Panel sencillo para textos y fotos.</span>
+                            <span class="rc-note" data-i18n="q.admin.basic.note">Editas tú sin depender de mí. Ideal para negocios que actualizan contenido con frecuencia.</span>
+                          </span>
+                        </label>
+                        <label class="radio-card">
+                          <input type="radio" name="admin" value="advanced">
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.admin.advanced">Avanzada: productos, publicaciones o usuarios</span>
+                            <span class="rc-desc" data-i18n="q.admin.advanced.desc">Gestión de catálogo, blog o cuentas.</span>
+                            <span class="rc-note" data-i18n="q.admin.advanced.note">Más complejo y costoso. Solo si necesitas gestionar mucho contenido o usuarios.</span>
+                          </span>
+                        </label>
                       </div>
-                      <select id="seo" name="seo">
-                        <option value="none" data-i18n="q.seo.none">Sin SEO (no te buscan en Google)</option>
-                        <option value="basic" selected data-i18n="q.seo.basic">Esencial (títulos y descripción)</option>
-                        <option value="local" data-i18n="q.seo.local">Local (que te hallen en tu ciudad)</option>
-                        <option value="advanced" data-i18n="q.seo.advanced">Completo (para competir)</option>
-                      </select>
                     </div>
-                    <div class="field">
-                      <label for="design" data-i18n="q.design">Diseño</label>
-                      <select id="design" name="design">
-                        <option value="preset" selected data-i18n="q.design.preset">Predefinido / plantilla</option>
-                        <option value="scratch" data-i18n="q.design.scratch">Desde cero</option>
-                      </select>
-                      <p class="field-help" data-i18n="q.design.help">Predefinido parte de una plantilla cuidada; desde cero es un diseño único para ti.</p>
+                    <div class="field field-full" id="field-seo">
+                      <span class="field-label" data-i18n="q.seo">Aparecer en Google (SEO)</span>
+                      <p class="field-help" data-i18n="q.seo.help">SEO es cómo Google te encuentra. Sin preparación, tu web existe pero casi nadie llega desde el buscador.</p>
+                      <div class="radio-cards radio-cards--cols-3" role="radiogroup" aria-labelledby="field-seo">
+                        <label class="radio-card">
+                          <input type="radio" name="seo" value="basic" checked>
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.seo.basic">Esencial</span>
+                            <span class="rc-desc" data-i18n="q.seo.basic.desc">Títulos y descripción en cada página.</span>
+                            <span class="rc-note" data-i18n="q.seo.basic.note">Lo mínimo para que Google indexe tu sitio. No compite por palabras difíciles.</span>
+                          </span>
+                        </label>
+                        <label class="radio-card">
+                          <input type="radio" name="seo" value="local">
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.seo.local">Local</span>
+                            <span class="rc-desc" data-i18n="q.seo.local.desc">Enfocado a tu ciudad o zona.</span>
+                            <span class="rc-note" data-i18n="q.seo.local.note">Mejor si tu negocio atiende en un área concreta. Google prioriza resultados locales.</span>
+                          </span>
+                        </label>
+                        <label class="radio-card">
+                          <input type="radio" name="seo" value="advanced">
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.seo.advanced">Completo</span>
+                            <span class="rc-desc" data-i18n="q.seo.advanced.desc">Estructura, velocidad y contenido.</span>
+                            <span class="rc-note" data-i18n="q.seo.advanced.note">Para competir en tu sector. Productos o servicios en páginas dedicadas rinden mejor que mezclarlos en inicio.</span>
+                          </span>
+                        </label>
+                      </div>
                     </div>
-                    <div class="field">
-                      <label for="identity" data-i18n="q.identity">Identidad (logo y colores)</label>
-                      <select id="identity" name="identity">
-                        <option value="defined" selected data-i18n="q.identity.defined">Ya la tengo</option>
-                        <option value="create" data-i18n="q.identity.create">Hay que crearla</option>
-                      </select>
-                      <p class="field-help" data-i18n="q.identity.help">¿Tienes logo y colores de marca, o los creamos?</p>
+                    <div class="field field-full" id="field-design">
+                      <span class="field-label" data-i18n="q.design">Diseño</span>
+                      <div class="radio-cards radio-cards--cols-2" role="radiogroup" aria-labelledby="field-design">
+                        <label class="radio-card">
+                          <input type="radio" name="design" value="preset" checked>
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.design.preset">Predefinido / plantilla</span>
+                            <span class="rc-desc" data-i18n="q.design.preset.desc">Parte de una plantilla cuidada y adaptable.</span>
+                            <span class="rc-note" data-i18n="q.design.preset.note">Arranca más rápido y cuesta menos. El resultado sigue siendo profesional.</span>
+                          </span>
+                        </label>
+                        <label class="radio-card">
+                          <input type="radio" name="design" value="scratch">
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.design.scratch">Desde cero</span>
+                            <span class="rc-desc" data-i18n="q.design.scratch.desc">Diseño único para tu marca.</span>
+                            <span class="rc-note" data-i18n="q.design.scratch.note">Más tiempo y precio. Vale si quieres una apariencia que nadie más tenga.</span>
+                          </span>
+                        </label>
+                      </div>
                     </div>
-                    <div class="field">
-                      <label for="theme" data-i18n="q.theme">Tema del sitio</label>
-                      <select id="theme" name="theme">
-                        <option value="light" selected data-i18n="q.theme.light">Solo claro</option>
-                        <option value="both" data-i18n="q.theme.both">Claro y oscuro</option>
-                      </select>
-                      <p class="field-help" data-i18n="q.theme.help">¿Quieres que tu web ofrezca modo claro y también modo oscuro?</p>
+                    <div class="field field-full" id="field-identity">
+                      <span class="field-label" data-i18n="q.identity">Identidad (logo y colores)</span>
+                      <div class="radio-cards radio-cards--cols-2" role="radiogroup" aria-labelledby="field-identity">
+                        <label class="radio-card">
+                          <input type="radio" name="identity" value="defined" checked>
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.identity.defined">Ya la tengo</span>
+                            <span class="rc-desc" data-i18n="q.identity.defined.desc">Logo y colores listos para usar.</span>
+                            <span class="rc-note" data-i18n="q.identity.defined.note">Sin costo extra si ya tienes logo y paleta de marca.</span>
+                          </span>
+                        </label>
+                        <label class="radio-card">
+                          <input type="radio" name="identity" value="create">
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.identity.create">Hay que crearla</span>
+                            <span class="rc-desc" data-i18n="q.identity.create.desc">Diseño de logo y colores básicos.</span>
+                            <span class="rc-note" data-i18n="q.identity.create.note">Incluye trabajo de marca básica para que tu sitio se vea coherente.</span>
+                          </span>
+                        </label>
+                      </div>
                     </div>
-                    <div class="field">
-                      <label for="languages" data-i18n="q.languages">Idiomas</label>
-                      <select id="languages" name="languages">
-                        <option value="1" selected data-i18n="q.languages.one">Uno</option>
-                        <option value="2" data-i18n="q.languages.multi">Dos o más</option>
-                      </select>
-                      <p class="field-help" data-i18n="q.languages.help">¿Tu sitio debe estar en más de un idioma?</p>
+                    <div class="field field-full" id="field-theme">
+                      <span class="field-label" data-i18n="q.theme">Tema del sitio</span>
+                      <div class="radio-cards radio-cards--cols-2" role="radiogroup" aria-labelledby="field-theme">
+                        <label class="radio-card">
+                          <input type="radio" name="theme" value="light" checked>
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.theme.light">Solo claro</span>
+                            <span class="rc-desc" data-i18n="q.theme.light.desc">Una sola apariencia clara.</span>
+                            <span class="rc-note" data-i18n="q.theme.light.note">Una sola apariencia; suficiente para muchos negocios.</span>
+                          </span>
+                        </label>
+                        <label class="radio-card">
+                          <input type="radio" name="theme" value="both">
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.theme.both">Claro y oscuro</span>
+                            <span class="rc-desc" data-i18n="q.theme.both.desc">El visitante alterna modo claro u oscuro.</span>
+                            <span class="rc-note" data-i18n="q.theme.both.note">Comodidad visual para cada visitante y un sitio que se ve bien de día y de noche.</span>
+                          </span>
+                        </label>
+                      </div>
                     </div>
-                    <div class="field field-full">
-                      <label for="images" data-i18n="q.images">¿Tus imágenes están listas?</label>
-                      <select id="images" name="images">
-                        <option value="ready" data-i18n="q.images.ready">Sí, ya están listas</option>
-                        <option value="process" selected data-i18n="q.images.process">No, prepáralas tú</option>
-                      </select>
-                      <p class="field-help" id="images-help" data-images-help>Yo ajusto formato, tamaño y peso para que carguen rápido y se vean nítidas (trabajo adicional).</p>
+                    <div class="field field-full" id="field-languages">
+                      <span class="field-label" data-i18n="q.languages">Idiomas</span>
+                      <div class="radio-cards radio-cards--cols-2" role="radiogroup" aria-labelledby="field-languages">
+                        <label class="radio-card">
+                          <input type="radio" name="languages" value="one" checked>
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.languages.one">Uno</span>
+                            <span class="rc-desc" data-i18n="q.languages.one.desc">Un solo idioma en todo el sitio.</span>
+                            <span class="rc-note" data-i18n="q.languages.one.note">Un solo idioma, mensaje claro y directo para tu audiencia principal.</span>
+                          </span>
+                        </label>
+                        <label class="radio-card">
+                          <input type="radio" name="languages" value="multi">
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.languages.multi">Dos o más</span>
+                            <span class="rc-desc" data-i18n="q.languages.multi.desc">Todo el texto en varios idiomas.</span>
+                            <span class="rc-note" data-i18n="q.languages.multi.note">Llegas a turistas, clientes internacionales o familias bilingües con el mismo sitio.</span>
+                          </span>
+                        </label>
+                      </div>
                     </div>
-                    <div class="field field-full">
-                      <label for="maintenance" data-i18n="q.maintenance">Mantenimiento después</label>
-                      <select id="maintenance" name="maintenance">
-                        <option value="light" selected data-i18n="q.maintenance.light">Cuidado puntual</option>
-                        <option value="mid" data-i18n="q.maintenance.mid">Mejora continua</option>
-                        <option value="full" data-i18n="q.maintenance.full">Acompañamiento</option>
-                      </select>
-                      <p class="field-help" data-i18n="q.maintenance.help">Siempre hay que hacerlo. El mantenimiento no es desarrollo nuevo: las funciones o secciones nuevas se cotizan aparte.</p>
+                    <div class="field field-full" id="field-images">
+                      <span class="field-label" data-i18n="q.images">¿Tus imágenes están listas?</span>
+                      <div class="radio-cards radio-cards--cols-2" role="radiogroup" aria-labelledby="field-images">
+                        <label class="radio-card">
+                          <input type="radio" name="images" value="ready">
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.images.ready">Sí, ya están listas</span>
+                            <span class="rc-desc" data-i18n="q.images.ready.desc">Fotos recortadas y optimizadas para web.</span>
+                            <span class="rc-note" data-i18n="q.images.ready.note">Sin costo extra de procesamiento. Uso tus archivos tal cual.</span>
+                          </span>
+                        </label>
+                        <label class="radio-card">
+                          <input type="radio" name="images" value="process" checked>
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.images.process">No, prepáralas tú</span>
+                            <span class="rc-desc" data-i18n="q.images.process.desc">Yo optimizo formato, tamaño y peso.</span>
+                            <span class="rc-note" data-i18n="q.images.process.note">Trabajo adicional para que cargen rápido y se vean nítidas en todos los dispositivos.</span>
+                          </span>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="field field-full" id="field-maintenance">
+                      <span class="field-label" data-i18n="q.maintenance">Mantenimiento después</span>
+                      <p class="field-help" data-i18n="q.maintenance.help">Siempre hay que hacerlo. El mantenimiento no es desarrollo nuevo: funciones o secciones nuevas se cotizan aparte.</p>
+                      <div class="radio-cards radio-cards--cols-3" role="radiogroup" aria-labelledby="field-maintenance">
+                        <label class="radio-card">
+                          <input type="radio" name="maintenance" value="light" checked>
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.maintenance.light">Cuidado puntual</span>
+                            <span class="rc-desc" data-i18n="q.maintenance.light.desc">Backups, seguridad y sitio en línea.</span>
+                            <span class="rc-note" data-i18n="q.maintenance.light.note">Lo esencial para que tu sitio no se caiga ni se quede atrás.</span>
+                          </span>
+                        </label>
+                        <label class="radio-card">
+                          <input type="radio" name="maintenance" value="mid">
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.maintenance.mid">Mejora continua</span>
+                            <span class="rc-desc" data-i18n="q.maintenance.mid.desc">Cambios pequeños cada mes.</span>
+                            <span class="rc-note" data-i18n="q.maintenance.mid.note">Incluye cupo de textos e imágenes. Ideal si actualizas con frecuencia.</span>
+                          </span>
+                        </label>
+                        <label class="radio-card">
+                          <input type="radio" name="maintenance" value="full">
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.maintenance.full">Acompañamiento</span>
+                            <span class="rc-desc" data-i18n="q.maintenance.full.desc">Prioridad y plan de mejoras.</span>
+                            <span class="rc-note" data-i18n="q.maintenance.full.note">Para negocios que se mueven rápido. No incluye funciones nuevas grandes.</span>
+                          </span>
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </form>
-            <aside class="board" aria-live="polite">
-              <h3 data-i18n="quote_range">Estimado</h3>
-              <ul id="quote-board"></ul>
-              <div class="total" id="quote-total">
-                <span data-range>—</span>
-                <small id="quote-note" data-i18n="quote_not_final">No es precio final. Dominio y hosting van aparte.</small>
+            <aside class="board board-quote" aria-live="polite">
+              <div class="board-head">
+                <h3 data-i18n="quote_range">Estimado</h3>
+                <div class="board-total" id="quote-total">
+                  <span data-range>—</span>
+                  <small id="quote-note" data-i18n="quote_not_final">No es precio final. Dominio y hosting van aparte.</small>
+                </div>
               </div>
+              <ul id="quote-board" class="board-lines"></ul>
               <small id="quote-note-interview" class="board-interview-note" hidden></small>
               <a class="btn btn-primary" id="board-wa" hidden href="https://wa.me/5356408532" target="_blank" rel="noopener noreferrer" data-i18n="quote_wa">Contactar por WhatsApp</a>
               <div class="board-actions" id="board-actions">
@@ -508,8 +674,8 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
     </button>
 
-    <script src="js/quote.js?v=6"></script>
-    <script src="js/theme-lang.js?v=6"></script>
-    <script src="js/main.js?v=6"></script>
+    <script src="js/quote.js?v=10"></script>
+    <script src="js/theme-lang.js?v=10"></script>
+    <script src="js/main.js?v=10"></script>
   </body>
 </html>
