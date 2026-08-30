@@ -1,6 +1,11 @@
 # Sitio estático: sin paso de build, se publica la raíz del repo.
 [build]
   publish = "."
+  command = ""
+
+# Fija Node a una versión LTS estable (evita que Netlify use una muy reciente).
+[build.environment]
+  NODE_VERSION = "20"
 
 # Cabeceras de seguridad para todo el sitio.
 [[headers]]
