@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="Cafetería">
+  <rect width="800" height="500" fill="#f6efe6"/>
+  <rect x="0" y="0" width="800" height="70" fill="#efe4d4"/>
+  <circle cx="52" cy="35" r="14" fill="#6b3f2a"/>
+  <rect x="76" y="28" width="130" height="14" fill="#3c2a20"/>
+  <rect x="640" y="22" width="120" height="28" rx="14" fill="#6b3f2a"/>
+  <rect x="48" y="130" width="360" height="40" fill="#3c2a20"/>
+  <rect x="48" y="188" width="300" height="14" fill="#8a6a55"/>
+  <rect x="48" y="214" width="260" height="14" fill="#8a6a55"/>
+  <rect x="48" y="260" width="150" height="38" rx="19" fill="#6b3f2a"/>
+  <ellipse cx="600" cy="270" rx="130" ry="90" fill="#d7c4ae"/>
+  <ellipse cx="600" cy="250" rx="70" ry="28" fill="#6b3f2a"/>
+  <rect x="560" y="248" width="14" height="70" fill="#6b3f2a"/>
+</svg>

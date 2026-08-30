@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="Dulcería">
+  <rect width="800" height="500" fill="#fff7f2"/>
+  <rect x="0" y="0" width="800" height="70" fill="#ffe8ef"/>
+  <circle cx="50" cy="35" r="14" fill="#e05d8a"/>
+  <rect x="74" y="28" width="140" height="14" fill="#4a2030"/>
+  <rect x="640" y="22" width="120" height="28" rx="14" fill="#e05d8a"/>
+  <rect x="48" y="128" width="340" height="38" fill="#4a2030"/>
+  <rect x="48" y="184" width="280" height="14" fill="#b07a8a"/>
+  <rect x="48" y="210" width="240" height="14" fill="#b07a8a"/>
+  <rect x="48" y="256" width="150" height="38" rx="19" fill="#e05d8a"/>
+  <circle cx="520" cy="280" r="56" fill="#ffd1dc"/>
+  <circle cx="620" cy="220" r="44" fill="#f6c36a"/>
+  <circle cx="690" cy="310" r="50" fill="#c9e4c5"/>
+  <circle cx="580" cy="350" r="36" fill="#e05d8a" opacity=".45"/>
+</svg>

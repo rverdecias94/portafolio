@@ -1,1734 +1,515 @@
 <!DOCTYPE html>
 <html lang="es">
-
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-    <title>Portafolio | Roberto Verdecia Sánchez</title>
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-          rel="stylesheet">
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-          crossorigin="anonymous"
-          referrerpolicy="no-referrer" />
-
-    <style>
-      /* =========================================================
-           VARIABLES Y CONFIGURACIÓN GENERAL
-           ========================================================= */
-      :root {
-        --primary: #a78bfa;
-        --primary-dark: #7c3aed;
-        --accent: #14b8a6;
-        --text-dark: #0f172a;
-        /* Más oscuro para contraste tech */
-        --text-light: #475569;
-        --bg-light: #f1f5f9;
-        /* Ligeramente más gris */
-        --white: #ffffff;
-        --font-main: 'Inter', system-ui, -apple-system, sans-serif;
-
-        /* Transición más "bouncy" para efectos altos */
-        --ease-out: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-      }
-
-      /* ===================== TEMA OSCURO ===================== */
-      body.dark-mode {
-        --primary: #a78bfa;
-        --primary-dark: #c4b5fd;
-        --accent: #2dd4bf;
-        --text-dark: #f1f5f9;
-        --text-light: #cbd5e1;
-        --bg-light: #181e29;
-        --white: #23293a;
-      }
-
-      body.dark-mode {
-        color: var(--text-dark);
-        background-color: var(--bg-light);
-      }
-
-      body.dark-mode .bg-pattern {
-        background-color: var(--white);
-        background-image: linear-gradient(#23293a 1.1px, transparent 1.1px), linear-gradient(90deg, #23293a 1.1px, transparent 1.1px);
-      }
-
-      body.dark-mode .bg-white {
-        background-color: var(--white);
-      }
-
-      body.dark-mode .card,
-      body.dark-mode .step,
-      body.dark-mode .contact-info p {
-        background: var(--white);
-        color: var(--text-dark);
-        border-color: #334155;
-      }
-
-      body.dark-mode .tag {
-        background: var(--white);
-        color: var(--primary);
-        border-color: #334155;
-      }
-
-      body.dark-mode .tag.highlight {
-        color: var(--primary);
-        border-color: var(--primary);
-      }
-
-      body.dark-mode .example-box {
-        background-color: #23293a;
-        color: var(--text-light);
-        border-color: #334155;
-      }
-
-      body.dark-mode .scope-alert {
-        background: linear-gradient(135deg, #23293a 0%, #181e29 100%);
-        border: 1px solid #a78bfa;
-        color: var(--text-light);
-      }
-
-      body.dark-mode .scope-alert h3 {
-        color: #a78bfa;
-      }
-
-      body.dark-mode .scope-alert p {
-        color: #cbd5e1;
-      }
-
-      body.dark-mode .top-bar {
-        background-color: rgba(24, 30, 41, 0.8);
-        border-bottom: 1px solid #23293a;
-      }
-
-      body.dark-mode .topbar-nav a {
-        color: rgba(241, 245, 249, 0.75);
-      }
-
-      body.dark-mode .topbar-nav a:hover {
-        color: var(--text-dark);
-        background: rgba(167, 139, 250, 0.14);
-      }
-
-      body.dark-mode .mobile-menu {
-        background: rgba(24, 30, 41, 0.98);
-        border: 1px solid #23293a;
-      }
-
-      body.dark-mode .mobile-menu a {
-        color: var(--text-dark);
-        background: rgba(167, 139, 250, 0.14);
-      }
-
-      body.dark-mode .mobile-menu-header {
-        border-bottom: 1px solid rgba(241, 245, 249, 0.12);
-      }
-
-      body.dark-mode .lang-btn {
-        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-        color: var(--white);
-        box-shadow: 0 4px 12px rgba(96, 165, 250, 0.2);
-      }
-
-      body.dark-mode .lang-btn:hover {
-        box-shadow: 0 6px 18px rgba(167, 139, 250, 0.3);
-      }
-
-      body.dark-mode footer {
-        background: #181e29;
-        color: rgba(255, 255, 255, 0.7);
-      }
-
-      body.dark-mode footer p {
-        color: rgba(255, 255, 255, 0.5);
-      }
-
-      /* Patrón de fondo sutil para zonas de luz */
-      .bg-pattern {
-        background-color: var(--white);
-        background-image: linear-gradient(#f1f5f9 1.1px, transparent 1.1px), linear-gradient(90deg, #f1f5f9 1.1px, transparent 1.1px);
-        background-size: 22px 22px;
-      }
-
-      body {
-        font-family: var(--font-main);
-        line-height: 1.7;
-        margin: 0;
-        padding: 0;
-        color: var(--text-dark);
-        background-color: var(--bg-light);
-        -webkit-font-smoothing: antialiased;
-        scroll-behavior: smooth;
-        /* Scroll suave nativo */
-      }
-
-      [hidden] {
-        display: none !important;
-      }
-
-      body.menu-open {
-        overflow: hidden;
-        touch-action: none;
-      }
-
-      .mobile-menu-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(15, 23, 42, 0.45);
-        backdrop-filter: blur(6px);
-        z-index: 1500;
-      }
-
-      body.dark-mode .mobile-menu-overlay {
-        background: rgba(2, 6, 23, 0.6);
-      }
-
-      .container {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 0 24px;
-      }
-
-      /* Títulos con degradado fuerte y animado en hover */
-      h1,
-      h2 {
-        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 50%, var(--primary) 100%);
-        background-size: 200% auto;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        color: transparent;
-        font-weight: 800;
-        letter-spacing: -0.03em;
-        transition: var(--ease-out);
-      }
-
-      h3 {
-        font-size: 1.5rem;
-        margin-top: 0;
-        margin-bottom: 15px;
-        color: var(--text-dark);
-        font-weight: 700;
-        letter-spacing: -0.01em;
-      }
-
-      p {
-        color: var(--text-light);
-        font-size: 1.1rem;
-      }
-
-      /* =========================================================
-           SISTEMA DE CAMBIO DE IDIOMA (SOLO CSS)
-           ========================================================= */
-      #lang-toggle {
-        display: none;
-      }
-
-      .lang-en {
-        display: none;
-      }
-
-      #lang-toggle:checked~.page-wrapper .lang-es {
-        display: none;
-      }
-
-      #lang-toggle:checked~.page-wrapper .lang-en {
-        display: block;
-      }
-
-      #lang-toggle:checked~.page-wrapper span.lang-en {
-        display: inline;
-      }
-
-      /* Header con nombre a la izquierda, menú hamburguesa en móvil, switches solo icono y fondo blur igual al header */
-      .top-bar {
-        background-color: rgba(241, 245, 249, 0.8);
-        backdrop-filter: blur(12px);
-        padding: 28px 24px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.03);
-      }
-
-      .topbar-left {
-        font-weight: 800;
-        font-size: 1.15rem;
-        color: var(--primary);
-        letter-spacing: -0.01em;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        white-space: nowrap;
-      }
-
-      .topbar-center {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex: 1;
-        padding: 0 20px;
-      }
-
-      .topbar-nav {
-        display: flex;
-        align-items: center;
-        gap: 18px;
-        padding: 0;
-        margin: 0;
-        list-style: none;
-      }
-
-      .topbar-nav a {
-        text-decoration: none;
-        color: var(--text-light);
-        font-weight: 600;
-        font-size: 0.98rem;
-        letter-spacing: -0.01em;
-        transition: var(--ease-out);
-        padding: 10px 10px;
-        border-radius: 12px;
-      }
-
-      .topbar-nav a:hover {
-        color: var(--text-dark);
-        background: rgba(167, 139, 250, 0.12);
-      }
-
-      .topbar-actions {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .icon-switch {
-        background: rgba(241, 245, 249, 0.8);
-        backdrop-filter: blur(12px);
-        border: none;
-        border-radius: 50%;
-        padding: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.25rem;
-        color: var(--primary-dark);
-        cursor: pointer;
-        transition: background 0.2s;
-        box-shadow: 0 2px 8px rgba(167, 139, 250, 0.08);
-      }
-
-      .icon-switch:active,
-      .icon-switch:focus {
-        outline: none;
-        background: rgba(226, 232, 240, 0.9);
-      }
-
-      .icon-switch:focus-visible,
-      .topbar-nav a:focus-visible,
-      .cta:focus-visible,
-      input:focus-visible,
-      select:focus-visible,
-      textarea:focus-visible {
-        outline: 3px solid rgba(167, 139, 250, 0.45);
-        outline-offset: 2px;
-      }
-
-      .lang-btn {
-        display: none !important;
-      }
-
-      .hamburger {
-        display: none;
-        background: rgba(241, 245, 249, 0.8);
-        border: none;
-        border-radius: 10px;
-        padding: 10px 12px;
-        font-size: 1.5rem;
-        color: var(--primary-dark);
-        cursor: pointer;
-        margin-left: 10px;
-        backdrop-filter: blur(12px);
-      }
-
-      @media (max-width: 1024px) {
-        .top-bar {
-          padding: 18px 16px;
-        }
-
-        .topbar-center {
-          display: none;
-        }
-
-        .topbar-actions {
-          display: none;
-        }
-
-        .hamburger {
-          display: flex;
-        }
-
-        .mobile-menu {
-          display: flex;
-          flex-direction: column;
-          position: fixed;
-          top: 0;
-          right: 0;
-          height: 100vh;
-          width: min(420px, 80vw);
-          background: rgba(241, 245, 249, 0.98);
-          border-radius: 24px 0 0 24px;
-          box-shadow: 0 12px 48px rgba(2, 6, 23, 0.18);
-          padding: calc(18px + env(safe-area-inset-top, 0px)) 18px calc(18px + env(safe-area-inset-bottom, 0px)) 18px;
-          z-index: 1600;
-          gap: 12px;
-          min-width: 0;
-          align-items: stretch;
-          overflow-y: auto;
-        }
-
-        .mobile-menu-header {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 12px;
-          padding-bottom: 8px;
-          border-bottom: 1px solid rgba(15, 23, 42, 0.06);
-        }
-
-        .mobile-menu-title {
-          font-weight: 900;
-          letter-spacing: -0.02em;
-          color: var(--text-dark);
-        }
-
-        .mobile-menu .icon-switch {
-          margin: 0;
-        }
-
-        .mobile-menu a {
-          text-decoration: none;
-          color: var(--text-dark);
-          font-weight: 700;
-          padding: 12px 12px;
-          border-radius: 12px;
-          background: rgba(167, 139, 250, 0.12);
-        }
-
-        .mobile-menu a:active {
-          background: rgba(167, 139, 250, 0.18);
-        }
-
-        .mobile-menu-actions {
-          margin-top: 6px;
-          display: flex;
-          gap: 10px;
-          justify-content: flex-end;
-        }
-      }
-
-      @media (max-width: 420px) {
-        .mobile-menu {
-          width: 100vw;
-          border-radius: 0;
-        }
-      }
-
-      /* =========================================================
-           DISEÑO DE SECCIONES (ESTILOS)
-           ========================================================= */
-      section {
-        padding: 120px 0;
-        position: relative;
-        scroll-margin-top: 120px;
-      }
-
-      .bg-white {
-        background-color: var(--white);
-      }
-
-      /* Clip-path suave para separar secciones */
-      .section-separator {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 60px;
-        background-color: var(--bg-light);
-        clip-path: polygon(0 100%, 100% 100%, 100% 0);
-        z-index: 1;
-      }
-
-      .text-center {
-        text-align: center;
-      }
-
-      h1 {
-        font-size: 3.8rem;
-        margin-bottom: 18px;
-        line-height: 1.1;
-      }
-
-      h2 {
-        font-size: 2.8rem;
-        margin-bottom: 60px;
-      }
-
-      /* Hero con patrón de fondo */
-      .hero {
-        padding: 80px 20px;
-        background-color: var(--bg-light);
-        background-image: radial-gradient(#e2e8f0 1.1px, transparent 1.1px), radial-gradient(#e2e8f0 1.1px, var(--bg-light) 1.1px);
-        background-size: 44px 44px;
-        background-position: 0 0, 22px 22px;
-      }
-
-      .cta-row {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 14px;
-        flex-wrap: wrap;
-        margin-top: 26px;
-      }
-
-      .cta {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        padding: 14px 18px;
-        border-radius: 14px;
-        border: 1px solid rgba(167, 139, 250, 0.22);
-        text-decoration: none;
-        font-weight: 800;
-        color: var(--text-dark);
-        background: rgba(255, 255, 255, 0.6);
-        transition: var(--ease-out);
-        box-shadow: 0 2px 10px rgba(167, 139, 250, 0.12);
-      }
-
-      .cta.primary {
-        color: var(--white);
-        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-        border-color: transparent;
-      }
-
-      .cta:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 28px rgba(167, 139, 250, 0.18);
-      }
-
-      .tags {
-        display: flex;
-        justify-content: center;
-        gap: 14px;
-        flex-wrap: wrap;
-        margin-top: 50px;
-      }
-
-      .tag {
-        background: var(--white);
-        padding: 12px 24px;
-        border-radius: 12px;
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: var(--text-dark);
-        border: 1px solid #e2e8f0;
-        transition: var(--ease-out);
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
-      }
-
-      .tag:hover {
-        border-color: var(--primary);
-        transform: translateY(-3px) rotate(1deg);
-      }
-
-      .tag.highlight {
-        background: var(--white);
-        color: var(--primary);
-        border: 2px solid var(--primary);
-        position: relative;
-      }
-
-      /* Efecto de pulso sutil en la tag de tiempo */
-      @keyframes pulse-border {
-        0% {
-          box-shadow: 0 0 0 0 rgba(167, 139, 250, 0.45);
-        }
-
-        70% {
-          box-shadow: 0 0 0 10px rgba(167, 139, 250, 0);
-        }
-
-        100% {
-          box-shadow: 0 0 0 0 rgba(167, 139, 250, 0);
-        }
-      }
-
-      .tag.highlight {
-        animation: pulse-border 2s infinite;
-      }
-
-      /* Grillas */
-      .grid-3 {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 35px;
-      }
-
-      .grid-4 {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 24px;
-      }
-
-      /* Tarjetas con efecto Glow en Hover */
-      .card {
-        background: var(--white);
-        padding: 45px 35px;
-        border-radius: 24px;
-        border: 1px solid #e2e8f0;
-        transition: var(--ease-out);
-        display: flex;
-        flex-direction: column;
-        position: relative;
-        z-index: 2;
-        /* Por encima del separator */
-      }
-
-      .card:hover {
-        transform: translateY(-10px) scale(1.02);
-        border-color: transparent;
-        /* Efecto Glow de color sutil */
-        box-shadow: 0 22px 44px -10px rgba(167, 139, 250, 0.20), 0 10px 20px -10px rgba(20, 184, 166, 0.14);
-      }
-
-      .price {
-        font-size: 2.2rem;
-        font-weight: 800;
-        color: var(--text-dark);
-        margin: 15px 0 25px 0;
-        letter-spacing: -0.04em;
-        position: relative;
-        display: inline-block;
-      }
-
-      /* Subrayado decorativo en el precio */
-      .price::after {
-        content: '';
-        position: absolute;
-        bottom: -5px;
-        left: 0;
-        width: 40px;
-        height: 4px;
-        background: linear-gradient(90deg, var(--primary), var(--accent));
-        border-radius: 2px;
-      }
-
-      ul {
-        padding-left: 20px;
-        color: var(--text-light);
-        flex-grow: 1;
-        margin-bottom: 30px;
-      }
-
-      li {
-        margin-bottom: 14px;
-        font-size: 1.05rem;
-      }
-
-      /* Ejemplos estilo burbuja de chat */
-      .example-box {
-        background-color: var(--bg-light);
-        padding: 20px;
-        font-size: 0.95rem;
-        color: var(--text-dark);
-        border-radius: 16px;
-        position: relative;
-        border: 1px solid #e2e8f0;
-      }
-
-      .example-box::before {
-        content: '💡';
-        position: absolute;
-        top: -15px;
-        left: 20px;
-        background: var(--white);
-        padding: 0 5px;
-        font-size: 1.2rem;
-      }
-
-      /* Alerta de Alcance (Scope) moderna */
-      .scope-alert {
-        background: linear-gradient(135deg, #fffbeb 0%, #fff7ed 100%);
-        border: 1px solid #fed7aa;
-        padding: 35px;
-        border-radius: 24px;
-        margin-top: 40px;
-        box-shadow: 0 10px 15px -3px rgba(251, 146, 60, 0.1);
-        position: relative;
-        overflow: hidden;
-      }
-
-      /* Decoración geométrica en la alerta */
-      .scope-alert::after {
-        content: '';
-        position: absolute;
-        top: -50px;
-        right: -50px;
-        width: 100px;
-        height: 100px;
-        background: rgba(251, 146, 60, 0.1);
-        border-radius: 50%;
-      }
-
-      .scope-alert h3 {
-        color: #c2410c;
-        margin-bottom: 15px;
-        font-size: 1.4rem;
-      }
-
-      .scope-alert p {
-        margin: 0;
-        color: #9a3412;
-        font-size: 1.05rem;
-        position: relative;
-        z-index: 1;
-      }
-
-      /* Pasos del Proceso interactivas */
-      .step {
-        text-align: center;
-        padding: 30px 20px;
-        background: var(--white);
-        border-radius: 20px;
-        border: 1px solid #e2e8f0;
-        transition: var(--ease-out);
-      }
-
-      .step:hover {
-        transform: scale(1.05);
-        box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.05);
-      }
-
-      /* Efecto Parallax simple en scroll (requiere JS para ser perfecto,
-           pero simularemos efecto visual con perspectiva fija) */
-      .step-number {
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        width: 70px;
-        height: 70px;
-        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 70%) var(--text-dark);
-        color: var(--white);
-        border-radius: 16px;
-        /* Forma de app icon */
-        font-size: 2rem;
-        font-weight: 800;
-        margin-bottom: 30px;
-        position: relative;
-        transform: translateZ(0);
-        /* Forzar aceleración hardware */
-        transition: var(--ease-out);
-      }
-
-      .step:hover .step-number {
-        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-        transform: rotateY(180deg);
-        /* Efecto flip al hover */
-      }
-
-      /* Volver a poner el número derecho después del flip */
-      .step-number span {
-        transition: var(--ease-out);
-      }
-
-      .step:hover .step-number span {
-        transform: rotateY(-180deg);
-      }
-
-      /* Contacto estilo botones grandes */
-      .contact-info {
-        margin-top: 40px;
-        font-size: 1.2rem;
-        display: flex;
-        gap: 20px;
-        justify-content: center;
-        flex-wrap: wrap;
-        flex-direction: row;
-      }
-
-      .contact-info p {
-        margin: 0;
-        background: var(--white);
-        padding: 16px 18px;
-        border-radius: 16px;
-        border: 1px solid #e2e8f0;
-        transition: var(--ease-out);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
-        max-width: 100vw;
-        overflow-wrap: anywhere;
-        word-break: break-all;
-        display: flex;
-        align-items: center;
-      }
-
-      .contact-info a {
-        color: var(--text-dark);
-        text-decoration: none;
-        font-weight: 600;
-        word-break: break-all;
-      }
-
-      .contact-form {
-        max-width: 720px;
-        margin: 35px auto 0 auto;
-        text-align: left;
-      }
-
-      .form-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 14px;
-      }
-
-      .field {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-      }
-
-      label {
-        font-weight: 700;
-        color: var(--text-dark);
-        font-size: 0.98rem;
-      }
-
-      input,
-      select,
-      textarea {
-        font-family: var(--font-main);
-        font-size: 1rem;
-        padding: 14px 14px;
-        border-radius: 14px;
-        border: 1px solid #e2e8f0;
-        background: var(--white);
-        color: var(--text-dark);
-        transition: var(--ease-out);
-      }
-
-      textarea {
-        min-height: 140px;
-        resize: vertical;
-      }
-
-      .form-actions {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        flex-wrap: wrap;
-        margin-top: 14px;
-      }
-
-      .hint {
-        font-size: 0.95rem;
-        color: var(--text-light);
-        margin: 10px 0 0 0;
-      }
-
-      @media (max-width: 768px) {
-        .contact-info {
-          flex-direction: column;
-          align-items: stretch;
-          gap: 12px;
-        }
-
-        .contact-info p {
-          font-size: 1rem;
-          padding: 14px 8px;
-          word-break: break-all;
-        }
-
-        .form-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      /* Footer */
-      footer {
-        background: var(--white);
-        color: var(--text-dark);
-        text-align: center;
-        padding: 50px 20px;
-        border-top: 1px solid rgba(0, 0, 0, 0.03);
-        backdrop-filter: blur(12px);
-      }
-
-      footer p {
-        color: var(--text-light);
-        margin: 0;
-        font-size: 0.95rem;
-      }
-
-      body.dark-mode footer {
-        background: #181e29;
-        color: rgba(255, 255, 255, 0.7);
-      }
-
-      body.dark-mode footer p {
-        color: rgba(255, 255, 255, 0.5);
-      }
-
-      /* Responsive */
-      @media (max-width: 1024px) {
-        h1 {
-          font-size: 3.1rem;
-        }
-
-        h2 {
-          font-size: 2.4rem;
-        }
-
-        section {
-          padding: 90px 0;
-          scroll-margin-top: 96px;
-        }
-
-        .hero {
-          padding: 40px 20px;
-          background-size: 36px 36px;
-        }
-
-        .contact-info {
-          flex-direction: column;
-          align-items: center;
-        }
-      }
-
-      @media (max-width: 640px) {
-        h1 {
-          font-size: 2.55rem;
-        }
-
-        h2 {
-          font-size: 2.05rem;
-        }
-
-        section {
-          padding: 72px 0;
-        }
-
-        .hero {
-          padding: 24px 16px;
-        }
-      }
-
-      @media (max-height: 520px) and (orientation: landscape) {
-        section {
-          padding: 64px 0;
-          scroll-margin-top: 96px;
-        }
-
-        .hero {
-          padding: 22px 16px;
-          background-size: 34px 34px;
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        * {
-          transition: none !important;
-          animation: none !important;
-          scroll-behavior: auto !important;
-        }
-      }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Roberto Verdecia Sánchez</title>
+    <meta name="description" content="Tu web tiene que conseguirte clientes, no solo verse bien. Sitios claros, rápidos y un rango estimado al momento.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css?v=6">
   </head>
-
   <body>
+    <!--
+      THESIS: A market price-board you write yourself — not a three-package freelance stall.
+      OWN-WORLD: Obsidian slab / plaster stall wall; bone chalk; brass prices; Bricolage Grotesque signs + Source Sans 3; dashed tally lines.
+      STORY: You configure the job, see a live range, then write to me. Domain and hosting stay yours.
+      FIRST VIEWPORT: Sign-scale headline left, primary CTA to #quote, sample board right.
+      FORM: Grounded #7 pizarra de mercado (seed a7f3c2e1, degraded roll, no challengers). Brief pins: obsidian dark, live quote.
+      FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+    -->
+    <a class="skip" href="#inicio" data-i18n="skip">Ir al contenido</a>
 
-    <input type="checkbox"
-           id="lang-toggle">
+    <header class="top">
+      <a class="brand" href="#inicio" data-i18n="brand">Roberto Verdecia Sánchez</a>
+      <nav>
+        <ul class="nav">
+          <li><a href="#inicio" data-i18n="nav_home">Inicio</a></li>
+          <li><a href="#trabajo" data-i18n="nav_work">Trabajo</a></li>
+          <li><a href="#como" data-i18n="nav_how">Cómo</a></li>
+          <li><a href="#quote" data-i18n="nav_quote">Cotizar</a></li>
+          <li><a href="#cuidado" data-i18n="nav_care">Cuidado</a></li>
+          <li><a href="#contacto" data-i18n="nav_contact">Contacto</a></li>
+        </ul>
+      </nav>
+      <div class="tools">
+        <button type="button" class="icon-btn" data-lang-toggle data-i18n-aria="lang_to"><span data-lang-mark>EN</span></button>
+        <button type="button" class="icon-btn" data-theme-toggle data-i18n-aria="theme_to_dark"><span class="icon"></span></button>
+      </div>
+      <button type="button" class="menu-btn" id="menu-open" aria-expanded="false" aria-controls="mobile-menu" data-i18n-aria="menu">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </header>
 
-    <div class="page-wrapper">
-
-      <div class="top-bar">
-        <div class="topbar-left">
-          Roberto Verdecia Sánchez
-        </div>
-        <div class="topbar-center">
-          <ul class="topbar-nav"
-              style="display: flex;justify-content: center;">
-            <li><a href="#home"><span class="lang-es">Inicio</span><span class="lang-en">Home</span></a></li>
-            <li><a href="#services"><span class="lang-es">Servicios</span><span class="lang-en">Services</span></a></li>
-            <li><a href="#portfolio"><span class="lang-es">Casos</span><span class="lang-en">Work</span></a></li>
-            <li><a href="#process"><span class="lang-es">Proceso</span><span class="lang-en">Process</span></a></li>
-            <li><a href="#resources"><span class="lang-es">Recursos</span><span class="lang-en">Resources</span></a>
-            </li>
-            <li><a href="#faq"><span class="lang-es">FAQ</span><span class="lang-en">FAQ</span></a></li>
-            <li><a href="#contact"><span class="lang-es">Contacto</span><span class="lang-en">Contact</span></a></li>
-          </ul>
-        </div>
-        <div class="topbar-actions">
-          <button id="lang-switch"
-                  class="icon-switch"
-                  title="Cambiar idioma">
-            <i class="fa-solid fa-language"></i>
-          </button>
-          <button id="theme-toggle"
-                  class="icon-switch"
-                  title="Cambiar tema">
-            <i id="theme-icon"
-               class="fa-solid fa-moon"
-               aria-hidden="true"></i>
-          </button>
-        </div>
-        <button class="hamburger"
-                id="hamburger-menu"
-                aria-label="Abrir menú">
-          <i class="fa-solid fa-bars"></i>
+    <div id="menu-overlay" class="overlay" hidden></div>
+    <div id="mobile-menu" class="drawer" hidden>
+      <div class="drawer-head">
+        <strong data-i18n="menu">Menú</strong>
+        <button type="button" class="icon-btn" id="menu-close" data-i18n-aria="close">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
         </button>
       </div>
-      <div id="mobile-menu-overlay"
-           class="mobile-menu-overlay"
-           hidden></div>
-      <div id="mobile-menu"
-           class="mobile-menu"
-           hidden>
-        <div class="mobile-menu-header">
-          <div class="mobile-menu-title"><span class="lang-es">Menú</span><span class="lang-en">Menu</span></div>
-          <button id="mobile-menu-close"
-                  class="icon-switch"
-                  title="Cerrar"
-                  aria-label="Cerrar">
-            <i class="fa-solid fa-xmark"
-               aria-hidden="true"></i>
-          </button>
-        </div>
-        <a href="#home"><span class="lang-es">Inicio</span><span class="lang-en">Home</span></a>
-        <a href="#services"><span class="lang-es">Servicios</span><span class="lang-en">Services</span></a>
-        <a href="#portfolio"><span class="lang-es">Casos</span><span class="lang-en">Work</span></a>
-        <a href="#process"><span class="lang-es">Proceso</span><span class="lang-en">Process</span></a>
-        <a href="#resources"><span class="lang-es">Recursos</span><span class="lang-en">Resources</span></a>
-        <a href="#faq"><span class="lang-es">Preguntas frecuentes</span><span class="lang-en">FAQ</span></a>
-        <a href="#contact"><span class="lang-es">Contacto</span><span class="lang-en">Contact</span></a>
-        <div class="mobile-menu-actions">
-          <button id="lang-switch-mobile"
-                  class="icon-switch"
-                  title="Cambiar idioma"
-                  aria-label="Cambiar idioma">
-            <i class="fa-solid fa-language"></i>
-          </button>
-          <button id="theme-toggle-mobile"
-                  class="icon-switch"
-                  title="Cambiar tema"
-                  aria-label="Cambiar tema">
-            <i id="theme-icon-mobile"
-               class="fa-solid fa-moon"
-               aria-hidden="true"></i>
-          </button>
-        </div>
+      <a href="#inicio" data-i18n="nav_home">Inicio</a>
+      <a href="#trabajo" data-i18n="nav_work">Trabajo</a>
+      <a href="#como" data-i18n="nav_how">Cómo</a>
+      <a href="#quote" data-i18n="nav_quote">Cotizar</a>
+      <a href="#cuidado" data-i18n="nav_care">Cuidado</a>
+      <a href="#contacto" data-i18n="nav_contact">Contacto</a>
+      <div class="tools">
+        <button type="button" class="icon-btn" data-lang-toggle data-i18n-aria="lang_to"><span data-lang-mark>EN</span></button>
+        <button type="button" class="icon-btn" data-theme-toggle data-i18n-aria="theme_to_dark"><span class="icon"></span></button>
       </div>
+    </div>
 
-      <section id="home"
-               class="hero text-center">
-        <div class="container">
-          <h1 class="lang-es">Sitios Web Simples, Limpios y Efectivos para tu Organización</h1>
-          <h1 class="lang-en">Simple, Clean, and Effective Websites for Your Organization</h1>
-
-          <p class="lang-es"><strong>Roberto Verdecia Sánchez</strong> | Desarrollador Frontend React & Diseño
-            UX/UI</p>
-          <p class="lang-en"><strong>Roberto Verdecia Sánchez</strong> | Frontend React Developer & UX/UI
-            Design</p>
-
-          <div class="cta-row">
-            <a class="cta primary"
-               href="#services"><i class="fa-solid fa-briefcase"
-                 aria-hidden="true"></i><span class="lang-es">Ver servicios</span><span class="lang-en">View
-                services</span></a>
-            <a class="cta"
-               href="#contact"><i class="fa-solid fa-paper-plane"
-                 aria-hidden="true"></i><span class="lang-es">Pedir propuesta</span><span class="lang-en">Request a
-                quote</span></a>
+    <main>
+      <section id="inicio">
+        <div class="wrap hero">
+          <div class="hero-copy">
+            <h1 data-i18n="hero_h">Soy Roberto, programador de sitios web</h1>
+            <p class="hero-sub" data-i18n="hero_sub">Diseño y programo tu sitio completo, de la idea a estar en línea. Conóceme, mira mi trabajo y arma tu cotización al instante.</p>
+            <div class="cta-row">
+              <a class="btn btn-primary" href="#quote" data-i18n="hero_cta">Armar mi cotización</a>
+              <a class="btn" href="#trabajo" data-i18n="hero_secondary">Ver trabajo</a>
+            </div>
           </div>
+          <aside class="board" aria-hidden="true">
+            <h3 data-i18n="hero_board_title">Pizarra de ejemplo</h3>
+            <p data-i18n="hero_board_note">Esto se actualiza de verdad en el cotizador.</p>
+            <ul>
+              <li><span data-i18n="hb_pages">Páginas</span><span>3</span></li>
+              <li><span data-i18n="hb_forms">Formularios</span><span>1</span></li>
+              <li><span data-i18n="hb_seo">Aparecer en Google</span><span data-i18n="hb_seo_v">Esencial</span></li>
+            </ul>
+            <div class="total">$211 – $269 USD</div>
+          </aside>
+        </div>
+      </section>
 
-          <div class="tags">
-            <span class="tag highlight lang-es">⏱️ 1 a 4 Semanas Estimadas</span>
-            <span class="tag highlight lang-en">⏱️ 1 to 4 Weeks Estimated</span>
-
-            <span class="tag lang-es">100% Móvil</span>
-            <span class="tag lang-en">100% Mobile</span>
-
-            <span class="tag lang-es">Diseño Adaptable</span>
-            <span class="tag lang-en">Adaptable Design</span>
+      <section class="band" id="sobre">
+        <div class="wrap">
+          <h2 data-i18n="about_h">Sobre mí</h2>
+          <div class="about-layout">
+            <div class="about-copy">
+              <p data-i18n="about_1">Soy Roberto Verdecia Sánchez, desarrollador frontend y especialista en UX/UI. Convierto una idea de negocio en un sitio claro que la gente entiende y usa sin pensarlo.</p>
+              <p data-i18n="about_2">Llevo más de 6 años construyendo productos reales: plataformas de datos y sistemas CRM que usan equipos todos los días. Esa experiencia la traigo a tu web: orden, velocidad y decisiones de diseño que se notan en el resultado.</p>
+              <p data-i18n="about_3">Trabajo contigo de forma directa: te hablo sin tecnicismos, te muestro la propuesta antes de construir y no escribo código hasta que la apruebas.</p>
+              <p data-i18n="about_4">Profesionalismo, detalle y fiabilidad: cada proyecto lo trato con el mismo cuidado que si fuera mío.</p>
+            </div>
+            <ul class="about-stats">
+              <li>
+                <strong data-i18n="about_stat_1_n">6+ años</strong>
+                <span data-i18n="about_stat_1_t">en productos reales de software</span>
+              </li>
+              <li>
+                <strong data-i18n="about_stat_2_n">Frontend + UX/UI</strong>
+                <span data-i18n="about_stat_2_t">diseño y desarrollo en una sola persona</span>
+              </li>
+              <li>
+                <strong data-i18n="about_stat_3_n">1–4 semanas</strong>
+                <span data-i18n="about_stat_3_t">para tener tu sitio publicado</span>
+              </li>
+            </ul>
           </div>
         </div>
       </section>
 
-      <section id="about"
-               class="bg-white">
-        <div class="container text-center">
-          <h2 class="lang-es">Sobre Mí</h2>
-          <h2 class="lang-en">About Me</h2>
-
-          <p class="lang-es">
-            <strong>
-              Roberto Verdecia Sánchez
-            </strong>
-            desarrollador Frontend | Especialista UX/UI
-
-            Diseño y desarrollo de interfaces digitales enfocadas en claridad, usabilidad y precisión visual. Con
-            más de 6 años de experiencia en entornos profesionales, he contribuido al desarrollo de plataformas de
-            datos y sistemas CRM, trabajando en equipo estructurado y productos reales.
-
-            Mi trabajo se centra en el diseño limpio, experiencia de usuario pensada y ejecución consistente. Busco
-            entregar soluciones que no solo sean visuales refinadas, sino también prácticas y fácil de usar.
-
-            Profesionalismo, atención al detalle y fiabilidad definen la manera en la que abordamos cada proyecto.
-          </p>
-          <p class="lang-en">
-            <strong>
-              Roberto Verdecia Sánchez
-            </strong>
-            frontend Developer | UX/UI Specialist
-
-            I design and build digital interfaces focused on clarity, usability and visual precision. With more than 6
-            years of experience in professional environments, I have contributed to the development of data platforms
-            and CRM systems, working closely within structured teams and real-world products.
-
-            My work emphasizes clean design, thoughtful user experience and consistent execution. I aim to deliver
-            solutions that are not only visually refined, but also practical and easy to use.
-
-            Professionalism, attention to detail and reliability define the way I approach every project.
-          </p>
+      <section id="oferta">
+        <div class="wrap">
+          <h2 data-i18n="offer_h">Qué te construyo</h2>
+          <p class="lede" data-i18n="offer_p">El centro son proyectos de corta duración. Siempre responsive: se ve y se usa bien en el móvil y en el escritorio.</p>
+          <div class="split">
+            <article class="panel">
+              <h3 data-i18n="offer_short_h">Sitios cortos</h3>
+              <p data-i18n="offer_short_p">Landing o 3 a 8 páginas. Servicios, horarios, contacto, formularios. Listo para que tus clientes te encuentren.</p>
+            </article>
+            <article class="panel">
+              <h3 data-i18n="offer_sys_h">CRM, SaaS, gestión o tienda</h3>
+              <p data-i18n="offer_sys_p">Estos proyectos no caben en un cotizador automático. Escríbeme por WhatsApp y analizamos si es viable.</p>
+              <a class="btn" href="https://wa.me/5356408532?text=Quiero%20analizar%20la%20viabilidad%20de%20un%20proyecto%20(CRM%2C%20SaaS%2C%20gesti%C3%B3n%20o%20tienda)." target="_blank" rel="noopener noreferrer" data-i18n="offer_sys_cta">Hablar por WhatsApp</a>
+            </article>
+          </div>
         </div>
       </section>
 
-      <section id="services">
-        <div class="container">
-          <h2 class="text-center lang-es">Paquetes de Desarrollo Web</h2>
-          <h2 class="text-center lang-en">Web Development Packages</h2>
+      <section class="band" id="trabajo">
+        <div class="wrap">
+          <h2 data-i18n="work_h">Trabajo representativo</h2>
+          <p class="lede" data-i18n="work_p">Por NDA no publico nombres de cliente confidenciales. Estas capturas y piezas son sitios o plantillas que ya construí, para que veas el tipo de problema que resuelvo.</p>
+          <div class="work-grid">
+            <article class="work">
+              <figure>
+                <img src="assets/work/iglesia.svg" width="800" height="500" alt="" loading="lazy">
+              </figure>
+              <h3 data-i18n="work_1_t">Iglesia parroquial</h3>
+              <p data-i18n="work_1_p">Sitio de comunidad: horarios, ministerios y una llegada clara para quien busca un lugar.</p>
+            </article>
+            <article class="work">
+              <figure>
+                <img src="assets/work/barberia.svg" width="800" height="500" alt="" loading="lazy">
+              </figure>
+              <h3 data-i18n="work_2_t">Barbería con reserva</h3>
+              <p data-i18n="work_2_p">Presencia de autor y reserva por WhatsApp, sin fricción de formularios eternos.</p>
+            </article>
+            <article class="work">
+              <figure>
+                <img src="assets/work/tienda.svg" width="800" height="500" alt="" loading="lazy">
+              </figure>
+              <h3 data-i18n="work_3_t">Tienda con pedido</h3>
+              <p data-i18n="work_3_p">Catálogo, carrito y confirmación por WhatsApp. Pedido simple, sin pasarela inventada.</p>
+            </article>
+            <article class="work">
+              <figure>
+                <img src="assets/work/gimnasio.svg" width="800" height="500" alt="" loading="lazy">
+              </figure>
+              <h3 data-i18n="work_4_t">Gimnasio local</h3>
+              <p data-i18n="work_4_p">Planes, horarios y un llamado a inscribirse que se entiende en segundos.</p>
+            </article>
+            <article class="work">
+              <figure>
+                <img src="assets/work/cafeteria.svg" width="800" height="500" alt="" loading="lazy">
+              </figure>
+              <h3 data-i18n="work_5_t">Cafetería</h3>
+              <p data-i18n="work_5_p">Carta, ambiente y ubicación: lo que un visitante necesita antes de ir.</p>
+            </article>
+            <article class="work">
+              <figure>
+                <img src="assets/work/dulceria.svg" width="800" height="500" alt="" loading="lazy">
+              </figure>
+              <h3 data-i18n="work_6_t">Dulcería / retail</h3>
+              <p data-i18n="work_6_p">Vitrina de productos y contacto directo. Hecho para decidir rápido.</p>
+            </article>
+          </div>
+        </div>
+      </section>
 
-          <p class="text-center lang-es"
-             style="margin-bottom: 50px;">Opciones claras diseñadas para adaptarse a las necesidades y
-            proyecciones de tu negocio.</p>
-          <p class="text-center lang-en"
-             style="margin-bottom: 50px;">Clear options designed to fit the needs and projections of your
-            business.</p>
+      <section id="como">
+        <div class="wrap">
+          <h2 data-i18n="how_h">Cómo trabajo contigo</h2>
+          <div class="steps">
+            <article class="step">
+              <b>1</b>
+              <h3 data-i18n="how_1_h">Te escucho</h3>
+              <p data-i18n="how_1_p">Me cuentas tus objetivos, a quién te diriges y qué debe incluir el sitio.</p>
+            </article>
+            <article class="step">
+              <b>2</b>
+              <h3 data-i18n="how_2_h">Te propongo</h3>
+              <p data-i18n="how_2_p">Te muestro una propuesta visual y funcional. No escribo código hasta que la apruebes.</p>
+            </article>
+            <article class="step">
+              <b>3</b>
+              <h3 data-i18n="how_3_h">Lo construyo</h3>
+              <p data-i18n="how_3_p">Desarrollo el sitio siguiendo el plan que acordamos. Siempre responsive.</p>
+            </article>
+            <article class="step">
+              <b>4</b>
+              <h3 data-i18n="how_4_h">Te lo entrego</h3>
+              <p data-i18n="how_4_p">Publico tu web. Dominio y hosting los contratas tú; yo te asisto si lo pides.</p>
+            </article>
+          </div>
+        </div>
+      </section>
 
-          <div class="grid-3">
-
-            <div class="card">
-              <h3 class="lang-es">Paquete Inicial</h3>
-              <h3 class="lang-en">Starter Package</h3>
-              <p class="lang-es">Ideal para comenzar tu presencia en línea de forma rápida.</p>
-              <p class="lang-en">Ideal for launching your online presence quickly.</p>
-              <div class="price">$200 - $300</div>
-
-              <ul class="lang-es">
-                <li><strong>1 a 3 páginas</strong> con diseño limpio y moderno</li>
-                <li>100% adaptado a dispositivos móviles</li>
-                <li>Información esencial: servicios, horarios, ubicación</li>
-                <li>Enlaces directos a redes y WhatsApp</li>
-              </ul>
-              <ul class="lang-en">
-                <li><strong>1 to 3 pages</strong> with a clean, modern design</li>
-                <li>100% mobile-friendly</li>
-                <li>Essential info: services, hours, location</li>
-                <li>Direct links to socials and WhatsApp</li>
-              </ul>
-
-              <div class="example-box">
-                <span class="lang-es"><strong>Ejemplo:</strong> La página web de un estudio de
-                  fotografía con una página de Inicio (portafolio), otra de Servicios/Precios y una de
-                  Contacto.</span>
-                <span class="lang-en"><strong>Example:</strong> A website for a photography studio with
-                  a Home page (portfolio), a Services/Pricing page, and a Contact page.</span>
+      <section class="band" id="quote">
+        <div class="wrap">
+          <h2 data-i18n="quote_h">Arma tu cotización</h2>
+          <p class="lede" data-i18n="quote_p">Marca lo que necesitas. El rango se escribe en la pizarra al instante. No es precio final: yo lo reviso y te confirmo.</p>
+          <div class="quote-layout">
+            <form id="quote-form">
+              <div class="fields">
+                <div class="field field-full">
+                  <label for="type" data-i18n="q.type">Tipo de proyecto</label>
+                  <select id="type" name="type">
+                    <option value="web" data-i18n="q.type.web">Sitio Web</option>
+                    <option value="landing" data-i18n="q.type.landing">Página de aterrizaje (Landing)</option>
+                    <option value="shop" data-i18n="q.type.shop">Tienda online</option>
+                    <option value="system" data-i18n="q.type.system">CRM / SaaS / Sistema de gestión</option>
+                  </select>
+                  <p class="field-help" id="type-desc" data-type-desc>Un sitio de varias secciones para presentar tu negocio: quién eres, qué ofreces y cómo contactarte.</p>
+                </div>
+                <div class="interview field-full" id="quote-interview" hidden>
+                  <p data-i18n="quote_interview">Un CRM, SaaS, sistema de gestión o tienda online no se cotiza a ciegas. Escríbeme por WhatsApp y analizamos si el proyecto es viable.</p>
+                  <a class="btn btn-primary" id="quote-wa" href="https://wa.me/5356408532" target="_blank" rel="noopener noreferrer" data-i18n="quote_wa">Contactar por WhatsApp</a>
+                </div>
+                <div id="quote-extras" class="field-full">
+                  <div class="fields">
+                    <div class="field field-full" id="field-pages">
+                      <span class="field-label" data-i18n="q.pages">¿Qué tan grande es tu sitio?</span>
+                      <p class="field-help" data-i18n="q.pages.help">Elige lo que más se parezca a lo que necesitas. Son secciones dentro del mismo sitio.</p>
+                      <div class="radio-cards" role="radiogroup" aria-labelledby="field-pages">
+                        <label class="radio-card">
+                          <input type="radio" name="pages" value="one">
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.pages.one">Todo en una página</span>
+                            <span class="rc-desc" data-i18n="q.pages.one.desc">Una sola página con todo. Ideal para empezar.</span>
+                          </span>
+                        </label>
+                        <label class="radio-card">
+                          <input type="radio" name="pages" value="basic" checked>
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.pages.basic">Sitio básico · unas 3 páginas</span>
+                            <span class="rc-desc" data-i18n="q.pages.basic.desc">Inicio, Servicios y Contacto.</span>
+                          </span>
+                        </label>
+                        <label class="radio-card">
+                          <input type="radio" name="pages" value="standard">
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.pages.standard">Sitio completo · unas 5 páginas</span>
+                            <span class="rc-desc" data-i18n="q.pages.standard.desc">Inicio, Sobre ti, Servicios, Galería y Contacto.</span>
+                          </span>
+                        </label>
+                        <label class="radio-card">
+                          <input type="radio" name="pages" value="wide">
+                          <span class="rc-body">
+                            <span class="rc-title" data-i18n="q.pages.wide">Sitio amplio · 7 a 8 páginas</span>
+                            <span class="rc-desc" data-i18n="q.pages.wide.desc">Lo anterior más blog, preguntas o precios.</span>
+                          </span>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="field">
+                      <label for="forms" data-i18n="q.forms">Formularios</label>
+                      <select id="forms" name="forms">
+                        <option value="0">0</option>
+                        <option value="1" selected>1</option>
+                        <option value="2">2+</option>
+                      </select>
+                      <p class="field-help" data-i18n="q.forms.help">Un formulario recoge datos de tus clientes: contacto, reservas o pedidos. Si dudas, con 1 suele bastar.</p>
+                    </div>
+                    <div class="field">
+                      <label for="admin" data-i18n="q.admin">Administración del sitio</label>
+                      <select id="admin" name="admin">
+                        <option value="none" selected data-i18n="q.admin.none">No la necesito</option>
+                        <option value="basic" data-i18n="q.admin.basic">Básica: editar textos e imágenes</option>
+                        <option value="advanced" data-i18n="q.admin.advanced">Avanzada: productos, publicaciones o usuarios</option>
+                      </select>
+                      <p class="field-help" data-i18n="q.admin.help">¿Quieres poder editar el contenido tú mismo, sin depender de mí?</p>
+                    </div>
+                    <div class="field" id="seo-tip-wrap">
+                      <div class="label-row">
+                        <label for="seo" data-i18n="q.seo">Aparecer en Google (SEO)</label>
+                        <button type="button" class="tip-btn" id="seo-tip-btn" aria-expanded="false" aria-controls="seo-tip" data-i18n-aria="q.seo.tip_aria">
+                          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 10v7M12 7.2h.01"/></svg>
+                        </button>
+                      </div>
+                      <div class="tip-pop" id="seo-tip" role="tooltip" hidden>
+                        <p data-i18n="q.seo.tip_what">SEO es cómo Google te encuentra cuando alguien busca lo que ofreces. Sin eso, tu web existe, pero casi nadie llega desde el buscador.</p>
+                        <ul>
+                          <li data-i18n="q.seo.tip_none">Sin SEO: no preparo el sitio para buscadores.</li>
+                          <li data-i18n="q.seo.tip_basic">Esencial: títulos, descripción y lo mínimo para que Google te indexe.</li>
+                          <li data-i18n="q.seo.tip_local">Local: además, te oriento para que te hallen en tu ciudad o barrio.</li>
+                          <li data-i18n="q.seo.tip_advanced">Completo: estructura, velocidad y contenido para competir con otros negocios.</li>
+                        </ul>
+                      </div>
+                      <select id="seo" name="seo">
+                        <option value="none" data-i18n="q.seo.none">Sin SEO (no te buscan en Google)</option>
+                        <option value="basic" selected data-i18n="q.seo.basic">Esencial (títulos y descripción)</option>
+                        <option value="local" data-i18n="q.seo.local">Local (que te hallen en tu ciudad)</option>
+                        <option value="advanced" data-i18n="q.seo.advanced">Completo (para competir)</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <label for="design" data-i18n="q.design">Diseño</label>
+                      <select id="design" name="design">
+                        <option value="preset" selected data-i18n="q.design.preset">Predefinido / plantilla</option>
+                        <option value="scratch" data-i18n="q.design.scratch">Desde cero</option>
+                      </select>
+                      <p class="field-help" data-i18n="q.design.help">Predefinido parte de una plantilla cuidada; desde cero es un diseño único para ti.</p>
+                    </div>
+                    <div class="field">
+                      <label for="identity" data-i18n="q.identity">Identidad (logo y colores)</label>
+                      <select id="identity" name="identity">
+                        <option value="defined" selected data-i18n="q.identity.defined">Ya la tengo</option>
+                        <option value="create" data-i18n="q.identity.create">Hay que crearla</option>
+                      </select>
+                      <p class="field-help" data-i18n="q.identity.help">¿Tienes logo y colores de marca, o los creamos?</p>
+                    </div>
+                    <div class="field">
+                      <label for="theme" data-i18n="q.theme">Tema del sitio</label>
+                      <select id="theme" name="theme">
+                        <option value="light" selected data-i18n="q.theme.light">Solo claro</option>
+                        <option value="both" data-i18n="q.theme.both">Claro y oscuro</option>
+                      </select>
+                      <p class="field-help" data-i18n="q.theme.help">¿Quieres que tu web ofrezca modo claro y también modo oscuro?</p>
+                    </div>
+                    <div class="field">
+                      <label for="languages" data-i18n="q.languages">Idiomas</label>
+                      <select id="languages" name="languages">
+                        <option value="1" selected data-i18n="q.languages.one">Uno</option>
+                        <option value="2" data-i18n="q.languages.multi">Dos o más</option>
+                      </select>
+                      <p class="field-help" data-i18n="q.languages.help">¿Tu sitio debe estar en más de un idioma?</p>
+                    </div>
+                    <div class="field field-full">
+                      <label for="images" data-i18n="q.images">¿Tus imágenes están listas?</label>
+                      <select id="images" name="images">
+                        <option value="ready" data-i18n="q.images.ready">Sí, ya están listas</option>
+                        <option value="process" selected data-i18n="q.images.process">No, prepáralas tú</option>
+                      </select>
+                      <p class="field-help" id="images-help" data-images-help>Yo ajusto formato, tamaño y peso para que carguen rápido y se vean nítidas (trabajo adicional).</p>
+                    </div>
+                    <div class="field field-full">
+                      <label for="maintenance" data-i18n="q.maintenance">Mantenimiento después</label>
+                      <select id="maintenance" name="maintenance">
+                        <option value="light" selected data-i18n="q.maintenance.light">Cuidado puntual</option>
+                        <option value="mid" data-i18n="q.maintenance.mid">Mejora continua</option>
+                        <option value="full" data-i18n="q.maintenance.full">Acompañamiento</option>
+                      </select>
+                      <p class="field-help" data-i18n="q.maintenance.help">Siempre hay que hacerlo. El mantenimiento no es desarrollo nuevo: las funciones o secciones nuevas se cotizan aparte.</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-
-            <div class="card">
-              <h3 class="lang-es">Paquete Estándar</h3>
-              <h3 class="lang-en">Standard Package</h3>
-              <p class="lang-es">La opción más popular para organizaciones activas y negocios
-                establecidos.</p>
-              <p class="lang-en">The most popular option for active organizations and established
-                businesses.</p>
-              <div class="price">$400 - $600</div>
-
-              <ul class="lang-es">
-                <li><strong>3 a 5 páginas</strong> bien estructuradas</li>
-                <li>Formularios interactivos para contacto y atracción de clientes (Leads)</li>
-                <li>Navegación intuitiva y diseño UI profesional</li>
-                <li>Optimización de carga y rendimiento</li>
-                <li><em>Soporte técnico opcional si lo necesita</em></li>
-                <li>Implementación de tema claro/oscuro (opcional)</li>
-                <li>Implementación de selector de idioma (opcional)</li>
-              </ul>
-              <ul class="lang-en">
-                <li><strong>3 to 5 well-structured pages</strong></li>
-                <li>Interactive forms for contact and lead generation</li>
-                <li>Intuitive navigation and professional UI design</li>
-                <li>Load and performance optimization</li>
-                <li><em>Optional technical support if needed</em></li>
-                <li>Implementation of light/dark theme (optional)</li>
-                <li>Implementation of language selector (optional)</li>
-              </ul>
-
-              <div class="example-box">
-                <span class="lang-es"><strong>Ejemplo:</strong> Sitio para una clínica dental con:
-                  Inicio, Nosotros, Tratamientos, Casos de Éxito y un Formulario para agendar
-                  consultas y captar pacientes.</span>
-                <span class="lang-en"><strong>Example:</strong> A dental clinic site featuring: Home,
-                  About Us, Treatments, Success Stories, and a Form to schedule appointments and
-                  capture patients.</span>
+            </form>
+            <aside class="board" aria-live="polite">
+              <h3 data-i18n="quote_range">Estimado</h3>
+              <ul id="quote-board"></ul>
+              <div class="total" id="quote-total">
+                <span data-range>—</span>
+                <small id="quote-note" data-i18n="quote_not_final">No es precio final. Dominio y hosting van aparte.</small>
               </div>
-            </div>
-
-            <div class="card">
-              <h3 class="lang-es">Paquete Comunidad</h3>
-              <h3 class="lang-en">Community Package</h3>
-              <p class="lang-es">Para organizaciones que necesitan plataformas dinámicas, gestión de
-                usuarios y bases de datos.</p>
-              <p class="lang-en">For organizations needing dynamic platforms, user management, and
-                databases.</p>
-              <div class="price">$700 - $1000</div>
-
-              <ul class="lang-es">
-                <li><strong>5+ páginas</strong> con arquitectura robusta</li>
-                <li>Autenticación (Login) y gestión de Roles de usuario</li>
-                <li>Backend como Servicio (SaaS) integrado con <strong>Supabase</strong></li>
-                <li>UI/UX altamente personalizada y Mapas interactivos</li>
-                <li>Formularios avanzados de captación de clientes</li>
-                <li><strong>Incluye 1 mes de soporte técnico post-entrega</strong></li>
-                <li>Implementación de tema claro/oscuro (opcional)</li>
-                <li>Implementación de selector de idioma (opcional)</li>
-              </ul>
-              <ul class="lang-en">
-                <li><strong>3 to 5 pages</strong> with robust architecture</li>
-                <li>User Authentication (Login) and Role management</li>
-                <li>Backend as a Service (SaaS) integrated with <strong>Supabase</strong></li>
-                <li>Highly customized UI/UX and Interactive Maps</li>
-                <li>Advanced lead capture forms</li>
-                <li><strong>Includes 1 month of post-delivery tech support</strong></li>
-                <li>Implementation of light/dark theme (optional)</li>
-                <li>Implementation of language selector (optional)</li>
-              </ul>
-
-              <div class="example-box">
-                <span class="lang-es"><strong>Ejemplo:</strong> Plataforma para una ONG donde los
-                  usuarios inician sesión, ven un mapa interactivo de proyectos y las empresas llenan
-                  formularios avanzados para donaciones.</span>
-                <span class="lang-en"><strong>Example:</strong> A platform for an NGO where users log
-                  in, view an interactive project map, and companies fill out advanced forms for
-                  donations.</span>
+              <small id="quote-note-interview" class="board-interview-note" hidden></small>
+              <a class="btn btn-primary" id="board-wa" hidden href="https://wa.me/5356408532" target="_blank" rel="noopener noreferrer" data-i18n="quote_wa">Contactar por WhatsApp</a>
+              <div class="board-actions" id="board-actions">
+                <p class="board-hint" data-i18n="quote_send_hint">¿Listo? Envíame tu cotización y te confirmo el precio.</p>
+                <a class="btn btn-primary" id="board-send-wa" href="https://wa.me/5356408532" target="_blank" rel="noopener noreferrer" data-i18n="quote_send_wa">Enviar por WhatsApp</a>
+                <a class="btn" id="board-send-mail" href="mailto:robertoverdeciasanchez@gmail.com" data-i18n="quote_send_mail">Enviar por correo</a>
               </div>
-            </div>
-
+            </aside>
           </div>
         </div>
       </section>
 
-      <section class="bg-white">
-        <div class="container">
-          <div class="scope-alert">
-            <h3 class="lang-es">⚠️ Sobre los Tiempos de Entrega y Alcance del Proyecto</h3>
-            <h3 class="lang-en">⚠️ About Delivery Times and Project Scope</h3>
-
-            <p class="lang-es">
-              El tiempo estimado de entrega para todos los proyectos es de <strong>1 a 4 semanas</strong>,
-              el cual puede variar según la complejidad técnica del paquete elegido y la rapidez con la
-              que proveas los textos, imágenes e información requerida.<br><br>
-              <strong>Importante:</strong> Es fundamental definir todas las características antes de
-              comenzar. Cualquier adición de páginas, integraciones o funcionalidades solicitadas
-              <em>después</em> de haber aprobado el alcance inicial (Scope) impactará en el costo final y
-              ajustará la fecha de entrega del proyecto.
-            </p>
-            <p class="lang-en">
-              The estimated delivery time for all projects is <strong>1 to 4 weeks</strong>, which may
-              vary based on the technical complexity of the chosen package and how quickly you provide the
-              required texts, images, and information.<br><br>
-              <strong>Important:</strong> It is essential to define all features before starting. Any
-              addition of pages, integrations, or functionalities requested <em>after</em> the initial
-              scope has been approved will impact the final cost and adjust the project's delivery date.
-            </p>
+      <section id="hosting">
+        <div class="wrap">
+          <h2 data-i18n="host_h">Dominio y hosting</h2>
+          <p class="lede" data-i18n="host_intro">Son dos cosas separadas de tu web, y ninguna es complicada. Las contratas tú, a tu nombre, para que siempre tengas el control. Yo te acompaño en elegirlas, comprarlas y dejar el sitio publicado.</p>
+          <div class="split">
+            <article class="panel">
+              <h3 data-i18n="host_domain_h">El dominio: tu dirección en internet</h3>
+              <p data-i18n="host_domain_p">Es el nombre que la gente escribe para llegar a ti, como tunegocio.com. Es igual que la dirección de tu local: única y tuya. Por ejemplo: cafeteria-lucia.com o barberiajuan.com.</p>
+              <p class="host-cost" data-i18n="host_domain_cost">Suele costar entre $10 y $15 al año.</p>
+            </article>
+            <article class="panel">
+              <h3 data-i18n="host_hosting_h">El hosting: dónde vive tu web</h3>
+              <p data-i18n="host_hosting_p">Es el espacio en internet donde se guarda tu web para que esté abierta las 24 horas. Piénsalo como el alquiler del local donde montas tu negocio: sin él, tu web no puede estar en línea.</p>
+              <p class="host-cost" data-i18n="host_hosting_cost">Según el proyecto, desde unos pocos dólares al mes.</p>
+            </article>
           </div>
+          <p class="host-foot" data-i18n="host_foot">Ninguno de los dos entra en el rango de construcción. Te asesoro para que elijas bien y no pagues de más.</p>
         </div>
       </section>
 
-      <section id="portfolio">
-        <div class="container">
-          <h2 class="text-center lang-es">Casos de Éxito</h2>
-          <h2 class="text-center lang-en">Representative Work (Anonymized)</h2>
-
-          <p class="text-center lang-es"
-             style="margin-bottom: 50px;">No comparto pantallas ni nombres por acuerdos de confidencialidad (NDA). En su
-            lugar, muestro el tipo de problema y el resultado que se suele conseguir.</p>
-          <p class="text-center lang-en"
-             style="margin-bottom: 50px;">I can’t share screenshots or client names due to NDAs. Instead, I show the
-            type of problem and the kind of results we typically achieve.</p>
-
-          <div class="grid-3">
-            <div class="card">
-              <h3 class="lang-es">Dashboard de CRM (B2B)</h3>
-              <h3 class="lang-en">CRM Dashboard (B2B)</h3>
-              <p class="lang-es">Rediseño de interfaz para reducir fricción y acelerar tareas repetitivas.</p>
-              <p class="lang-en">UI redesign to reduce friction and speed up repetitive workflows.</p>
-              <ul class="lang-es">
-                <li>Jerarquía visual y componentes consistentes</li>
-                <li>Mejoras de accesibilidad y estados</li>
-                <li>Optimización de tablas, filtros y formularios</li>
+      <section class="band" id="cuidado">
+        <div class="wrap">
+          <h2 data-i18n="care_h">Cuando el sitio ya está vivo</h2>
+          <p class="lede" data-i18n="care_p">Un sitio sin mantenimiento se desactualiza, se pone lento y pierde clientes. El cuidado no es opcional: eliges cómo lo hacemos, no si lo hacemos. Los montos son orientativos.</p>
+          <div class="care-grid">
+            <article class="care">
+              <h3 data-i18n="care_1_h">Cuidado puntual</h3>
+              <strong data-i18n="care_1_price">desde $15 / mes</strong>
+              <p data-i18n="care_1_p">Lo esencial para que tu sitio no se caiga ni se quede atrás.</p>
+              <ul class="care-list">
+                <li data-i18n="care_1_b1">Copia de seguridad mensual</li>
+                <li data-i18n="care_1_b2">Actualizaciones de seguridad</li>
+                <li data-i18n="care_1_b3">Reviso que todo siga en línea</li>
               </ul>
-              <ul class="lang-en">
-                <li>Clear visual hierarchy and consistent components</li>
-                <li>Accessibility and state improvements</li>
-                <li>Optimized tables, filters and forms</li>
+            </article>
+            <article class="care care-featured">
+              <h3 data-i18n="care_2_h">Mejora continua</h3>
+              <strong data-i18n="care_2_price">desde $25 / mes</strong>
+              <p data-i18n="care_2_p">Todo lo anterior y, además, cambios pequeños cada mes.</p>
+              <ul class="care-list">
+                <li data-i18n="care_2_b1">Todo lo del plan puntual</li>
+                <li data-i18n="care_2_b2">Cupo de cambios de texto e imágenes</li>
+                <li data-i18n="care_2_b3">Revisión de velocidad y enlaces rotos</li>
               </ul>
-            </div>
-            <div class="card">
-              <h3 class="lang-es">Plataforma de Datos</h3>
-              <h3 class="lang-en">Data Platform UI</h3>
-              <p class="lang-es">Interfaz enfocada en claridad y rendimiento para vistas con alta densidad de
-                información.</p>
-              <p class="lang-en">Clarity-first UI and performance improvements for high-density screens.</p>
-              <ul class="lang-es">
-                <li>Diseño responsive para analítica</li>
-                <li>Patrones reutilizables y escalables</li>
-                <li>Mejoras de carga percibida</li>
+            </article>
+            <article class="care">
+              <h3 data-i18n="care_3_h">Acompañamiento</h3>
+              <strong data-i18n="care_3_price">desde $50 / mes</strong>
+              <p data-i18n="care_3_p">Para negocios que se mueven rápido y necesitan prioridad.</p>
+              <ul class="care-list">
+                <li data-i18n="care_3_b1">Todo lo de mejora continua</li>
+                <li data-i18n="care_3_b2">Atención prioritaria en la misma semana</li>
+                <li data-i18n="care_3_b3">Plan de mejoras cada mes</li>
               </ul>
-              <ul class="lang-en">
-                <li>Responsive analytics layout</li>
-                <li>Reusable and scalable patterns</li>
-                <li>Better perceived performance</li>
-              </ul>
-            </div>
-            <div class="card">
-              <h3 class="lang-es">Sitio de Servicios (Lead Gen)</h3>
-              <h3 class="lang-en">Service Website (Lead Gen)</h3>
-              <p class="lang-es">Estructura orientada a conversión: propuesta de valor, servicios, confianza y contacto.
-              </p>
-              <p class="lang-en">Conversion-focused structure: value proposition, services, trust, and contact.</p>
-              <ul class="lang-es">
-                <li>Secciones estándar de captación (FAQ, CTA, contacto)</li>
-                <li>Copy claro y jerarquía de contenido</li>
-                <li>Microinteracciones con intención</li>
-              </ul>
-              <ul class="lang-en">
-                <li>Standard lead-gen sections (FAQ, CTA, contact)</li>
-                <li>Clear copy and content hierarchy</li>
-                <li>Intentional microinteractions</li>
-              </ul>
-            </div>
+            </article>
           </div>
-        </div>
-      </section>
-
-      <section id="testimonials"
-               class="bg-white">
-        <div class="container text-center">
-          <h2 class="lang-es">Testimonios y Referencias</h2>
-          <h2 class="lang-en">Testimonials & References</h2>
-          <p class="lang-es">Por confidencialidad, muchas veces no puedo publicar testimonios ni pantallas. Si lo
-            deseas, puedo compartir referencias verificables por privado.</p>
-          <p class="lang-en">Due to confidentiality, I often can’t publish testimonials or screenshots. If you want, I
-            can share verifiable references privately.</p>
-          <div class="cta-row">
-            <a class="cta primary"
-               href="#contact"><i class="fa-solid fa-comment-dots"
-                 aria-hidden="true"></i><span class="lang-es">Solicitar referencias</span><span class="lang-en">Request
-                references</span></a>
-          </div>
-        </div>
-      </section>
-
-      <section id="process">
-        <div class="container">
-          <h2 class="text-center lang-es">¿Cómo Trabajamos Juntos?</h2>
-          <h2 class="text-center lang-en">How We Work Together?</h2>
-
-          <div class="grid-4"
-               style="margin-top: 50px;">
-            <div class="step">
-              <div class="step-number">1</div>
-              <h3 class="lang-es">Entender</h3>
-              <h3 class="lang-en">Understand</h3>
-              <p class="lang-es">Definimos tus objetivos, la audiencia y el alcance exacto del sitio web.
-              </p>
-              <p class="lang-en">We define your goals, audience, and the exact scope of the website.</p>
-            </div>
-            <div class="step">
-              <div class="step-number">2</div>
-              <h3 class="lang-es">Planificar</h3>
-              <h3 class="lang-en">Plan</h3>
-              <p class="lang-es">Alineamos expectativas visuales y funcionales antes de escribir código.
-              </p>
-              <p class="lang-en">We align visual and functional expectations before writing any code.</p>
-            </div>
-            <div class="step">
-              <div class="step-number">3</div>
-              <h3 class="lang-es">Construir</h3>
-              <h3 class="lang-en">Build</h3>
-              <p class="lang-es">Desarrollo la plataforma basándome estrictamente en el plan aprobado.</p>
-              <p class="lang-en">I develop the platform strictly based on the approved plan.</p>
-            </div>
-            <div class="step">
-              <div class="step-number">4</div>
-              <h3 class="lang-es">Entregar</h3>
-              <h3 class="lang-en">Deliver</h3>
-              <p class="lang-es">Publicamos el sitio para tus visitantes. Activo soporte técnico si
-                aplica.</p>
-              <p class="lang-en">We publish the site for your visitors. Active tech support if applicable.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="resources"
-               class="bg-white">
-        <div class="container">
-          <h2 class="text-center lang-es">Recursos</h2>
-          <h2 class="text-center lang-en">Resources</h2>
-
-          <p class="text-center lang-es"
-             style="margin-bottom: 50px;">Mini guías rápidas para ayudarte a tomar mejores decisiones antes de invertir
-            en tu web.</p>
-          <p class="text-center lang-en"
-             style="margin-bottom: 50px;">Short practical guides to help you make better decisions before investing in
-            your website.</p>
-
-          <div class="grid-3">
-            <div class="card">
-              <h3 class="lang-es">Checklist de Contenido</h3>
-              <h3 class="lang-en">Content Checklist</h3>
-              <p class="lang-es">Lo que necesitas tener listo para avanzar rápido (textos, fotos, datos, CTA).</p>
-              <p class="lang-en">What you should have ready to move fast (copy, photos, business info, CTAs).</p>
-              <div class="example-box">
-                <span class="lang-es"><strong>Tip:</strong> Define tu oferta, tu público y un CTA principal antes de
-                  diseñar.</span>
-                <span class="lang-en"><strong>Tip:</strong> Define your offer, audience and one primary CTA before
-                  design.</span>
-              </div>
-            </div>
-            <div class="card">
-              <h3 class="lang-es">Estructura que Convierte</h3>
-              <h3 class="lang-en">High-Converting Structure</h3>
-              <p class="lang-es">Orden recomendado: propuesta de valor, servicios, prueba social, FAQ y contacto.</p>
-              <p class="lang-en">Recommended order: value proposition, services, social proof, FAQ and contact.</p>
-              <div class="example-box">
-                <span class="lang-es"><strong>Tip:</strong> Un visitante decide en segundos. Que el “qué haces” sea
-                  obvio.</span>
-                <span class="lang-en"><strong>Tip:</strong> Visitors decide in seconds. Make “what you do”
-                  obvious.</span>
-              </div>
-            </div>
-            <div class="card">
-              <h3 class="lang-es">Rendimiento Básico</h3>
-              <h3 class="lang-en">Performance Basics</h3>
-              <p class="lang-es">Buenas prácticas: tipografías, imágenes ligeras, JS mínimo, y diseño móvil primero.</p>
-              <p class="lang-en">Best practices: fonts, lightweight images, minimal JS, and mobile-first design.</p>
-              <div class="example-box">
-                <span class="lang-es"><strong>Tip:</strong> Si una web carga lento en móvil, estás perdiendo
-                  leads.</span>
-                <span class="lang-en"><strong>Tip:</strong> If your site is slow on mobile, you’re losing leads.</span>
-              </div>
-            </div>
-          </div>
+          <p class="care-note" data-i18n="care_note">El mantenimiento cuida el sitio ya construido: correcciones, actualizaciones, copias de seguridad y ajustes pequeños. No es desarrollo nuevo. Las funciones o secciones nuevas se cotizan aparte una vez terminado el sitio.</p>
         </div>
       </section>
 
       <section id="faq">
-        <div class="container">
-          <h2 class="text-center lang-es">Preguntas Frecuentes</h2>
-          <h2 class="text-center lang-en">Frequently Asked Questions</h2>
-
-          <div class="grid-3">
-            <div class="card">
-              <h3 class="lang-es">¿Qué necesitas de mí?</h3>
-              <h3 class="lang-en">What do you need from me?</h3>
-              <p class="lang-es">Textos, datos del negocio, y si tienes: fotos, logo y enlaces. Si no, te ayudo a
-                estructurarlo.</p>
-              <p class="lang-en">Copy, business info, and if available: photos, logo and links. If not, I’ll help
-                structure it.</p>
-            </div>
-            <div class="card">
-              <h3 class="lang-es">¿Incluye hosting o dominio?</h3>
-              <h3 class="lang-en">Does it include hosting or domain?</h3>
-              <p class="lang-es">Puedo asesorarte y ayudarte a configurarlo. Se cotiza según proveedor y necesidades.
-              </p>
-              <p class="lang-en">I can guide you and help set it up. Pricing depends on provider and needs.</p>
-            </div>
-            <div class="card">
-              <h3 class="lang-es">¿Se puede escalar luego?</h3>
-              <h3 class="lang-en">Can it scale later?</h3>
-              <p class="lang-es">Sí. Diseñamos una base sólida: estructura, componentes y contenido listos para crecer.
-              </p>
-              <p class="lang-en">Yes. We build a solid base: structure, components and content ready to grow.</p>
-            </div>
+        <div class="wrap">
+          <h2 data-i18n="faq_h">Preguntas frecuentes</h2>
+          <div class="faq">
+            <article>
+              <h3 data-i18n="faq_1_q">¿Qué necesito de ti?</h3>
+              <p data-i18n="faq_1_a">Textos, datos del negocio y, si los tienes, fotos, logo y enlaces. Si no, te ayudo a estructurarlo.</p>
+            </article>
+            <article>
+              <h3 data-i18n="faq_2_q">¿El sitio será responsive?</h3>
+              <p data-i18n="faq_2_a">Sí. Todo lo que te entrego se ve y se usa en móvil, tablet y escritorio. No es un extra: va incluido.</p>
+            </article>
+            <article>
+              <h3 data-i18n="faq_3_q">¿Incluye dominio o hosting?</h3>
+              <p data-i18n="faq_3_a">No. Van por tu cuenta. Te asesoro y te ayudo a contratarlos y a publicar.</p>
+            </article>
+            <article>
+              <h3 data-i18n="faq_4_q">¿Y si necesito una tienda o un sistema grande?</h3>
+              <p data-i18n="faq_4_a">CRM, SaaS, gestión o tienda online salen del cotizador. Escríbeme por WhatsApp y vemos si el proyecto es viable.</p>
+            </article>
           </div>
         </div>
       </section>
 
-      <section id="contact"
-               class="bg-white text-center">
-        <div class="container">
-          <h2 class="lang-es">Hablemos</h2>
-          <h2 class="lang-en">Let's Talk</h2>
-
-          <p class="lang-es">Construyamos juntos el sitio web que tu organización necesita.</p>
-          <p class="lang-en">Let's build the website your organization needs together.</p>
-
-          <div class="contact-info">
-            <p><i class="fa-solid fa-envelope"
-                 aria-hidden="true"
-                 style="color:var(--primary);margin-right:8px;"></i> <a
-                 href="mailto:robertoverdeciasanchez@gmail.com">robertoverdeciasanchez@gmail.com</a></p>
-            <p><i class="fab fa-whatsapp"
-                 aria-hidden="true"
-                 style="color:#25d366;margin-right:8px;"></i> <a href="https://wa.me/5356408532"
-                 target="_blank">WhatsApp: +53 56408532</a></p>
+      <section class="band" id="contacto">
+        <div class="wrap">
+          <h2 data-i18n="contact_h">Cuéntame qué necesitas</h2>
+          <p data-i18n="contact_p">Te preparo una propuesta con el desglose que armaste arriba.</p>
+          <div class="contact-row">
+            <a href="mailto:robertoverdeciasanchez@gmail.com">robertoverdeciasanchez@gmail.com</a>
+            <a href="https://wa.me/5356408532" target="_blank" rel="noopener noreferrer">WhatsApp +53 56408532</a>
           </div>
-
-          <form class="contact-form"
-                id="lead-form">
-            <div class="form-grid">
+          <form id="lead-form">
+            <div class="fields">
               <div class="field">
-                <label for="lead-name"><span class="lang-es">Nombre</span><span class="lang-en">Name</span></label>
-                <input id="lead-name"
-                       name="name"
-                       autocomplete="name"
-                       required>
+                <label for="lead-name" data-i18n="label_name">Nombre</label>
+                <input id="lead-name" name="name" autocomplete="name" required>
               </div>
               <div class="field">
-                <label for="lead-email"><span class="lang-es">Email</span><span class="lang-en">Email</span></label>
-                <input id="lead-email"
-                       name="email"
-                       type="email"
-                       autocomplete="email"
-                       required>
+                <label for="lead-email" data-i18n="label_email">Correo</label>
+                <input id="lead-email" name="email" type="email" autocomplete="email" required>
               </div>
-              <div class="field">
-                <label for="lead-service"><span class="lang-es">Servicio</span><span
-                        class="lang-en">Service</span></label>
-                <select id="lead-service"
-                        name="service"
-                        required>
-                  <option value="">Selecciona / Select</option>
-                  <option value="Starter">Starter</option>
-                  <option value="Standard">Standard</option>
-                  <option value="Community">Community</option>
-                  <option value="Other">Otro / Other</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="lead-budget"><span class="lang-es">Presupuesto estimado</span><span
-                        class="lang-en">Estimated budget</span></label>
-                <select id="lead-budget"
-                        name="budget"
-                        required>
-                  <option value="">Selecciona / Select</option>
-                  <option value="200-300">$200–$300</option>
-                  <option value="400-600">$400–$600</option>
-                  <option value="700-1000">$700–$1000</option>
-                  <option value="1000+">$1000+</option>
-                </select>
+              <div class="field field-full">
+                <label for="lead-message" data-i18n="label_message">Mensaje</label>
+                <textarea id="lead-message" name="message" data-i18n-placeholder="ph_message" placeholder="Cuéntame el contexto, plazos o dudas…"></textarea>
               </div>
             </div>
-
-            <div class="field"
-                 style="margin-top:14px;">
-              <label for="lead-message"><span class="lang-es">Mensaje</span><span class="lang-en">Message</span></label>
-              <textarea id="lead-message"
-                        name="message"
-                        required
-                        placeholder="Cuéntame qué necesitas… / Tell me what you need…"></textarea>
+            <div class="cta-row">
+              <button type="submit" class="btn btn-primary" data-i18n="send">Enviarme tu mensaje</button>
+              <a class="btn" id="wa-link" href="https://wa.me/5356408532" target="_blank" rel="noopener noreferrer" data-i18n="wa">Escríbeme por WhatsApp</a>
             </div>
-
-            <div class="form-actions">
-              <button type="submit"
-                      class="cta primary"><i class="fa-solid fa-paper-plane"
-                   aria-hidden="true"></i><span class="lang-es">Enviar</span><span class="lang-en">Send</span></button>
-              <a class="cta"
-                 href="https://wa.me/5356408532"
-                 target="_blank"><i class="fab fa-whatsapp"
-                   aria-hidden="true"></i><span class="lang-es">Escribir por WhatsApp</span><span
-                      class="lang-en">Message on WhatsApp</span></a>
-            </div>
-            <p class="hint lang-es">Al enviar, se abrirá tu cliente de correo con el mensaje prellenado.</p>
-            <p class="hint lang-en">On submit, your email client will open with a prefilled message.</p>
+            <p data-i18n="hint">Al enviar, se abre tu correo con el desglose listo. Dominio y hosting no van en el rango.</p>
           </form>
         </div>
       </section>
+    </main>
 
-      <footer>
-        <div class="container">
-          <p>&copy; 2026 Roberto Verdecia Sánchez. <span class="lang-es">Todos los derechos
-              reservados.</span><span class="lang-en">All rights reserved.</span></p>
-        </div>
-      </footer>
+    <footer>
+      <div class="wrap">
+        <p>© 2026 Roberto Verdecia Sánchez. <span data-i18n="footer">Todos los derechos reservados.</span></p>
+      </div>
+    </footer>
 
-    </div>
+    <button type="button" id="to-top" class="to-top" data-i18n-aria="top_aria" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+    </button>
+
+    <script src="js/quote.js?v=6"></script>
+    <script src="js/theme-lang.js?v=6"></script>
+    <script src="js/main.js?v=6"></script>
   </body>
-
-  <script>
-    const hamburger = document.getElementById('hamburger-menu');
-    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const mobileMenuClose = document.getElementById('mobile-menu-close');
-    const langToggle = document.getElementById('lang-toggle');
-    const langSwitch = document.getElementById('lang-switch');
-    const langSwitchMobile = document.getElementById('lang-switch-mobile');
-    const themeToggle = document.getElementById('theme-toggle');
-    const themeToggleMobile = document.getElementById('theme-toggle-mobile');
-    const themeIcon = document.getElementById('theme-icon');
-    const themeIconMobile = document.getElementById('theme-icon-mobile');
-
-    function getUiLang() {
-      return (document.documentElement.getAttribute('lang') || 'es').toLowerCase().startsWith('en') ? 'en' : 'es';
-    }
-
-    function setMenuOpen(open) {
-      const isOpen = Boolean(open);
-      hamburger.setAttribute('aria-expanded', String(isOpen));
-      if (isOpen) {
-        mobileMenu.removeAttribute('hidden');
-        mobileMenuOverlay.removeAttribute('hidden');
-        document.body.classList.add('menu-open');
-      } else {
-        mobileMenu.setAttribute('hidden', '');
-        mobileMenuOverlay.setAttribute('hidden', '');
-        document.body.classList.remove('menu-open');
-      }
-    }
-
-    function setTheme(dark) {
-      const isDark = Boolean(dark);
-      document.body.classList.toggle('dark-mode', isDark);
-
-      const iconPairs = [
-        [themeIcon, isDark],
-        [themeIconMobile, isDark],
-      ];
-
-      iconPairs.forEach(([el, darkOn]) => {
-        if (!el) return;
-        el.classList.toggle('fa-moon', !darkOn);
-        el.classList.toggle('fa-sun', darkOn);
-      });
-
-      const uiLang = getUiLang();
-      const label = uiLang === 'en'
-        ? (isDark ? 'Light mode' : 'Dark mode')
-        : (isDark ? 'Modo claro' : 'Modo oscuro');
-      themeToggle.title = label;
-      themeToggleMobile.title = label;
-      themeToggle.setAttribute('aria-label', label);
-      themeToggleMobile.setAttribute('aria-label', label);
-
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    }
-
-    function setLangEnglish(english) {
-      const isEn = Boolean(english);
-      langToggle.checked = isEn;
-      document.documentElement.setAttribute('lang', isEn ? 'en' : 'es');
-      localStorage.setItem('lang', isEn ? 'en' : 'es');
-
-      const label = isEn ? 'Switch to Spanish' : 'Cambiar a Inglés';
-      langSwitch.title = label;
-      langSwitchMobile.title = label;
-      langSwitch.setAttribute('aria-label', label);
-      langSwitchMobile.setAttribute('aria-label', label);
-
-      const closeLabel = isEn ? 'Close menu' : 'Cerrar menú';
-      mobileMenuClose.title = closeLabel;
-      mobileMenuClose.setAttribute('aria-label', closeLabel);
-
-      const isDark = document.body.classList.contains('dark-mode');
-      setTheme(isDark);
-    }
-
-    const savedLang = localStorage.getItem('lang');
-    if (savedLang === 'en') setLangEnglish(true);
-    if (savedLang === 'es') setLangEnglish(false);
-    if (savedLang !== 'en' && savedLang !== 'es') setLangEnglish(langToggle.checked);
-
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    setTheme(savedTheme ? savedTheme === 'dark' : prefersDark);
-
-    setMenuOpen(false);
-
-    hamburger.addEventListener('click', () => {
-      const open = mobileMenu.hasAttribute('hidden');
-      setMenuOpen(open);
-    });
-
-    mobileMenuClose.addEventListener('click', () => setMenuOpen(false));
-    mobileMenuOverlay.addEventListener('click', () => setMenuOpen(false));
-
-    document.addEventListener('click', (e) => {
-      if (mobileMenu.hasAttribute('hidden')) return;
-      if (mobileMenu.contains(e.target)) return;
-      if (hamburger.contains(e.target)) return;
-      setMenuOpen(false);
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key !== 'Escape') return;
-      if (mobileMenu.hasAttribute('hidden')) return;
-      setMenuOpen(false);
-    });
-
-    mobileMenu.addEventListener('click', (e) => {
-      const el = e.target.closest('a');
-      if (!el) return;
-      setMenuOpen(false);
-    });
-
-    langSwitch.addEventListener('click', () => setLangEnglish(!langToggle.checked));
-    langSwitchMobile.addEventListener('click', () => {
-      setLangEnglish(!langToggle.checked);
-      setMenuOpen(false);
-    });
-
-    themeToggle.addEventListener('click', () => setTheme(!document.body.classList.contains('dark-mode')));
-    themeToggleMobile.addEventListener('click', () => {
-      setTheme(!document.body.classList.contains('dark-mode'));
-      setMenuOpen(false);
-    });
-
-    const leadForm = document.getElementById('lead-form');
-    leadForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const name = document.getElementById('lead-name').value.trim();
-      const email = document.getElementById('lead-email').value.trim();
-      const service = document.getElementById('lead-service').value.trim();
-      const budget = document.getElementById('lead-budget').value.trim();
-      const message = document.getElementById('lead-message').value.trim();
-
-      const lang = langToggle.checked ? 'en' : 'es';
-      const subject = lang === 'en'
-        ? `Website request (${service || 'Service'})`
-        : `Solicitud de sitio web (${service || 'Servicio'})`;
-
-      const body = lang === 'en'
-        ? `Name: ${name}\nEmail: ${email}\nService: ${service}\nBudget: ${budget}\n\nMessage:\n${message}`
-        : `Nombre: ${name}\nEmail: ${email}\nServicio: ${service}\nPresupuesto: ${budget}\n\nMensaje:\n${message}`;
-
-      const mailto = `mailto:robertoverdeciasanchez@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      window.location.href = mailto;
-    });
-  </script>
-
 </html>
