@@ -1,6 +1,6 @@
-# Sitio estático: sin paso de build, se publica la raíz del repo.
+# Sitio estático: sin paso de build, se publica la carpeta public/.
 [build]
-  publish = "."
+  publish = "public"
   command = ""
 
 # Fija Node a una versión LTS estable (evita que Netlify use una muy reciente).
