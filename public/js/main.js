@@ -11,7 +11,6 @@ const {
   isInterviewType,
   quoteMessage,
   priceUsd,
-  roundUpTo50,
 } = window.RVQuote;
 
 const { initThemeLang } = window.RVLang;
@@ -98,7 +97,9 @@ function initMotion() {
   const hero = document.querySelector(".hero");
   if (hero) hero.classList.add("is-ready");
 
-  const items = Array.from(document.querySelectorAll(REVEAL_SELECTOR));
+  const items = Array.from(document.querySelectorAll(REVEAL_SELECTOR)).filter(
+    (el) => !el.closest("#quote")
+  );
 
   if (prefersReducedMotion() || typeof IntersectionObserver === "undefined") {
     items.forEach((el) => el.classList.add("in"));
@@ -133,43 +134,79 @@ function initMotion() {
   items.forEach((el) => io.observe(el));
 }
 
-let priceRaf = 0;
-let lastPrice = null;
-
 function formatPrice(price) {
   return `${formatUsd(price)} USD`;
 }
 
-function animatePrice(price) {
-  if (prefersReducedMotion() || lastPrice === null) {
-    rangeEl.textContent = formatPrice(price);
-    lastPrice = price;
+function updatePriceDisplay(price) {
+  if (!rangeEl) return;
+  if (price == null) {
+    rangeEl.textContent = t("quote_empty");
     return;
   }
-  if (price === lastPrice) return;
+  const next = formatPrice(price);
+  if (rangeEl.textContent !== next) {
+    rangeEl.textContent = next;
+    pulseRange(rangeEl);
+  }
+}
 
-  const start = lastPrice;
-  const t0 = performance.now();
-  const dur = 480;
-  cancelAnimationFrame(priceRaf);
-
-  const step = (now) => {
-    const p = Math.min(1, (now - t0) / dur);
-    const e = 1 - Math.pow(1 - p, 3);
-    const current = roundUpTo50(Math.round(start + (price - start) * e));
-    rangeEl.textContent = formatPrice(current);
-    if (p < 1) {
-      priceRaf = requestAnimationFrame(step);
-    } else {
-      lastPrice = price;
-    }
+function initSectionNav() {
+  const scrollToQuote = () => {
+    const section = document.getElementById("quote");
+    if (!section) return;
+    section.scrollIntoView({
+      behavior: prefersReducedMotion() ? "auto" : "smooth",
+      block: "start",
+    });
   };
-  priceRaf = requestAnimationFrame(step);
+
+  document.querySelectorAll('a[href="#quote"]').forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      history.pushState(null, "", "#quote");
+      scrollToQuote();
+    });
+  });
+
+  window.addEventListener("hashchange", () => {
+    if (location.hash === "#quote") scrollToQuote();
+  });
+
+  if (location.hash === "#quote") scrollToQuote();
+}
+
+let seoModalLevel = null;
+
+function openSeoModal(level) {
+  const modal = document.getElementById("seo-modal");
+  const titleEl = document.getElementById("seo-modal-title");
+  const bodyEl = document.getElementById("seo-modal-body");
+  if (!modal || !titleEl || !bodyEl) return;
+  seoModalLevel = level;
+  titleEl.textContent = t(`q.seo.${level}`);
+  bodyEl.textContent = t(`q.seo.${level}.modal`);
+  modal.hidden = false;
+  document.body.classList.add("modal-open");
+  modal.querySelector(".site-modal-close")?.focus();
+}
+
+function closeSeoModal() {
+  const modal = document.getElementById("seo-modal");
+  if (!modal || modal.hidden) return;
+  modal.hidden = true;
+  document.body.classList.remove("modal-open");
+  seoModalLevel = null;
+}
+
+function refreshSeoModalContent() {
+  if (seoModalLevel) openSeoModal(seoModalLevel);
 }
 
 const { getLang, t } = initThemeLang({
   onLang: () => {
     updateThemeIcons();
+    refreshSeoModalContent();
     document.getElementById("quote-form")?.dispatchEvent(new Event("input", { bubbles: true }));
   },
 });
@@ -185,12 +222,17 @@ const form = document.getElementById("quote-form");
 const contactForm = document.getElementById("lead-form");
 const board = document.getElementById("quote-board");
 const totalEl = document.getElementById("quote-total");
-const rangeEl = totalEl.querySelector("[data-range]");
+const rangeEl = totalEl?.querySelector("[data-range]");
 const noteEl = document.getElementById("quote-note");
 const interviewNote = document.getElementById("quote-note-interview");
 const interviewEl = document.getElementById("quote-interview");
 const extras = document.getElementById("quote-extras");
 const pagesField = document.getElementById("field-pages");
+const imageCountField = document.getElementById("field-image-count");
+const imageAdminHint = document.getElementById("image-admin-hint");
+const imageAdminHintText = document.getElementById("image-admin-hint-text");
+const imageAdminSwitch = document.getElementById("image-admin-switch");
+const adminAdvancedInput = document.getElementById("admin-advanced-input");
 const quoteWa = document.getElementById("quote-wa");
 const boardWa = document.getElementById("board-wa");
 const boardActions = document.getElementById("board-actions");
@@ -218,55 +260,78 @@ function syncSendLinks(quote) {
   if (boardSendMail) boardSendMail.href = mailtoHref(quote);
 }
 
-bindQuote(form, {
-  onChange(quote) {
-    try {
-      paintQuote(quote);
-    } catch (_) {
-      /* keep the form usable even if the board fails */
-    }
-  },
-});
-
-function paintQuote(quote) {
-    lastQuote = quote;
-    const interview = isInterviewType(quote.type);
-    interviewEl.hidden = !interview;
-    extras.hidden = interview;
-    totalEl.hidden = interview;
-    if (boardWa) boardWa.hidden = !interview;
-    if (boardActions) boardActions.hidden = interview;
-    if (pagesField) pagesField.hidden = quote.type === "landing";
-    syncSendLinks(quote);
-
-    if (interview) {
-      board.replaceChildren();
-      if (interviewNote) {
-        interviewNote.hidden = false;
-        interviewNote.textContent = t("quote_interview");
-      }
-      return;
-    }
-
-    if (interviewNote) interviewNote.hidden = true;
-
-    const price = priceUsd(quote);
-    renderBoard(board, quote, t);
-    chalkWrite(board);
-
-    if (price != null) {
-      const changed = price !== lastPrice;
-      animatePrice(price);
-      if (changed) pulseRange(rangeEl);
-    } else {
-      cancelAnimationFrame(priceRaf);
-      rangeEl.textContent = t("quote_empty");
-      lastPrice = null;
-    }
-    noteEl.textContent = t("quote_not_final");
+function needsAdvancedForImages(quote) {
+  return quote.images === "process" && quote.imageCount === "large";
 }
 
-contactForm.addEventListener("submit", (e) => {
+function syncLargeImagesAdmin(quote) {
+  const needs = needsAdvancedForImages(quote);
+  const hasAdvanced = quote.admin === "advanced";
+  const showHint = needs && !hasAdvanced;
+
+  if (imageAdminHint) imageAdminHint.hidden = !showHint;
+  if (imageAdminHintText && showHint) {
+    imageAdminHintText.textContent = t("q.imageCount.large.admin");
+  }
+  if (imageAdminSwitch && showHint) {
+    imageAdminSwitch.textContent = t("q.imageCount.large.admin_btn");
+  }
+}
+
+if (form) {
+  if (imageAdminSwitch && adminAdvancedInput) {
+    imageAdminSwitch.addEventListener("click", () => {
+      adminAdvancedInput.checked = true;
+      form.dispatchEvent(new Event("input", { bubbles: true }));
+      form.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+  }
+
+  bindQuote(form, {
+    onChange(quote) {
+      try {
+        paintQuote(quote);
+        syncLargeImagesAdmin(quote);
+      } catch (err) {
+        console.error("paintQuote failed:", err);
+      }
+    },
+  });
+}
+
+function paintQuote(quote) {
+  if (!board || !totalEl || !noteEl) return;
+
+  lastQuote = quote;
+  const interview = isInterviewType(quote.type);
+  if (interviewEl) interviewEl.hidden = !interview;
+  if (extras) extras.hidden = interview;
+  totalEl.hidden = interview;
+  if (boardWa) boardWa.hidden = !interview;
+  if (boardActions) boardActions.hidden = interview;
+  if (pagesField) pagesField.hidden = quote.type === "landing";
+  if (imageCountField) imageCountField.hidden = quote.images !== "process";
+  syncSendLinks(quote);
+
+  if (interview) {
+    board.replaceChildren();
+    if (interviewNote) {
+      interviewNote.hidden = false;
+      interviewNote.textContent = t("quote_interview");
+    }
+    return;
+  }
+
+  if (interviewNote) interviewNote.hidden = true;
+
+  const price = priceUsd(quote);
+  renderBoard(board, quote, t);
+  updatePriceDisplay(price);
+  noteEl.textContent = t("quote_not_final");
+}
+
+if (contactForm) {
+  contactForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const name = document.getElementById("lead-name").value.trim();
   const email = document.getElementById("lead-email").value.trim();
@@ -281,11 +346,15 @@ contactForm.addEventListener("submit", (e) => {
     extra ? `\n${extra}` : "",
   ].join("\n");
   window.location.href = `mailto:${CONTACT_MAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-});
+  });
+}
 
-document.getElementById("wa-link").addEventListener("click", (e) => {
-  e.currentTarget.href = waHref(currentBreakdownText());
-});
+const waLink = document.getElementById("wa-link");
+if (waLink) {
+  waLink.addEventListener("click", (e) => {
+    e.currentTarget.href = waHref(currentBreakdownText());
+  });
+}
 
 function initToTop() {
   const btn = document.getElementById("to-top");
@@ -300,6 +369,31 @@ function initToTop() {
   });
 }
 
+function initSeoModal() {
+  const modal = document.getElementById("seo-modal");
+  if (!modal) return;
+
+  document.querySelectorAll(".seo-learn").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const level = btn.getAttribute("data-seo-level");
+      if (level) openSeoModal(level);
+    });
+  });
+
+  modal.querySelectorAll("[data-seo-modal-close]").forEach((el) => {
+    el.addEventListener("click", () => closeSeoModal());
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !modal.hidden) closeSeoModal();
+  });
+}
+
 initToTop();
 initMotion();
+initSectionNav();
+initSeoModal();
+window.RVWork?.initWorkGallery({ t });
 })();
